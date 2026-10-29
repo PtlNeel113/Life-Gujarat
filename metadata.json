@@ -1,0 +1,9 @@
+{
+  "name": "LiFE Gujarat",
+  "description": "A comprehensive sustainability and citizen engagement platform for households across Gujarat to track electricity use, complete Mission LiFE daily actions, calculate rooftop solar potential, and measure real carbon impact.",
+  "prompt": "Convert Existing Frontend into a Fully Functional Multi-Page Application for LiFE Gujarat",
+  "version": "1.0.0",
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

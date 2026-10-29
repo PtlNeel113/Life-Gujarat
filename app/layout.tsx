@@ -1,6 +1,6 @@
-import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import './globals.css'
+import { AuthProvider } from '@/components/providers/AuthProvider'
 
 export const metadata: Metadata = {
   title: 'LiFE Gujarat — Small Actions. Measurable Impact.',
@@ -23,8 +23,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
-        {children}
-        {process.env.NODE_ENV === 'production' && <Analytics />}
+        <AuthProvider>
+          {children}
+        </AuthProvider>
       </body>
     </html>
   )
