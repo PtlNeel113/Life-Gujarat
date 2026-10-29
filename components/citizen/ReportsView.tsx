@@ -20,6 +20,7 @@ import { calculateCarbonFootprint, CEA_FACTOR_VERSION } from '@/lib/footprint-ca
 import { PageHeader } from '@/components/shared/PageHeader'
 import { MetricCard } from '@/components/shared/MetricCard'
 import { StatusBadge } from '@/components/shared/StatusBadge'
+import { ReportsCo2SavingsChart } from '@/components/citizen/ReportsCo2SavingsChart'
 
 export function ReportsView() {
   const [user, setUser] = useState<UserProfile>(dataStore.getUser())
@@ -155,6 +156,9 @@ export function ReportsView() {
             <p className="mt-1 text-xs text-[#66736B]">{user.streakDays}-day continuous streak</p>
           </div>
         </div>
+
+        {/* Year-over-Year CO2 Savings Trends & Efficiency Gains (Recharts) */}
+        <ReportsCo2SavingsChart readings={readings} />
 
         {/* Detailed Energy Breakdown */}
         <div className="space-y-4">

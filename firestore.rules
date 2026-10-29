@@ -1,0 +1,130 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Default deny-all catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Global helper primitives
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && (
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid)) ||
+        (request.auth.token.email != null && (
+          request.auth.token.email == 'bhavin.patel@gujarat.gov.in' ||
+          request.auth.token.email.matches('.*@gujarat\\.gov\\.in$')
+        ))
+      );
+    }
+
+    // Validation blueprints
+    function isValidUserProfile(data) {
+      return data.keys().hasAll(['id', 'name', 'email', 'role']) &&
+        data.id is string && data.id.size() <= 128 &&
+        data.name is string && data.name.size() <= 120 &&
+        data.email is string && data.email.size() <= 150 &&
+        (data.role == 'citizen' || data.role == 'admin');
+    }
+
+    function isValidReading(data) {
+      return data.keys().hasAll(['id', 'userId', 'consumptionKwh', 'status']) &&
+        data.id is string && data.id.size() <= 128 &&
+        data.userId is string && data.userId.size() <= 128 &&
+        data.consumptionKwh is number && data.consumptionKwh >= 0 &&
+        (data.status == 'pending' || data.status == 'verified' || data.status == 'flagged');
+    }
+
+    function isValidSolarAssessment(data) {
+      return data.keys().hasAll(['id', 'userId', 'recommendedCapacityKw']) &&
+        data.id is string && data.id.size() <= 128 &&
+        data.userId is string && data.userId.size() <= 128 &&
+        data.recommendedCapacityKw is number;
+    }
+
+    function isValidChatMessage(data) {
+      return data.keys().hasAll(['id', 'userId', 'sender', 'text']) &&
+        data.id is string && data.id.size() <= 128 &&
+        data.userId is string && data.userId.size() <= 128 &&
+        (data.sender == 'user' || data.sender == 'assistant') &&
+        data.text is string && data.text.size() <= 10000;
+    }
+
+    function isValidSubmission(data) {
+      return data.keys().hasAll(['id', 'missionId', 'userId', 'status']) &&
+        data.id is string && data.id.size() <= 128 &&
+        data.missionId is string && data.missionId.size() <= 128 &&
+        data.userId is string && data.userId.size() <= 128 &&
+        (data.status == 'pending' || data.status == 'approved' || data.status == 'rejected');
+    }
+
+    // User profile documents
+    match /users/{userId} {
+      allow get: if isOwner(userId) || isAdmin();
+      allow list: if isAdmin();
+      allow create: if isOwner(userId) && isValidId(userId) && isValidUserProfile(incoming());
+      allow update: if (isOwner(userId) || isAdmin()) && isValidId(userId) && isValidUserProfile(incoming());
+      allow delete: if isAdmin();
+
+      // Energy readings subcollection
+      match /readings/{readingId} {
+        allow get, list: if isOwner(userId) || isAdmin();
+        allow create: if isOwner(userId) && isValidId(readingId) && isValidReading(incoming()) && incoming().userId == userId;
+        allow update: if (isOwner(userId) || isAdmin()) && isValidId(readingId) && isValidReading(incoming()) && incoming().userId == userId;
+        allow delete: if isOwner(userId) || isAdmin();
+      }
+
+      // Solar feasibility assessments subcollection
+      match /solar/{solarId} {
+        allow get, list: if isOwner(userId) || isAdmin();
+        allow create: if isOwner(userId) && isValidId(solarId) && isValidSolarAssessment(incoming()) && incoming().userId == userId;
+        allow update: if (isOwner(userId) || isAdmin()) && isValidId(solarId) && isValidSolarAssessment(incoming()) && incoming().userId == userId;
+        allow delete: if isOwner(userId) || isAdmin();
+      }
+
+      // Gemini AI Coach Chat message history subcollection
+      match /messages/{messageId} {
+        allow get, list: if isOwner(userId) || isAdmin();
+        allow create: if isOwner(userId) && isValidId(messageId) && isValidChatMessage(incoming()) && incoming().userId == userId;
+        allow update: if (isOwner(userId) || isAdmin()) && isValidId(messageId) && isValidChatMessage(incoming());
+        allow delete: if isOwner(userId) || isAdmin();
+      }
+    }
+
+    // Citizen mission submissions
+    match /submissions/{submissionId} {
+      allow get: if isSignedIn();
+      allow list: if isSignedIn();
+      allow create: if isSignedIn() && isValidId(submissionId) && isValidSubmission(incoming()) && incoming().userId == request.auth.uid;
+      allow update: if (isAdmin() || (isSignedIn() && existing().userId == request.auth.uid)) && isValidSubmission(incoming());
+      allow delete: if isAdmin() || (isSignedIn() && existing().userId == request.auth.uid);
+    }
+
+    // Administrative roles roster
+    match /admins/{adminId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+  }
+}

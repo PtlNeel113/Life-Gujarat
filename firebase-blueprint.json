@@ -1,0 +1,123 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Registered citizen or administrative user profile in LiFE Gujarat",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "name": { "type": "string", "maxLength": 120 },
+        "email": { "type": "string", "maxLength": 150 },
+        "role": { "type": "string", "enum": ["citizen", "admin"] },
+        "district": { "type": "string", "maxLength": 60 },
+        "discom": { "type": "string", "maxLength": 60 },
+        "consumerNumber": { "type": "string", "maxLength": 40 },
+        "householdMembers": { "type": "number" },
+        "homeType": { "type": "string", "maxLength": 50 },
+        "points": { "type": "number" },
+        "streakDays": { "type": "number" },
+        "joinedDate": { "type": "string", "maxLength": 30 },
+        "language": { "type": "string", "maxLength": 10 },
+        "avatarInitials": { "type": "string", "maxLength": 10 },
+        "createdAt": { "type": "string", "maxLength": 40 },
+        "updatedAt": { "type": "string", "maxLength": 40 }
+      },
+      "required": ["id", "name", "email", "role"]
+    },
+    "EnergyReading": {
+      "title": "EnergyReading",
+      "description": "Monthly verified electricity consumption reading for a household",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "startDate": { "type": "string", "maxLength": 20 },
+        "endDate": { "type": "string", "maxLength": 20 },
+        "consumptionKwh": { "type": "number" },
+        "billAmount": { "type": "number" },
+        "source": { "type": "string", "enum": ["manual", "bill_scan", "smart_meter", "discom_sync"] },
+        "notes": { "type": "string", "maxLength": 500 },
+        "status": { "type": "string", "enum": ["pending", "verified", "flagged"] },
+        "createdAt": { "type": "string", "maxLength": 40 }
+      },
+      "required": ["id", "userId", "consumptionKwh", "status"]
+    },
+    "SolarAssessment": {
+      "title": "SolarAssessment",
+      "description": "PM Surya Ghar rooftop solar feasibility evaluation",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "monthlyBill": { "type": "number" },
+        "sanctionedLoadKw": { "type": "number" },
+        "roofAreaSqFt": { "type": "number" },
+        "recommendedCapacityKw": { "type": "number" },
+        "estimatedCostInr": { "type": "number" },
+        "subsidyInr": { "type": "number" },
+        "netCostInr": { "type": "number" },
+        "annualSavingsInr": { "type": "number" },
+        "annualGenerationKwh": { "type": "number" },
+        "paybackYears": { "type": "number" },
+        "createdAt": { "type": "string", "maxLength": 40 }
+      },
+      "required": ["id", "userId", "recommendedCapacityKw"]
+    },
+    "ChatMessage": {
+      "title": "ChatMessage",
+      "description": "Multi-turn Gemini chat interaction message between citizen and AI coach",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "sender": { "type": "string", "enum": ["user", "assistant"] },
+        "text": { "type": "string", "maxLength": 10000 },
+        "model": { "type": "string", "maxLength": 50 },
+        "rolePersona": { "type": "string", "maxLength": 50 },
+        "timestamp": { "type": "string", "maxLength": 50 },
+        "createdAt": { "type": "string", "maxLength": 40 }
+      },
+      "required": ["id", "userId", "sender", "text"]
+    },
+    "MissionSubmission": {
+      "title": "MissionSubmission",
+      "description": "Citizen proof submission for a Mission LiFE behavioral action",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "missionId": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "userName": { "type": "string", "maxLength": 120 },
+        "userDistrict": { "type": "string", "maxLength": 60 },
+        "status": { "type": "string", "enum": ["pending", "approved", "rejected"] },
+        "proofType": { "type": "string", "enum": ["photo", "text_note", "self_declaration", "meter_delta"] },
+        "proofText": { "type": "string", "maxLength": 2000 },
+        "pointsEarned": { "type": "number" },
+        "submittedAt": { "type": "string", "maxLength": 40 }
+      },
+      "required": ["id", "missionId", "userId", "status"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "Citizen user profile storage"
+    },
+    "/users/{userId}/readings/{readingId}": {
+      "schema": "EnergyReading",
+      "description": "User electricity consumption readings"
+    },
+    "/users/{userId}/solar/{solarId}": {
+      "schema": "SolarAssessment",
+      "description": "User solar calculator assessments"
+    },
+    "/users/{userId}/messages/{messageId}": {
+      "schema": "ChatMessage",
+      "description": "User multi-turn chat message history with Gemini"
+    },
+    "/submissions/{submissionId}": {
+      "schema": "MissionSubmission",
+      "description": "Global mission evidence submissions"
+    }
+  }
+}
