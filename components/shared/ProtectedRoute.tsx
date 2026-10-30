@@ -41,18 +41,17 @@ export function ProtectedRoute({
     }
   }, [isLoading, isAuthenticated, router, pathname, fallbackUrl, hasRedirected])
 
-  // While checking auth status, render high-fidelity loader to prevent protected content flashing
+  // While checking auth status, render high-fidelity Neumorphic loader
   if (isLoading || (!isAuthenticated && !hasRedirected)) {
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center bg-[#F6F8F3] p-6 text-center">
+      <div className="flex min-h-screen flex-col items-center justify-center bg-[#E8EDF3] p-6 text-center">
         <div className="relative mb-6">
-          <div className="size-16 animate-ping rounded-2xl bg-[#B8E986]/40 absolute inset-0" />
-          <div className="relative grid size-16 place-items-center rounded-2xl bg-[#103D30] text-[#B8E986] shadow-lg">
-            <Leaf size={32} className="animate-pulse" />
+          <div className="grid size-20 place-items-center rounded-3xl neu-raised text-[#238B57]">
+            <Leaf size={34} className="animate-pulse" />
           </div>
         </div>
-        <h2 className="text-lg font-bold text-[#103D30]">Verifying Authorization</h2>
-        <p className="mt-1 text-xs text-[#55695C]">
+        <h2 className="text-lg font-extrabold text-[#253247]">Verifying Authorization</h2>
+        <p className="mt-1 text-xs text-[#718096]">
           Checking Mission LiFE Gujarat citizen credentials...
         </p>
       </div>
@@ -62,21 +61,23 @@ export function ProtectedRoute({
   // If unauthenticated after check, keep showing redirect state while browser navigates
   if (!isAuthenticated) {
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center bg-[#F6F8F3] p-6 text-center">
-        <div className="grid size-14 place-items-center rounded-2xl bg-[#E5F1DF] text-[#176B4D] mb-4">
-          <Leaf size={28} />
+      <div className="flex min-h-screen flex-col items-center justify-center bg-[#E8EDF3] p-6 text-center">
+        <div className="rounded-3xl neu-raised p-8 max-w-md w-full">
+          <div className="mx-auto grid size-16 place-items-center rounded-2xl neu-inset-sm text-[#238B57] mb-4">
+            <Leaf size={30} />
+          </div>
+          <h2 className="text-xl font-extrabold text-[#253247]">Authentication Required</h2>
+          <p className="mt-2 text-xs text-[#718096] leading-relaxed">
+            Please sign in or use one-click demo access to view your LiFE dashboard and energy metrics.
+          </p>
+          <Link
+            href={`/login?redirect=${encodeURIComponent(pathname || '/dashboard')}`}
+            className="mt-6 inline-flex items-center gap-2 rounded-2xl neu-button-primary px-6 py-3 text-xs font-bold"
+          >
+            <span>Go to Sign In</span>
+            <ArrowRight size={14} />
+          </Link>
         </div>
-        <h2 className="text-xl font-bold text-[#103D30]">Authentication Required</h2>
-        <p className="mt-2 text-xs text-[#55695C] max-w-sm">
-          Please sign in or use one-click demo access to view your LiFE dashboard and energy metrics.
-        </p>
-        <Link
-          href={`/login?redirect=${encodeURIComponent(pathname || '/dashboard')}`}
-          className="mt-6 inline-flex items-center gap-2 rounded-xl bg-[#176B4D] px-5 py-2.5 text-xs font-bold text-white shadow-sm hover:bg-[#103D30] transition"
-        >
-          <span>Go to Sign In</span>
-          <ArrowRight size={14} />
-        </Link>
       </div>
     )
   }
@@ -84,27 +85,29 @@ export function ProtectedRoute({
   // Role validation: if page requires admin role and current user is citizen
   if (requiredRole === 'admin' && user?.role !== 'admin') {
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center bg-[#F6F8F3] p-6 text-center">
-        <div className="grid size-14 place-items-center rounded-2xl bg-amber-50 text-amber-700 border border-amber-200 mb-4">
-          <ShieldAlert size={28} />
-        </div>
-        <h2 className="text-xl font-bold text-[#103D30]">Admin Access Required</h2>
-        <p className="mt-2 text-xs text-[#55695C] max-w-sm">
-          This section is restricted to Government Directorate administrators. Please switch to Admin mode in the profile menu.
-        </p>
-        <div className="mt-6 flex items-center justify-center gap-3">
-          <Link
-            href="/dashboard"
-            className="rounded-xl border border-[#D7E2D3] bg-white px-4 py-2.5 text-xs font-semibold text-[#103D30] hover:bg-[#EBF4E5]"
-          >
-            Back to Dashboard
-          </Link>
-          <Link
-            href="/login"
-            className="rounded-xl bg-[#176B4D] px-4 py-2.5 text-xs font-bold text-white hover:bg-[#103D30]"
-          >
-            Switch Account
-          </Link>
+      <div className="flex min-h-screen flex-col items-center justify-center bg-[#E8EDF3] p-6 text-center">
+        <div className="rounded-3xl neu-raised p-8 max-w-md w-full">
+          <div className="mx-auto grid size-16 place-items-center rounded-2xl neu-inset-sm text-[#d97706] mb-4">
+            <ShieldAlert size={30} />
+          </div>
+          <h2 className="text-xl font-extrabold text-[#253247]">Admin Access Required</h2>
+          <p className="mt-2 text-xs text-[#718096] leading-relaxed">
+            This section is restricted to Government Directorate administrators. Please switch to Admin mode in the profile menu.
+          </p>
+          <div className="mt-6 flex items-center justify-center gap-3">
+            <Link
+              href="/dashboard"
+              className="rounded-2xl neu-button px-5 py-2.5 text-xs font-bold text-[#253247]"
+            >
+              Back to Dashboard
+            </Link>
+            <Link
+              href="/login"
+              className="rounded-2xl neu-button-primary px-5 py-2.5 text-xs font-bold"
+            >
+              Switch Account
+            </Link>
+          </div>
         </div>
       </div>
     )
@@ -113,5 +116,4 @@ export function ProtectedRoute({
   return <>{children}</>
 }
 
-// Re-export as RouteGuard for semantic flexibility
 export const RouteGuard = ProtectedRoute

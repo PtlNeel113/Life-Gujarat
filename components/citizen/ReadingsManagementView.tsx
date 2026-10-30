@@ -118,25 +118,25 @@ export function ReadingsManagementView() {
         }}
       />
 
-      {/* Filter and Search Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-[#E3E8DF] bg-white p-4 shadow-sm">
+      {/* Filter and Search Bar with Neumorphic Styling */}
+      <div className="flex flex-wrap items-center justify-between gap-4 rounded-3xl neu-raised p-5">
         <div className="relative min-w-[240px] flex-1">
-          <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#8E9B92]" />
+          <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#718096] pointer-events-none" />
           <input
             type="text"
             placeholder="Search dates, notes, or cycle details..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full rounded-xl border border-[#D7E2D3] bg-[#FBFCF8] py-2 pl-9 pr-3 text-xs text-[#103D30] outline-none focus:border-[#176B4D]"
+            className="w-full rounded-2xl neu-input py-2.5 pl-10 pr-4 text-xs text-[#253247]"
           />
         </div>
 
         <div className="flex items-center gap-2">
-          <Filter size={14} className="text-[#8E9B92]" />
+          <Filter size={15} className="text-[#718096]" />
           <select
             value={sourceFilter}
             onChange={(e) => setSourceFilter(e.target.value)}
-            className="rounded-xl border border-[#D7E2D3] bg-[#FBFCF8] px-3 py-2 text-xs font-semibold text-[#103D30] outline-none"
+            className="appearance-none rounded-2xl neu-input py-2.5 px-4 text-xs font-bold text-[#253247] cursor-pointer"
           >
             <option value="all">All Sources</option>
             <option value="manual">Manual Entry</option>
@@ -147,28 +147,28 @@ export function ReadingsManagementView() {
         </div>
       </div>
 
-      {/* Main Table */}
-      <div className="rounded-3xl border border-[#E3E8DF] bg-white shadow-sm overflow-hidden">
+      {/* Main Table Card */}
+      <div className="rounded-3xl neu-raised p-6 sm:p-8">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="bg-[#FBFCF8] border-b border-[#E3E8DF] text-[11px] font-bold uppercase tracking-wider text-[#8E9B92]">
-              <tr>
+            <thead>
+              <tr className="border-b border-[rgba(197,202,208,0.35)] text-[11px] font-bold uppercase tracking-wider text-[#718096]">
                 <th
                   onClick={() => toggleSort('startDate')}
-                  className="py-3.5 px-4 cursor-pointer hover:text-[#103D30]"
+                  className="py-3.5 px-4 cursor-pointer hover:text-[#253247]"
                 >
-                  <div className="flex items-center gap-1">
+                  <div className="flex items-center gap-1.5">
                     <span>Billing Period</span>
-                    <ArrowUpDown size={12} />
+                    <ArrowUpDown size={13} />
                   </div>
                 </th>
                 <th
                   onClick={() => toggleSort('consumptionKwh')}
-                  className="py-3.5 px-4 cursor-pointer hover:text-[#103D30]"
+                  className="py-3.5 px-4 cursor-pointer hover:text-[#253247]"
                 >
-                  <div className="flex items-center gap-1">
+                  <div className="flex items-center gap-1.5">
                     <span>Units (kWh)</span>
-                    <ArrowUpDown size={12} />
+                    <ArrowUpDown size={13} />
                   </div>
                 </th>
                 <th className="py-3.5 px-4">Estimated Bill</th>
@@ -177,27 +177,27 @@ export function ReadingsManagementView() {
                 <th className="py-3.5 px-4 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#F0F3EC]">
+            <tbody className="divide-y divide-[rgba(197,202,208,0.25)]">
               {filtered.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="py-12 text-center text-[#8E9B92]">
+                  <td colSpan={6} className="py-12 text-center text-[#718096]">
                     No matching records found.
                   </td>
                 </tr>
               ) : (
                 filtered.map((r) => (
-                  <tr key={r.id} className="hover:bg-[#F9FAF6] transition">
-                    <td className="py-3.5 px-4 font-semibold text-[#103D30]">
+                  <tr key={r.id} className="hover:neu-inset-sm transition">
+                    <td className="py-3.5 px-4 font-bold text-[#253247]">
                       {new Date(r.startDate).toLocaleDateString('en-IN', { month: 'short', day: 'numeric', year: 'numeric' })} –{' '}
                       {new Date(r.endDate).toLocaleDateString('en-IN', { month: 'short', day: 'numeric', year: 'numeric' })}
                     </td>
-                    <td className="py-3.5 px-4 font-extrabold text-[#176B4D]">
-                      {r.consumptionKwh} <span className="font-normal text-[11px] text-[#8E9B92]">kWh</span>
+                    <td className="py-3.5 px-4 font-extrabold text-[#238B57]">
+                      {r.consumptionKwh} <span className="font-normal text-[11px] text-[#718096]">kWh</span>
                     </td>
-                    <td className="py-3.5 px-4 font-semibold text-[#103D30]">
+                    <td className="py-3.5 px-4 font-bold text-[#253247]">
                       ₹{(r.billAmount || estimateGujaratBill(r.consumptionKwh)).toLocaleString('en-IN')}
                     </td>
-                    <td className="py-3.5 px-4 capitalize text-[#66736B]">
+                    <td className="py-3.5 px-4 capitalize text-[#718096]">
                       {r.source.replace('_', ' ')}
                     </td>
                     <td className="py-3.5 px-4">
@@ -210,17 +210,17 @@ export function ReadingsManagementView() {
                       <div className="flex items-center justify-end gap-1.5">
                         <button
                           onClick={() => setSelectedReading(r)}
-                          className="rounded-lg p-1.5 text-[#55635B] hover:bg-[#EEF4E8] hover:text-[#176B4D]"
+                          className="grid size-8 place-items-center rounded-xl neu-button text-[#718096] hover:text-[#238B57]"
                           title="Inspect Details"
                         >
-                          <Eye size={15} />
+                          <Eye size={14} />
                         </button>
                         <button
                           onClick={() => setDeleteTargetId(r.id)}
-                          className="rounded-lg p-1.5 text-[#55635B] hover:bg-[#FEECEC] hover:text-[#C0392B]"
+                          className="grid size-8 place-items-center rounded-xl neu-button text-[#718096] hover:text-[#C0392B]"
                           title="Delete Record"
                         >
-                          <Trash2 size={15} />
+                          <Trash2 size={14} />
                         </button>
                       </div>
                     </td>
@@ -232,54 +232,60 @@ export function ReadingsManagementView() {
         </div>
       </div>
 
-      {/* Reading Detail Drawer */}
+      {/* Inspect Detail Modal */}
       {selectedReading && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div className="fixed inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setSelectedReading(null)} />
-          <div className="relative z-10 w-full max-w-md rounded-3xl border border-[#D7E2D3] bg-white p-6 shadow-2xl">
-            <div className="flex items-center justify-between border-b border-[#E3E8DF] pb-4">
-              <div>
-                <h3 className="text-base font-bold text-[#103D30]">Billing Cycle Audit Details</h3>
-                <p className="text-[11px] text-[#8E9B92]">Record ID: {selectedReading.id}</p>
-              </div>
-              <button onClick={() => setSelectedReading(null)} className="text-[#8E9B92] hover:text-[#103D30]">
-                <X size={18} />
+          <div className="fixed inset-0 bg-[#253247]/30 backdrop-blur-sm" onClick={() => setSelectedReading(null)} />
+          <div className="relative z-10 w-full max-w-md rounded-3xl neu-raised p-6 sm:p-8 shadow-2xl">
+            <div className="flex items-center justify-between border-b border-[rgba(197,202,208,0.35)] pb-4">
+              <h3 className="text-lg font-extrabold text-[#253247]">Cycle Detail View</h3>
+              <button
+                onClick={() => setSelectedReading(null)}
+                className="grid size-8 place-items-center rounded-xl neu-button text-[#718096]"
+              >
+                <X size={16} />
               </button>
             </div>
 
-            <div className="mt-4 space-y-3 text-xs text-[#55635B]">
-              <div className="flex justify-between border-b border-[#F0F3EC] pb-2">
-                <span>Start Date:</span>
-                <strong className="text-[#103D30]">{selectedReading.startDate}</strong>
+            <div className="mt-5 space-y-3.5 text-xs">
+              <div className="rounded-2xl neu-inset p-4 space-y-2">
+                <div className="flex justify-between">
+                  <span className="text-[#718096]">Record ID:</span>
+                  <span className="font-mono text-[#253247]">{selectedReading.id}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-[#718096]">Billing Start:</span>
+                  <span className="font-bold text-[#253247]">{selectedReading.startDate}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-[#718096]">Billing End:</span>
+                  <span className="font-bold text-[#253247]">{selectedReading.endDate}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-[#718096]">Consumption:</span>
+                  <span className="font-extrabold text-[#238B57]">{selectedReading.consumptionKwh} kWh</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-[#718096]">Bill Amount:</span>
+                  <span className="font-extrabold text-[#253247]">₹{(selectedReading.billAmount || estimateGujaratBill(selectedReading.consumptionKwh)).toLocaleString('en-IN')}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-[#718096]">Data Source:</span>
+                  <span className="font-bold text-[#253247] capitalize">{selectedReading.source}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-[#718096]">Verification Status:</span>
+                  <StatusBadge
+                    label={selectedReading.status}
+                    variant={selectedReading.status === 'verified' ? 'success' : 'neutral'}
+                  />
+                </div>
               </div>
-              <div className="flex justify-between border-b border-[#F0F3EC] pb-2">
-                <span>End Date:</span>
-                <strong className="text-[#103D30]">{selectedReading.endDate}</strong>
-              </div>
-              <div className="flex justify-between border-b border-[#F0F3EC] pb-2">
-                <span>Consumption:</span>
-                <strong className="text-[#176B4D] font-bold">{selectedReading.consumptionKwh} kWh</strong>
-              </div>
-              <div className="flex justify-between border-b border-[#F0F3EC] pb-2">
-                <span>Bill Amount:</span>
-                <strong className="text-[#103D30]">₹{selectedReading.billAmount || estimateGujaratBill(selectedReading.consumptionKwh)}</strong>
-              </div>
-              <div className="flex justify-between border-b border-[#F0F3EC] pb-2">
-                <span>Data Source:</span>
-                <span className="capitalize">{selectedReading.source.replace('_', ' ')}</span>
-              </div>
-              <div className="flex justify-between border-b border-[#F0F3EC] pb-2">
-                <span>Validation:</span>
-                <StatusBadge label={selectedReading.status} variant="success" />
-              </div>
-              <div className="flex justify-between border-b border-[#F0F3EC] pb-2">
-                <span>Logged At:</span>
-                <span>{new Date(selectedReading.createdAt).toLocaleString('en-IN')}</span>
-              </div>
+
               {selectedReading.notes && (
-                <div className="rounded-xl bg-[#F6F8F3] p-3 text-xs text-[#66736B]">
-                  <strong className="block text-[#103D30] mb-0.5">User Notes:</strong>
-                  {selectedReading.notes}
+                <div className="rounded-2xl neu-inset-sm p-3.5">
+                  <p className="text-[10px] font-bold uppercase text-[#718096]">Household Notes</p>
+                  <p className="mt-1 text-[#253247] leading-relaxed">{selectedReading.notes}</p>
                 </div>
               )}
             </div>
@@ -287,9 +293,9 @@ export function ReadingsManagementView() {
             <div className="mt-6 flex justify-end">
               <button
                 onClick={() => setSelectedReading(null)}
-                className="rounded-xl bg-[#176B4D] px-4 py-2 text-xs font-bold text-white hover:bg-[#103D30]"
+                className="rounded-2xl neu-button px-5 py-2.5 text-xs font-bold text-[#253247]"
               >
-                Close Details
+                Close
               </button>
             </div>
           </div>
@@ -299,9 +305,9 @@ export function ReadingsManagementView() {
       {/* Delete Confirmation */}
       <ConfirmationDialog
         isOpen={deleteTargetId !== null}
-        title="Delete Record"
-        message="Are you sure you want to delete this recorded reading?"
-        confirmLabel="Delete"
+        title="Delete Energy Reading"
+        message="Are you sure you want to delete this recorded billing cycle? This will update your calculated baseline and history."
+        confirmLabel="Delete Record"
         isDestructive={true}
         onConfirm={confirmDelete}
         onCancel={() => setDeleteTargetId(null)}

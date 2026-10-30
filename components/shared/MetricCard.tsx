@@ -24,50 +24,54 @@ export function MetricCard({
   unit,
   subtext,
   icon: Icon,
-  iconColor = 'text-[#176B4D]',
-  iconBg = 'bg-[#EEF4E8]',
+  iconColor = 'text-[#238B57]',
+  iconBg = 'neu-inset-sm',
   trend,
   href,
 }: MetricCardProps) {
   const content = (
-    <div className="flex flex-col justify-between rounded-2xl border border-[#E3E8DF] bg-white p-5 shadow-[0_2px_8px_rgba(0,0,0,0.02)] transition hover:shadow-md">
-      <div className="flex items-start justify-between">
+    <div className="flex flex-col justify-between rounded-3xl neu-raised neu-raised-hover p-6 h-full transition select-none">
+      <div className="flex items-start justify-between gap-4">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-wider text-[#738279]">{title}</p>
+          <p className="text-xs font-bold uppercase tracking-wider text-[#718096]">{title}</p>
           <div className="mt-3 flex items-baseline gap-1.5">
-            <span className="text-3xl font-extrabold tracking-tight text-[#103D30]">{value}</span>
-            {unit && <span className="text-sm font-semibold text-[#66736B]">{unit}</span>}
+            <span className="text-3xl font-extrabold tracking-tight text-[#253247] tabular-nums">{value}</span>
+            {unit && <span className="text-sm font-semibold text-[#718096]">{unit}</span>}
           </div>
         </div>
-        <div className={`grid size-10 place-items-center rounded-xl ${iconBg} ${iconColor}`}>
-          <Icon size={20} />
+        <div className={`grid size-12 place-items-center rounded-2xl ${iconBg} ${iconColor} shrink-0`}>
+          <Icon size={22} />
         </div>
       </div>
 
-      <div className="mt-4 flex items-center justify-between border-t border-[#F0F3EC] pt-3 text-xs">
+      <div className="mt-5 flex items-center justify-between border-t border-[rgba(197,202,208,0.35)] pt-3 text-xs">
         {trend ? (
-          <div className="flex items-center gap-1 font-semibold">
+          <div className="flex items-center gap-1.5 font-bold">
             {trend.value > 0 ? (
-              <span className={`inline-flex items-center gap-0.5 rounded-full px-2 py-0.5 text-[11px] ${
-                trend.isPositiveGood ? 'bg-[#E5F1DF] text-[#176B4D]' : 'bg-[#FEECEC] text-[#C0392B]'
-              }`}>
-                <ArrowUpRight size={12} /> {Math.abs(trend.value)}%
+              <span
+                className={`inline-flex items-center gap-0.5 rounded-lg px-2 py-0.5 text-[11px] neu-inset-sm ${
+                  trend.isPositiveGood ? 'text-[#238B57]' : 'text-[#C0392B]'
+                }`}
+              >
+                <ArrowUpRight size={13} /> {Math.abs(trend.value)}%
               </span>
             ) : (
-              <span className={`inline-flex items-center gap-0.5 rounded-full px-2 py-0.5 text-[11px] ${
-                trend.isPositiveGood ? 'bg-[#FEECEC] text-[#C0392B]' : 'bg-[#E5F1DF] text-[#176B4D]'
-              }`}>
-                <ArrowDownRight size={12} /> {Math.abs(trend.value)}%
+              <span
+                className={`inline-flex items-center gap-0.5 rounded-lg px-2 py-0.5 text-[11px] neu-inset-sm ${
+                  trend.isPositiveGood ? 'text-[#C0392B]' : 'text-[#238B57]'
+                }`}
+              >
+                <ArrowDownRight size={13} /> {Math.abs(trend.value)}%
               </span>
             )}
-            <span className="text-[#8E9B92] font-normal">{trend.label}</span>
+            <span className="text-[#718096] font-normal">{trend.label}</span>
           </div>
         ) : (
-          <span className="text-[#8E9B92]">{subtext || 'Logged in profile'}</span>
+          <span className="text-[#718096]">{subtext || 'Verified profile data'}</span>
         )}
 
         {href && (
-          <span className="font-semibold text-[#176B4D] hover:underline">
+          <span className="font-bold text-[#238B57] hover:underline">
             View details →
           </span>
         )}
@@ -76,7 +80,7 @@ export function MetricCard({
   )
 
   if (href) {
-    return <Link href={href} className="block">{content}</Link>
+    return <Link href={href} className="block h-full">{content}</Link>
   }
 
   return content

@@ -47,12 +47,12 @@ export function CommunityDetailView({ communityId }: CommunityDetailViewProps) {
 
   if (!community) {
     return (
-      <div className="rounded-3xl border border-[#E3E8DF] bg-white p-12 text-center">
-        <h3 className="text-base font-bold text-[#103D30]">Community Not Found</h3>
-        <p className="mt-1 text-xs text-[#66736B]">The requested collective does not exist or has been archived.</p>
+      <div className="neu-surface neu-raised rounded-3xl p-12 text-center border border-white/60">
+        <h3 className="text-base font-extrabold text-[#253247]">Community Not Found</h3>
+        <p className="mt-1 text-xs text-[#718096]">The requested collective does not exist or has been archived.</p>
         <Link
           href="/community"
-          className="mt-5 inline-flex items-center gap-1.5 rounded-xl bg-[#176B4D] px-4 py-2 text-xs font-bold text-white"
+          className="neu-button-primary mt-5 inline-flex items-center gap-1.5 rounded-xl px-4 py-2.5 text-xs font-bold"
         >
           <ArrowLeft size={14} /> Back to Communities
         </Link>
@@ -83,59 +83,59 @@ export function CommunityDetailView({ communityId }: CommunityDetailViewProps) {
       />
 
       {/* Hero Impact Stats */}
-      <div className="grid gap-4 sm:grid-cols-3">
-        <div className="rounded-3xl border border-[#E3E8DF] bg-white p-6 shadow-xs">
-          <p className="text-xs font-bold uppercase tracking-wider text-[#8E9B92]">Enrolled Households</p>
-          <p className="mt-2 text-3xl font-extrabold text-[#103D30]">{community.membersCount}</p>
-          <p className="mt-1 text-xs text-[#66736B]">{community.district} District</p>
+      <div className="grid gap-5 sm:grid-cols-3">
+        <div className="neu-surface neu-raised rounded-3xl p-6 border border-white/60">
+          <p className="text-xs font-extrabold uppercase tracking-wider text-[#718096]">Enrolled Households</p>
+          <p className="mt-2 text-3xl font-black text-[#253247]">{community.membersCount}</p>
+          <p className="mt-1 text-xs text-[#718096]">{community.district} District</p>
         </div>
 
-        <div className="rounded-3xl border border-[#E3E8DF] bg-white p-6 shadow-xs">
-          <p className="text-xs font-bold uppercase tracking-wider text-[#8E9B92]">Pooled Energy Saved</p>
-          <p className="mt-2 text-3xl font-extrabold text-[#176B4D]">
+        <div className="neu-surface neu-raised rounded-3xl p-6 border border-white/60">
+          <p className="text-xs font-extrabold uppercase tracking-wider text-[#718096]">Pooled Energy Saved</p>
+          <p className="mt-2 text-3xl font-black text-[#238B57]">
             {community.totalKwhSaved.toLocaleString('en-IN')}{' '}
-            <span className="text-sm font-normal text-[#8E9B92]">kWh</span>
+            <span className="text-sm font-semibold text-[#718096]">kWh</span>
           </p>
-          <p className="mt-1 text-xs text-[#66736B]">
+          <p className="mt-1 text-xs text-[#718096]">
             ~{Math.round(community.totalKwhSaved * 0.716 / 1000)} tonnes CO₂ avoided
           </p>
         </div>
 
-        <div className="rounded-3xl border border-[#E3E8DF] bg-white p-6 shadow-xs">
-          <p className="text-xs font-bold uppercase tracking-wider text-[#8E9B92]">Collective Points</p>
-          <p className="mt-2 text-3xl font-extrabold text-[#F39C12]">
+        <div className="neu-surface neu-raised rounded-3xl p-6 border border-white/60">
+          <p className="text-xs font-extrabold uppercase tracking-wider text-[#718096]">Collective Points</p>
+          <p className="mt-2 text-3xl font-black text-[#6489C7]">
             {community.totalPoints.toLocaleString('en-IN')}{' '}
-            <span className="text-sm font-normal text-[#8E9B92]">LiFE pts</span>
+            <span className="text-sm font-semibold text-[#718096]">LiFE pts</span>
           </p>
-          <p className="mt-1 text-xs text-[#66736B]">District Rank #2</p>
+          <p className="mt-1 text-xs text-[#718096]">District Rank #2</p>
         </div>
       </div>
 
       {/* Active Challenge Box & Leaderboard */}
       <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
-        <div className="rounded-3xl border border-[#E3E8DF] bg-white p-6 shadow-sm sm:p-8 space-y-6">
-          <div className="flex items-center justify-between border-b border-[#F0F3EC] pb-4">
+        <div className="neu-surface neu-raised rounded-3xl p-6 sm:p-8 space-y-6 border border-white/60">
+          <div className="flex items-center justify-between border-b border-black/5 pb-4">
             <div>
-              <span className="text-[10px] font-bold uppercase tracking-wider text-[#176B4D]">Active Campaign</span>
-              <h3 className="mt-0.5 text-base font-bold text-[#103D30]">{community.activeChallenge}</h3>
+              <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#238B57]">Active Campaign</span>
+              <h3 className="mt-0.5 text-base font-extrabold text-[#253247]">{community.activeChallenge}</h3>
             </div>
             <StatusBadge label="In Progress" variant="success" />
           </div>
 
-          <p className="text-xs leading-relaxed text-[#66736B]">
+          <p className="text-xs leading-relaxed text-[#718096]">
             All households in {community.name} are encouraged to audit lighting, shift stairwell and parking illumination
             to timer-based 5-star LEDs, and set air conditioners to 24°C comfort benchmarks.
           </p>
 
-          <div className="rounded-2xl bg-[#F6F8F3] p-5 space-y-3">
-            <div className="flex justify-between text-xs font-bold text-[#103D30]">
+          <div className="neu-inset-sm rounded-2xl p-5 space-y-3 border border-white/40">
+            <div className="flex justify-between text-xs font-bold text-[#253247]">
               <span>Collective Progress Target (20,000 kWh)</span>
-              <span>71% Completed</span>
+              <span className="text-[#238B57]">71% Completed</span>
             </div>
-            <div className="h-2.5 w-full overflow-hidden rounded-full bg-[#E3E8DF]">
-              <div className="h-full bg-[#176B4D] w-[71%]" />
+            <div className="neu-inset-sm h-3 w-full overflow-hidden rounded-full bg-[#dce3ec] p-0.5">
+              <div className="h-full bg-gradient-to-r from-[#238B57] to-[#65B98A] rounded-full w-[71%]" />
             </div>
-            <div className="flex justify-between text-[11px] text-[#8E9B92]">
+            <div className="flex justify-between text-[11px] text-[#718096]">
               <span>14,200 kWh achieved</span>
               <span>18 days remaining in challenge</span>
             </div>
@@ -144,7 +144,7 @@ export function CommunityDetailView({ communityId }: CommunityDetailViewProps) {
           <div className="pt-2">
             <Link
               href="/missions"
-              className="inline-flex items-center gap-2 rounded-xl bg-[#176B4D] px-5 py-2.5 text-xs font-bold text-white hover:bg-[#103D30]"
+              className="neu-button-primary inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-xs font-bold"
             >
               Log Individual Mission to Contribute Points →
             </Link>
@@ -152,35 +152,35 @@ export function CommunityDetailView({ communityId }: CommunityDetailViewProps) {
         </div>
 
         {/* Neighborhood Leaderboard */}
-        <div className="rounded-3xl border border-[#E3E8DF] bg-white p-6 shadow-sm sm:p-8">
-          <div className="flex items-center gap-2 border-b border-[#F0F3EC] pb-4">
-            <Trophy size={18} className="text-[#F39C12]" />
-            <h3 className="text-base font-bold text-[#103D30]">Block & Wing Standings</h3>
+        <div className="neu-surface neu-raised rounded-3xl p-6 sm:p-8 border border-white/60">
+          <div className="flex items-center gap-2 border-b border-black/5 pb-4">
+            <Trophy size={18} className="text-[#6489C7]" />
+            <h3 className="text-base font-extrabold text-[#253247]">Block & Wing Standings</h3>
           </div>
 
           <div className="mt-5 space-y-3">
             {sampleLeaderboard.map((item) => (
               <div
                 key={item.rank}
-                className="flex items-center justify-between rounded-2xl bg-[#FBFCF8] p-3 text-xs border border-[#F0F3EC]"
+                className="neu-raised-sm flex items-center justify-between rounded-2xl p-3.5 text-xs border border-white/60"
               >
                 <div className="flex items-center gap-3">
                   <span
-                    className={`grid size-6 place-items-center rounded-full font-bold text-[11px] ${
+                    className={`grid size-7 place-items-center rounded-xl font-black text-xs ${
                       item.rank === 1
-                        ? 'bg-[#FEF5E7] text-[#B07C2D]'
+                        ? 'neu-inset text-[#238B57]'
                         : item.rank === 2
-                        ? 'bg-[#F0F2EB] text-[#55635B]'
-                        : 'bg-[#F6F8F3] text-[#8E9B92]'
+                        ? 'neu-inset text-[#6489C7]'
+                        : 'neu-inset-sm text-[#718096]'
                     }`}
                   >
                     {item.rank}
                   </span>
-                  <span className="font-bold text-[#103D30]">{item.name}</span>
+                  <span className="font-bold text-[#253247]">{item.name}</span>
                 </div>
                 <div className="text-right">
-                  <p className="font-extrabold text-[#176B4D]">{item.kwhSaved} kWh</p>
-                  <p className="text-[10px] text-[#8E9B92]">{item.points} pts</p>
+                  <p className="font-black text-[#238B57]">{item.kwhSaved} kWh</p>
+                  <p className="text-[10px] text-[#718096]">{item.points} pts</p>
                 </div>
               </div>
             ))}

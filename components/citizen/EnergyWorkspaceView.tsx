@@ -53,7 +53,6 @@ export function EnergyWorkspaceView() {
 
   const openAddModal = () => {
     setEditingReading(null)
-    // Pre-populate with typical last month dates
     const today = new Date()
     const lastMonth = new Date(today.getFullYear(), today.getMonth() - 1, 15)
     const thisMonth = new Date(today.getFullYear(), today.getMonth(), 15)
@@ -85,7 +84,6 @@ export function EnergyWorkspaceView() {
     setConsumptionKwh(val)
     const num = parseFloat(val)
     if (!isNaN(num) && num > 0) {
-      // Auto estimate bill based on GERC tariff if empty
       if (!billAmount || billAmount === '0') {
         const est = estimateGujaratBill(num)
         setBillAmount(est.toString())
@@ -171,8 +169,8 @@ export function EnergyWorkspaceView() {
         }}
       />
 
-      {/* Top Statistics Cards */}
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {/* Top Statistics Cards in Neumorphic Elevation */}
+      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         <MetricCard
           title="Latest Consumption"
           value={stats.latestKwh || 0}
@@ -209,11 +207,11 @@ export function EnergyWorkspaceView() {
       </div>
 
       {/* Readings Table Card */}
-      <div className="rounded-3xl border border-[#E3E8DF] bg-white p-6 shadow-sm">
-        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#F0F3EC] pb-4">
+      <div className="rounded-3xl neu-raised p-6 sm:p-8">
+        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[rgba(197,202,208,0.35)] pb-4">
           <div>
-            <h3 className="text-base font-bold text-[#103D30]">Recorded Electricity Cycles</h3>
-            <p className="text-xs text-[#66736B]">
+            <h3 className="text-base font-extrabold text-[#253247]">Recorded Electricity Cycles</h3>
+            <p className="text-xs text-[#718096]">
               Persistent records. Click any row to inspect, edit, or delete.
             </p>
           </div>
@@ -221,7 +219,7 @@ export function EnergyWorkspaceView() {
           <div className="flex items-center gap-2">
             <Link
               href="/energy/readings"
-              className="rounded-xl border border-[#D7E2D3] bg-[#FBFCF8] px-3.5 py-2 text-xs font-bold text-[#176B4D] hover:bg-[#EEF4E8]"
+              className="rounded-2xl neu-button px-4 py-2 text-xs font-bold text-[#238B57]"
             >
               Full History & CSV Export →
             </Link>
@@ -229,14 +227,14 @@ export function EnergyWorkspaceView() {
         </div>
 
         {readings.length === 0 ? (
-          <div className="py-12 text-center text-xs text-[#8E9B92]">
+          <div className="py-12 text-center text-xs text-[#718096]">
             No energy readings recorded yet. Click &quot;Add Energy Reading&quot; to begin your baseline.
           </div>
         ) : (
           <div className="mt-4 overflow-x-auto">
             <table className="w-full text-left text-xs">
               <thead>
-                <tr className="border-b border-[#E3E8DF] text-[11px] font-bold uppercase tracking-wider text-[#8E9B92]">
+                <tr className="border-b border-[rgba(197,202,208,0.35)] text-[11px] font-bold uppercase tracking-wider text-[#718096]">
                   <th className="py-3 px-3">Billing Cycle</th>
                   <th className="py-3 px-3">Consumption</th>
                   <th className="py-3 px-3">Bill Amount</th>
@@ -245,23 +243,23 @@ export function EnergyWorkspaceView() {
                   <th className="py-3 px-3 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#F0F3EC]">
+              <tbody className="divide-y divide-[rgba(197,202,208,0.25)]">
                 {readings.map((r) => (
-                  <tr key={r.id} className="hover:bg-[#F9FAF6] transition">
-                    <td className="py-3.5 px-3 font-semibold text-[#103D30]">
+                  <tr key={r.id} className="hover:neu-inset-sm transition">
+                    <td className="py-3.5 px-3 font-bold text-[#253247]">
                       {new Date(r.startDate).toLocaleDateString('en-IN', { month: 'short', day: 'numeric' })} –{' '}
                       {new Date(r.endDate).toLocaleDateString('en-IN', { month: 'short', day: 'numeric', year: 'numeric' })}
-                      {r.notes && <p className="text-[11px] font-normal text-[#8E9B92]">{r.notes}</p>}
+                      {r.notes && <p className="text-[11px] font-normal text-[#718096]">{r.notes}</p>}
                     </td>
                     <td className="py-3.5 px-3">
-                      <span className="text-sm font-bold text-[#176B4D]">{r.consumptionKwh}</span>{' '}
-                      <span className="text-[11px] text-[#8E9B92]">kWh</span>
+                      <span className="text-sm font-extrabold text-[#238B57]">{r.consumptionKwh}</span>{' '}
+                      <span className="text-[11px] text-[#718096]">kWh</span>
                     </td>
-                    <td className="py-3.5 px-3 font-semibold text-[#103D30]">
+                    <td className="py-3.5 px-3 font-bold text-[#253247]">
                       ₹{(r.billAmount || estimateGujaratBill(r.consumptionKwh)).toLocaleString('en-IN')}
                     </td>
                     <td className="py-3.5 px-3">
-                      <span className="capitalize text-[#66736B]">
+                      <span className="capitalize text-[#718096]">
                         {r.source.replace('_', ' ')}
                       </span>
                     </td>
@@ -275,17 +273,17 @@ export function EnergyWorkspaceView() {
                       <div className="flex items-center justify-end gap-1.5">
                         <button
                           onClick={() => openEditModal(r)}
-                          className="rounded-lg p-1.5 text-[#55635B] hover:bg-[#EEF4E8] hover:text-[#176B4D]"
+                          className="grid size-8 place-items-center rounded-xl neu-button text-[#718096] hover:text-[#238B57]"
                           title="Edit reading"
                         >
-                          <Edit3 size={15} />
+                          <Edit3 size={14} />
                         </button>
                         <button
                           onClick={() => setDeleteTargetId(r.id)}
-                          className="rounded-lg p-1.5 text-[#55635B] hover:bg-[#FEECEC] hover:text-[#C0392B]"
+                          className="grid size-8 place-items-center rounded-xl neu-button text-[#718096] hover:text-[#C0392B]"
                           title="Delete reading"
                         >
-                          <Trash2 size={15} />
+                          <Trash2 size={14} />
                         </button>
                       </div>
                     </td>
@@ -300,57 +298,64 @@ export function EnergyWorkspaceView() {
       {/* Add / Edit Reading Modal */}
       {modalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div className="fixed inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setModalOpen(false)} />
-          <div className="relative z-10 w-full max-w-lg rounded-3xl border border-[#D7E2D3] bg-white p-6 shadow-2xl">
-            <div className="flex items-center justify-between border-b border-[#E3E8DF] pb-4">
-              <h3 className="text-lg font-bold text-[#103D30]">
+          <div className="fixed inset-0 bg-[#253247]/30 backdrop-blur-sm" onClick={() => setModalOpen(false)} />
+          <div className="relative z-10 w-full max-w-lg rounded-3xl neu-raised p-6 sm:p-8 shadow-2xl">
+            <div className="flex items-center justify-between border-b border-[rgba(197,202,208,0.35)] pb-4">
+              <h3 className="text-lg font-extrabold text-[#253247]">
                 {editingReading ? 'Edit Energy Reading' : 'Log New Electricity Reading'}
               </h3>
-              <button onClick={() => setModalOpen(false)} className="text-[#8E9B92] hover:text-[#103D30]">
-                <X size={18} />
+              <button
+                onClick={() => setModalOpen(false)}
+                className="grid size-8 place-items-center rounded-xl neu-button text-[#718096]"
+              >
+                <X size={16} />
               </button>
             </div>
 
             <form onSubmit={handleSubmit} className="mt-5 space-y-4">
               {formError && (
-                <div className="flex items-center gap-2 rounded-xl bg-[#FEECEC] p-3 text-xs font-semibold text-[#C0392B]">
+                <div className="flex items-center gap-2 rounded-2xl neu-inset p-3 text-xs font-bold text-[#C0392B]">
                   <AlertCircle size={15} /> {formError}
                 </div>
               )}
 
               {formWarning && (
-                <div className="flex items-center gap-2 rounded-xl bg-[#FEF5E7] p-3 text-xs font-semibold text-[#B07C2D]">
+                <div className="flex items-center gap-2 rounded-2xl neu-inset p-3 text-xs font-bold text-[#d97706]">
                   <AlertCircle size={15} /> {formWarning}
                 </div>
               )}
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-[#103D30]">Cycle Start Date</label>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-[#718096] mb-1.5">
+                    Cycle Start Date
+                  </label>
                   <input
                     type="date"
                     required
                     value={startDate}
                     onChange={(e) => setStartDate(e.target.value)}
-                    className="mt-1.5 w-full rounded-xl border border-[#D7E2D3] bg-[#FBFCF8] px-3 py-2 text-xs text-[#103D30] outline-none focus:border-[#176B4D]"
+                    className="w-full rounded-2xl neu-input py-2.5 px-3 text-xs text-[#253247]"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-[#103D30]">Cycle End Date</label>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-[#718096] mb-1.5">
+                    Cycle End Date
+                  </label>
                   <input
                     type="date"
                     required
                     value={endDate}
                     onChange={(e) => setEndDate(e.target.value)}
-                    className="mt-1.5 w-full rounded-xl border border-[#D7E2D3] bg-[#FBFCF8] px-3 py-2 text-xs text-[#103D30] outline-none focus:border-[#176B4D]"
+                    className="w-full rounded-2xl neu-input py-2.5 px-3 text-xs text-[#253247]"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-[#103D30]">
-                    Consumption <span className="font-normal text-[#8E9B92]">(kWh / units)</span>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-[#718096] mb-1.5">
+                    Consumption <span className="font-normal">(kWh / units)</span>
                   </label>
                   <input
                     type="number"
@@ -360,12 +365,12 @@ export function EnergyWorkspaceView() {
                     placeholder="e.g. 260"
                     value={consumptionKwh}
                     onChange={(e) => handleKwhChange(e.target.value)}
-                    className="mt-1.5 w-full rounded-xl border border-[#D7E2D3] bg-[#FBFCF8] px-3 py-2 text-xs text-[#103D30] outline-none focus:border-[#176B4D]"
+                    className="w-full rounded-2xl neu-input py-2.5 px-3 text-xs text-[#253247]"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-[#103D30]">
-                    Bill Amount <span className="font-normal text-[#8E9B92]">(₹, optional)</span>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-[#718096] mb-1.5">
+                    Bill Amount <span className="font-normal">(₹, optional)</span>
                   </label>
                   <input
                     type="number"
@@ -374,17 +379,19 @@ export function EnergyWorkspaceView() {
                     placeholder="Auto-calculated"
                     value={billAmount}
                     onChange={(e) => setBillAmount(e.target.value)}
-                    className="mt-1.5 w-full rounded-xl border border-[#D7E2D3] bg-[#FBFCF8] px-3 py-2 text-xs text-[#103D30] outline-none focus:border-[#176B4D]"
+                    className="w-full rounded-2xl neu-input py-2.5 px-3 text-xs text-[#253247]"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-[#103D30]">Data Source</label>
+                <label className="block text-xs font-bold uppercase tracking-wider text-[#718096] mb-1.5">
+                  Data Source
+                </label>
                 <select
                   value={source}
                   onChange={(e) => setSource(e.target.value as any)}
-                  className="mt-1.5 w-full rounded-xl border border-[#D7E2D3] bg-[#FBFCF8] px-3 py-2 text-xs text-[#103D30] outline-none focus:border-[#176B4D]"
+                  className="w-full appearance-none rounded-2xl neu-input py-2.5 px-3 text-xs font-bold text-[#253247] cursor-pointer"
                 >
                   <option value="manual">Manual Entry from Bill</option>
                   <option value="bill_scan">Scanned Bill (UGVCL/DGVCL/MGVCL/PGVCL/Torrent)</option>
@@ -394,29 +401,29 @@ export function EnergyWorkspaceView() {
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-[#103D30]">
-                  Notes <span className="font-normal text-[#8E9B92]">(Optional)</span>
+                <label className="block text-xs font-bold uppercase tracking-wider text-[#718096] mb-1.5">
+                  Notes <span className="font-normal">(Optional)</span>
                 </label>
                 <input
                   type="text"
                   placeholder="e.g. Guests visited, high fan usage, AC serviced"
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
-                  className="mt-1.5 w-full rounded-xl border border-[#D7E2D3] bg-[#FBFCF8] px-3 py-2 text-xs text-[#103D30] outline-none focus:border-[#176B4D]"
+                  className="w-full rounded-2xl neu-input py-2.5 px-3 text-xs text-[#253247]"
                 />
               </div>
 
-              <div className="mt-6 flex justify-end gap-2.5 pt-3 border-t border-[#E3E8DF]">
+              <div className="mt-6 flex justify-end gap-3 pt-3 border-t border-[rgba(197,202,208,0.35)]">
                 <button
                   type="button"
                   onClick={() => setModalOpen(false)}
-                  className="rounded-xl border border-[#D7E2D3] px-4 py-2.5 text-xs font-semibold text-[#55635B] hover:bg-[#F6F8F3]"
+                  className="rounded-2xl neu-button px-4 py-2.5 text-xs font-bold text-[#718096]"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="rounded-xl bg-[#176B4D] px-5 py-2.5 text-xs font-bold text-white transition hover:bg-[#103D30]"
+                  className="rounded-2xl neu-button-primary px-5 py-2.5 text-xs font-bold cursor-pointer"
                 >
                   {editingReading ? 'Save Changes' : 'Record Reading (+50 Pts)'}
                 </button>

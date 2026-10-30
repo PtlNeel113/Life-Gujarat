@@ -18,6 +18,8 @@ import {
   Users,
   ShieldCheck,
   BarChart3,
+  Clock,
+  Activity,
 } from 'lucide-react'
 import { dataStore } from '@/lib/data-store'
 import { EnergyReading, UserProfile, Mission } from '@/lib/types'
@@ -66,39 +68,39 @@ export function DashboardView() {
 
   return (
     <div className="space-y-8">
-      {/* Welcome Banner */}
-      <div className="flex flex-col justify-between gap-4 rounded-3xl bg-gradient-to-r from-[#103D30] via-[#144E3E] to-[#176B4D] p-6 text-white shadow-sm sm:flex-row sm:items-center sm:p-8">
+      {/* Welcome Banner - Soft Neumorphic Raised Container */}
+      <div className="flex flex-col justify-between gap-6 rounded-3xl neu-raised p-6 sm:p-8 lg:flex-row lg:items-center">
         <div>
-          <div className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-semibold text-[#B8E986] backdrop-blur">
-            <Sparkles size={13} /> {userDistrict} District · {userDiscom} Connection
+          <div className="inline-flex items-center gap-2 rounded-2xl neu-inset px-3.5 py-1.5 text-xs font-bold text-[#238B57]">
+            <Sparkles size={14} /> {userDistrict} District · {userDiscom} Connection
           </div>
-          <h2 className="mt-3 text-2xl font-extrabold tracking-tight sm:text-3xl">
+          <h2 className="mt-4 text-2xl sm:text-3xl font-extrabold tracking-tight text-[#253247]">
             Welcome back, {userDisplayName}
           </h2>
-          <p className="mt-1 text-sm text-white/80 max-w-xl leading-relaxed">
-            Your household is on a <span className="font-bold text-[#B8E986]">{userStreak}-day</span> sustainability streak.
-            Track your power, complete daily actions, and explore rooftop solar.
+          <p className="mt-1.5 text-xs sm:text-sm text-[#718096] max-w-xl leading-relaxed">
+            Your household is maintaining a <span className="font-extrabold text-[#238B57]">{userStreak}-day</span> sustainability streak.
+            Track your electricity consumption, complete daily actions, and explore rooftop solar.
           </p>
         </div>
 
         <div className="flex flex-wrap items-center gap-3">
           <Link
             href="/energy"
-            className="inline-flex items-center gap-2 rounded-xl bg-[#B8E986] px-4 py-2.5 text-xs font-bold text-[#103D30] shadow-sm transition hover:bg-white"
+            className="inline-flex items-center gap-2 rounded-2xl neu-button-primary px-5 py-3 text-xs font-bold"
           >
             <Plus size={16} /> Add Energy Reading
           </Link>
           <Link
             href="/missions"
-            className="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-4 py-2.5 text-xs font-bold text-white transition hover:bg-white/20"
+            className="inline-flex items-center gap-2 rounded-2xl neu-button px-5 py-3 text-xs font-bold text-[#253247]"
           >
             Daily Missions
           </Link>
         </div>
       </div>
 
-      {/* Top Stat Cards */}
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      {/* Top Stat Cards in Neumorphic Elevation */}
+      <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
         <MetricCard
           title="Monthly Electricity"
           value={stats.latestKwh || '—'}
@@ -117,10 +119,10 @@ export function DashboardView() {
           title="Estimated Emissions"
           value={footprint.emissionsKg || '—'}
           unit="kg CO₂e"
-          subtext="Official CEA v19.0 Factor (0.716)"
+          subtext="CEA v19.0 Factor (0.716)"
           icon={Leaf}
-          iconColor="text-[#27AE60]"
-          iconBg="bg-[#EAF8EE]"
+          iconColor="text-[#238B57]"
+          iconBg="neu-inset-sm"
           href="/footprint"
         />
 
@@ -130,8 +132,8 @@ export function DashboardView() {
           unit="pts"
           subtext={`${userStreak} days active streak`}
           icon={Trophy}
-          iconColor="text-[#F39C12]"
-          iconBg="bg-[#FEF7EC]"
+          iconColor="text-[#d97706]"
+          iconBg="neu-inset-sm"
           href="/rewards"
         />
 
@@ -141,8 +143,8 @@ export function DashboardView() {
           unit={solarSaved ? 'Capacity' : ''}
           subtext={solarSaved ? `₹${solarSaved.annualSavingsInr.toLocaleString('en-IN')}/yr estimated savings` : 'Calculate rooftop potential'}
           icon={Sun}
-          iconColor="text-[#D35400]"
-          iconBg="bg-[#FBEFEA]"
+          iconColor="text-[#d97706]"
+          iconBg="neu-inset-sm"
           href="/solar-advisor"
         />
       </div>
@@ -150,31 +152,32 @@ export function DashboardView() {
       {/* Energy Trend Chart & Recommended Action */}
       <div className="grid gap-6 xl:grid-cols-[1.4fr_0.6fr]">
         {/* Consumption Bar Chart */}
-        <div className="flex flex-col justify-between rounded-3xl border border-[#E3E8DF] bg-white p-6 shadow-sm">
-          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#F0F3EC] pb-4">
+        <div className="flex flex-col justify-between rounded-3xl neu-raised p-6 sm:p-8">
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[rgba(197,202,208,0.35)] pb-4">
             <div>
               <div className="flex items-center gap-2">
-                <BarChart3 size={18} className="text-[#176B4D]" />
-                <h3 className="text-base font-bold text-[#103D30]">Household Energy History</h3>
+                <BarChart3 size={18} className="text-[#238B57]" />
+                <h3 className="text-base font-extrabold text-[#253247]">Household Energy Trend</h3>
               </div>
-              <p className="mt-0.5 text-xs text-[#66736B]">
+              <p className="mt-0.5 text-xs text-[#718096]">
                 Tracked over billing cycles with official Discom tariff estimates
               </p>
             </div>
 
-            <div className="flex items-center rounded-xl bg-[#F0F4EC] p-1 text-xs font-semibold">
+            {/* Inset Segmented Timeframe Switcher */}
+            <div className="flex items-center rounded-2xl neu-inset p-1 text-xs font-bold">
               <button
                 onClick={() => setChartPeriod('6m')}
-                className={`rounded-lg px-3 py-1 transition ${
-                  chartPeriod === '6m' ? 'bg-white text-[#176B4D] shadow-xs' : 'text-[#66736B]'
+                className={`rounded-xl px-3 py-1.5 transition cursor-pointer ${
+                  chartPeriod === '6m' ? 'neu-raised text-[#238B57]' : 'text-[#718096] hover:text-[#253247]'
                 }`}
               >
                 Last 6 Months
               </button>
               <button
                 onClick={() => setChartPeriod('12m')}
-                className={`rounded-lg px-3 py-1 transition ${
-                  chartPeriod === '12m' ? 'bg-white text-[#176B4D] shadow-xs' : 'text-[#66736B]'
+                className={`rounded-xl px-3 py-1.5 transition cursor-pointer ${
+                  chartPeriod === '12m' ? 'neu-raised text-[#238B57]' : 'text-[#718096] hover:text-[#253247]'
                 }`}
               >
                 1 Year
@@ -182,64 +185,63 @@ export function DashboardView() {
             </div>
           </div>
 
-          {/* Interactive Visual Bars */}
+          {/* Interactive Neumorphic Visual Bars */}
           <div className="mt-8">
-            <div className="flex h-56 items-end gap-3 sm:gap-5 border-b border-[#E3E8DF] px-2 pb-2">
+            <div className="flex h-56 items-end gap-3 sm:gap-5 border-b border-[rgba(197,202,208,0.35)] px-2 pb-2">
               {chartItems.map((r, i) => {
                 const heightPercent = Math.max(15, Math.round((r.consumptionKwh / maxKwh) * 100))
                 const dateLabel = new Date(r.startDate).toLocaleDateString('en-IN', { month: 'short' })
                 return (
                   <div key={r.id || i} className="group relative flex flex-1 flex-col items-center">
                     {/* Tooltip on hover */}
-                    <div className="absolute -top-14 z-10 hidden flex-col items-center rounded-lg bg-[#103D30] px-2.5 py-1.5 text-[11px] text-white shadow-lg group-hover:flex">
-                      <span className="font-bold">{r.consumptionKwh} kWh</span>
-                      <span className="text-[10px] text-[#B8E986]">₹{r.billAmount || '—'}</span>
-                      <div className="absolute -bottom-1 size-2 rotate-45 bg-[#103D30]" />
+                    <div className="absolute -top-14 z-20 hidden flex-col items-center rounded-xl neu-raised p-2 text-[11px] shadow-lg group-hover:flex">
+                      <span className="font-extrabold text-[#253247]">{r.consumptionKwh} kWh</span>
+                      <span className="text-[10px] font-bold text-[#238B57]">₹{r.billAmount || '—'}</span>
                     </div>
 
                     <div
-                      className="w-full rounded-t-lg bg-[#CBE3C3] transition-all duration-300 group-hover:bg-[#176B4D]"
+                      className="w-full rounded-t-xl bg-gradient-to-t from-[#65B98A] to-[#238B57] shadow-sm transition-all duration-300 group-hover:from-[#238B57] group-hover:to-[#176B4D]"
                       style={{ height: `${heightPercent}%` }}
                     />
-                    <span className="mt-2 text-[11px] font-semibold text-[#66736B]">{dateLabel}</span>
+                    <span className="mt-2 text-[11px] font-bold text-[#718096]">{dateLabel}</span>
                   </div>
                 )
               })}
             </div>
 
-            <div className="mt-4 flex flex-wrap items-center justify-between text-xs text-[#8E9B92]">
+            <div className="mt-4 flex flex-wrap items-center justify-between text-xs text-[#718096]">
               <span className="flex items-center gap-2">
-                <span className="size-2 rounded-full bg-[#176B4D]" /> Recorded Consumption (kWh)
+                <span className="size-2.5 rounded-full bg-[#238B57]" /> Recorded Consumption (kWh)
               </span>
               <span>
                 Average:{' '}
-                <strong className="text-[#103D30]">{stats.averageKwh} kWh/mo</strong>
+                <strong className="text-[#253247] tabular-nums">{stats.averageKwh} kWh/mo</strong>
               </span>
             </div>
           </div>
         </div>
 
-        {/* Action Recommendation Card */}
-        <div className="flex flex-col justify-between rounded-3xl bg-[#103D30] p-6 text-white shadow-sm">
+        {/* Action Recommendation Card with Neumorphism */}
+        <div className="flex flex-col justify-between rounded-3xl neu-raised p-6 sm:p-8">
           <div>
-            <div className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-[#B8E986]">
+            <div className="inline-flex items-center gap-1.5 rounded-xl neu-inset-sm px-3 py-1 text-xs font-bold text-[#238B57]">
               <Sparkles size={13} /> Recommended Mission
             </div>
-            <h3 className="mt-4 text-xl font-bold leading-snug">{recommendedMission.title}</h3>
-            <p className="mt-2 text-xs leading-relaxed text-white/75">{recommendedMission.description}</p>
+            <h3 className="mt-4 text-xl font-extrabold text-[#253247] leading-snug">{recommendedMission.title}</h3>
+            <p className="mt-2 text-xs leading-relaxed text-[#718096]">{recommendedMission.description}</p>
 
-            <div className="mt-5 space-y-2 border-t border-white/10 pt-4 text-xs text-white/80">
+            <div className="mt-5 space-y-2.5 rounded-2xl neu-inset p-4 text-xs">
               <div className="flex justify-between">
-                <span>Category:</span>
-                <span className="font-semibold text-white">{recommendedMission.category}</span>
+                <span className="text-[#718096]">Category:</span>
+                <span className="font-bold text-[#253247]">{recommendedMission.category}</span>
               </div>
               <div className="flex justify-between">
-                <span>Time required:</span>
-                <span className="font-semibold text-white">{recommendedMission.duration}</span>
+                <span className="text-[#718096]">Time required:</span>
+                <span className="font-bold text-[#253247]">{recommendedMission.duration}</span>
               </div>
               <div className="flex justify-between">
-                <span>Reward:</span>
-                <span className="font-bold text-[#B8E986]">+{recommendedMission.points} LiFE pts</span>
+                <span className="text-[#718096]">Reward:</span>
+                <span className="font-extrabold text-[#238B57]">+{recommendedMission.points} LiFE pts</span>
               </div>
             </div>
           </div>
@@ -247,7 +249,7 @@ export function DashboardView() {
           <div className="mt-6">
             <Link
               href={`/missions/${recommendedMission.id}`}
-              className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#B8E986] py-3 text-xs font-bold text-[#103D30] transition hover:bg-white"
+              className="flex w-full items-center justify-center gap-2 rounded-2xl neu-button-primary py-3 text-xs font-bold"
             >
               Start Mission Now <ArrowRight size={14} />
             </Link>
@@ -258,35 +260,35 @@ export function DashboardView() {
       {/* Bottom Grid: Community Spotlight & Quick Navigation */}
       <div className="grid gap-6 md:grid-cols-2">
         {/* Community Progress */}
-        <div className="rounded-3xl border border-[#E3E8DF] bg-white p-6 shadow-sm">
-          <div className="flex items-center justify-between border-b border-[#F0F3EC] pb-4">
+        <div className="rounded-3xl neu-raised p-6 sm:p-8">
+          <div className="flex items-center justify-between border-b border-[rgba(197,202,208,0.35)] pb-4">
             <div className="flex items-center gap-2">
-              <Users size={18} className="text-[#176B4D]" />
-              <h3 className="text-base font-bold text-[#103D30]">Community Action</h3>
+              <Users size={18} className="text-[#238B57]" />
+              <h3 className="text-base font-extrabold text-[#253247]">Community Action</h3>
             </div>
-            <Link href="/community" className="text-xs font-semibold text-[#176B4D] hover:underline">
+            <Link href="/community" className="text-xs font-bold text-[#238B57] hover:underline">
               View all →
             </Link>
           </div>
 
           <div className="mt-5 space-y-4">
-            <div className="rounded-2xl bg-[#F6F8F3] p-4">
+            <div className="rounded-2xl neu-inset p-4">
               <div className="flex items-start justify-between">
                 <div>
-                  <h4 className="text-sm font-bold text-[#103D30]">Shantigram Green Haven RWA</h4>
-                  <p className="mt-0.5 text-xs text-[#66736B]">148 active households participating</p>
+                  <h4 className="text-sm font-extrabold text-[#253247]">Shantigram Green Haven RWA</h4>
+                  <p className="mt-0.5 text-xs text-[#718096]">148 active households participating</p>
                 </div>
                 <StatusBadge label="Active" variant="success" />
               </div>
               <div className="mt-3 flex items-center justify-between text-xs">
-                <span className="text-[#8E9B92]">Challenge: LED Common Area Shift</span>
-                <span className="font-bold text-[#176B4D]">14,200 kWh saved</span>
+                <span className="text-[#718096]">Challenge: LED Common Area Shift</span>
+                <span className="font-extrabold text-[#238B57]">14,200 kWh saved</span>
               </div>
             </div>
 
             <Link
               href="/community"
-              className="flex items-center justify-between rounded-2xl border border-dashed border-[#D7E2D3] p-3 text-xs font-semibold text-[#176B4D] hover:bg-[#F6F8F3]"
+              className="flex items-center justify-between rounded-2xl neu-button p-3.5 text-xs font-bold text-[#238B57]"
             >
               <span>Explore challenges in {user.district}</span>
               <ArrowRight size={14} />
@@ -295,42 +297,42 @@ export function DashboardView() {
         </div>
 
         {/* Solar Shortcut / Rooftop Calculator */}
-        <div className="rounded-3xl border border-[#E3E8DF] bg-[#F9FAF6] p-6 shadow-sm">
-          <div className="flex items-center justify-between border-b border-[#E3E8DF] pb-4">
+        <div className="rounded-3xl neu-raised p-6 sm:p-8">
+          <div className="flex items-center justify-between border-b border-[rgba(197,202,208,0.35)] pb-4">
             <div className="flex items-center gap-2">
-              <Sun size={18} className="text-[#D35400]" />
-              <h3 className="text-base font-bold text-[#103D30]">PM Surya Ghar Calculator</h3>
+              <Sun size={18} className="text-[#d97706]" />
+              <h3 className="text-base font-extrabold text-[#253247]">PM Surya Ghar Calculator</h3>
             </div>
-            <Link href="/solar-advisor" className="text-xs font-semibold text-[#176B4D] hover:underline">
+            <Link href="/solar-advisor" className="text-xs font-bold text-[#238B57] hover:underline">
               Open Advisor →
             </Link>
           </div>
 
-          <div className="mt-4 text-xs text-[#66736B] leading-relaxed">
-            Gujarat homeowners can receive up to <strong className="text-[#103D30]">₹78,000</strong> in central DBT subsidies
+          <div className="mt-4 text-xs text-[#718096] leading-relaxed">
+            Gujarat homeowners can receive up to <strong className="text-[#253247]">₹78,000</strong> in central DBT subsidies
             under PM Surya Ghar Muft Bijli Yojana. Sized for your {stats.latestKwh} kWh monthly consumption.
           </div>
 
-          <div className="mt-5 rounded-2xl bg-white p-4 border border-[#E3E8DF]">
+          <div className="mt-5 rounded-2xl neu-inset p-4">
             <div className="grid grid-cols-3 gap-2 text-center text-xs">
               <div>
-                <p className="text-[10px] uppercase text-[#8E9B92]">Rec. Size</p>
-                <p className="mt-1 text-base font-bold text-[#103D30]">3 kW</p>
+                <p className="text-[10px] uppercase font-bold text-[#718096]">Rec. Size</p>
+                <p className="mt-1 text-base font-extrabold text-[#253247]">3 kW</p>
               </div>
               <div>
-                <p className="text-[10px] uppercase text-[#8E9B92]">Central Subsidy</p>
-                <p className="mt-1 text-base font-bold text-[#176B4D]">₹78,000</p>
+                <p className="text-[10px] uppercase font-bold text-[#238B57]">Central Subsidy</p>
+                <p className="mt-1 text-base font-extrabold text-[#238B57]">₹78,000</p>
               </div>
               <div>
-                <p className="text-[10px] uppercase text-[#8E9B92]">Est. Payback</p>
-                <p className="mt-1 text-base font-bold text-[#103D30]">3.2 Yrs</p>
+                <p className="text-[10px] uppercase font-bold text-[#718096]">Est. Payback</p>
+                <p className="mt-1 text-base font-extrabold text-[#253247]">3.2 Yrs</p>
               </div>
             </div>
           </div>
 
           <Link
             href="/solar-advisor"
-            className="mt-4 inline-flex items-center gap-2 text-xs font-bold text-[#176B4D] hover:underline"
+            className="mt-4 inline-flex items-center gap-2 text-xs font-bold text-[#238B57] hover:underline"
           >
             Run full rooftop feasibility scenario <ArrowRight size={13} />
           </Link>

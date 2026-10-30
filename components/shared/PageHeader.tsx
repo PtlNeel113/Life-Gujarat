@@ -36,13 +36,13 @@ export function PageHeader({
         {backHref && (
           <Link
             href={backHref}
-            className="mb-2 inline-flex items-center gap-1.5 text-xs font-semibold text-[#176B4D] hover:underline"
+            className="mb-2.5 inline-flex items-center gap-1.5 rounded-xl neu-button px-3 py-1.5 text-xs font-bold text-[#238B57]"
           >
             <ArrowLeft size={13} /> {backLabel}
           </Link>
         )}
-        <h2 className="text-2xl font-extrabold tracking-tight text-[#103D30] sm:text-3xl">{title}</h2>
-        {description && <p className="mt-1.5 max-w-2xl text-sm leading-relaxed text-[#66736B]">{description}</p>}
+        <h2 className="text-2xl font-extrabold tracking-tight text-[#253247] sm:text-3xl">{title}</h2>
+        {description && <p className="mt-1.5 max-w-2xl text-xs sm:text-sm leading-relaxed text-[#718096]">{description}</p>}
       </div>
 
       <div className="flex flex-wrap items-center gap-3">
@@ -50,7 +50,7 @@ export function PageHeader({
           secondaryAction.href ? (
             <Link
               href={secondaryAction.href}
-              className="inline-flex items-center gap-2 rounded-xl border border-[#D7E2D3] bg-white px-4 py-2.5 text-xs font-bold text-[#103D30] shadow-sm transition hover:bg-[#F6F8F3]"
+              className="inline-flex items-center gap-2 rounded-2xl neu-button px-4 py-2.5 text-xs font-bold text-[#253247]"
             >
               {secondaryAction.icon}
               {secondaryAction.label}
@@ -58,7 +58,7 @@ export function PageHeader({
           ) : (
             <button
               onClick={secondaryAction.onClick}
-              className="inline-flex items-center gap-2 rounded-xl border border-[#D7E2D3] bg-white px-4 py-2.5 text-xs font-bold text-[#103D30] shadow-sm transition hover:bg-[#F6F8F3]"
+              className="inline-flex items-center gap-2 rounded-2xl neu-button px-4 py-2.5 text-xs font-bold text-[#253247] cursor-pointer"
             >
               {secondaryAction.icon}
               {secondaryAction.label}
@@ -70,7 +70,7 @@ export function PageHeader({
           action.href ? (
             <Link
               href={action.href}
-              className="inline-flex items-center gap-2 rounded-xl bg-[#176B4D] px-4 py-2.5 text-xs font-bold text-white shadow-sm transition hover:bg-[#103D30]"
+              className="inline-flex items-center gap-2 rounded-2xl neu-button-primary px-4 py-2.5 text-xs font-bold"
             >
               {action.icon}
               {action.label}
@@ -78,7 +78,7 @@ export function PageHeader({
           ) : (
             <button
               onClick={action.onClick}
-              className="inline-flex items-center gap-2 rounded-xl bg-[#176B4D] px-4 py-2.5 text-xs font-bold text-white shadow-sm transition hover:bg-[#103D30]"
+              className="inline-flex items-center gap-2 rounded-2xl neu-button-primary px-4 py-2.5 text-xs font-bold cursor-pointer"
             >
               {action.icon}
               {action.label}

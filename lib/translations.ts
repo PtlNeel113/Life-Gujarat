@@ -1,4 +1,4 @@
-export type Language = 'en' | 'gu'
+export type Language = 'en' | 'hi' | 'gu'
 
 export const translations = {
   en: {
@@ -29,6 +29,35 @@ export const translations = {
     footprintSubtitle: 'Transparent estimates grounded in official CEA emission factors.',
     switchRole: 'Switch to Admin / Citizen',
     signOut: 'Sign out',
+  },
+  hi: {
+    appName: 'लाइफ गुजरात',
+    tagline: 'छोटे कदम। बड़ा प्रभाव।',
+    overview: 'अवलोकन',
+    myEnergy: 'मेरी ऊर्जा',
+    myFootprint: 'कार्बन फुटप्रिंट',
+    dailyMissions: 'दैनिक मिशन',
+    energyCoach: 'एआई ऊर्जा कोच',
+    solarAdvisor: 'सोलर सलाहकार',
+    community: 'समुदाय',
+    rewards: 'पुरस्कार',
+    learnExplore: 'सीखें और समझें',
+    myReports: 'रिपोर्ट्स',
+    settings: 'सेटिंग्स',
+    notifications: 'सूचनाएं',
+    adminPanel: 'लाइफ एडमिन',
+    goodMorning: 'शुभ प्रभात',
+    monthlyEnergy: 'मासिक बिजली',
+    currentStreak: 'सक्रिय स्ट्रीक',
+    missionPoints: 'मिशन अंक',
+    addReading: 'रीडिंग जोड़ें',
+    recentActivity: 'हाल की गतिविधि',
+    recommendedNextStep: 'अनुशंसित अगला कदम',
+    allMissions: 'सभी मिशन',
+    energySubtitle: 'अपने घरेलू बिजली उपयोग की स्पष्ट तस्वीर बनाएं।',
+    footprintSubtitle: 'आधिकारिक सीईए उत्सर्जन मानकों पर आधारित पारदर्शी अनुमान।',
+    switchRole: 'एडमिन / नागरिक बदलें',
+    signOut: 'लॉग आउट',
   },
   gu: {
     appName: 'લાઇફ ગુજરાત',

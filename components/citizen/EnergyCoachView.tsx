@@ -322,15 +322,15 @@ I maintain full multi-turn memory of our conversation. You can ask me to:
         }}
       />
 
-      {/* Role & Model Controls Strip */}
-      <div className="grid gap-4 rounded-3xl border border-[#E3E8DF] bg-white p-5 shadow-xs lg:grid-cols-2">
+      {/* Role & Model Controls Strip with Neumorphism */}
+      <div className="grid gap-5 rounded-3xl neu-raised p-6 lg:grid-cols-2">
         {/* Role Persona Selector */}
-        <div className="space-y-2">
-          <label className="text-xs font-bold uppercase tracking-wider text-[#738279] flex items-center gap-1.5">
-            <Compass size={14} className="text-[#176B4D]" />
-            Select Specialized Assistant Persona
+        <div className="space-y-2.5">
+          <label className="text-xs font-bold uppercase tracking-wider text-[#718096] flex items-center gap-1.5">
+            <Compass size={15} className="text-[#238B57]" />
+            Specialized Energy Persona
           </label>
-          <div className="grid grid-cols-3 gap-2">
+          <div className="grid grid-cols-3 gap-2.5">
             {(Object.keys(roleDescriptions) as RolePersona[]).map((r) => {
               const item = roleDescriptions[r]
               const Icon = item.icon
@@ -340,23 +340,23 @@ I maintain full multi-turn memory of our conversation. You can ask me to:
                   key={r}
                   type="button"
                   onClick={() => setRolePersona(r)}
-                  className={`flex flex-col items-start rounded-2xl p-3 text-left transition cursor-pointer border ${
+                  className={`flex flex-col items-start rounded-2xl p-3 text-left transition cursor-pointer ${
                     isSelected
-                      ? 'border-[#176B4D] bg-[#F1F8EE] text-[#103D30] shadow-xs'
-                      : 'border-[#E3E8DF] bg-white text-[#66736B] hover:border-[#CAD5C6] hover:bg-[#FAFBF9]'
+                      ? 'neu-inset text-[#238B57]'
+                      : 'neu-button text-[#718096] hover:text-[#253247]'
                   }`}
                 >
                   <div className="flex items-center gap-1.5 w-full">
                     <span
-                      className={`grid size-6 place-items-center rounded-lg ${
-                        isSelected ? 'bg-[#176B4D] text-white' : 'bg-[#EEF4E8] text-[#176B4D]'
+                      className={`grid size-7 place-items-center rounded-xl ${
+                        isSelected ? 'neu-raised text-[#238B57]' : 'neu-inset-sm text-[#718096]'
                       }`}
                     >
-                      <Icon size={13} />
+                      <Icon size={14} />
                     </span>
                     <span className="text-[11px] font-extrabold truncate">{item.badge}</span>
                   </div>
-                  <span className="mt-1 text-[10px] text-[#66736B] line-clamp-1">{item.label}</span>
+                  <span className="mt-1 text-[10px] text-[#718096] line-clamp-1">{item.label}</span>
                 </button>
               )
             })}
@@ -364,12 +364,12 @@ I maintain full multi-turn memory of our conversation. You can ask me to:
         </div>
 
         {/* Gemini Model Selector */}
-        <div className="space-y-2">
-          <label className="text-xs font-bold uppercase tracking-wider text-[#738279] flex items-center gap-1.5">
-            <Cpu size={14} className="text-[#176B4D]" />
+        <div className="space-y-2.5">
+          <label className="text-xs font-bold uppercase tracking-wider text-[#718096] flex items-center gap-1.5">
+            <Cpu size={15} className="text-[#238B57]" />
             Gemini Reasoning Model
           </label>
-          <div className="grid grid-cols-3 gap-2">
+          <div className="grid grid-cols-3 gap-2.5">
             {(Object.keys(modelDescriptions) as ModelChoice[]).map((m) => {
               const item = modelDescriptions[m]
               const Icon = item.icon
@@ -379,23 +379,23 @@ I maintain full multi-turn memory of our conversation. You can ask me to:
                   key={m}
                   type="button"
                   onClick={() => setSelectedModel(m)}
-                  className={`flex flex-col items-start rounded-2xl p-3 text-left transition cursor-pointer border ${
+                  className={`flex flex-col items-start rounded-2xl p-3 text-left transition cursor-pointer ${
                     isSelected
-                      ? 'border-[#176B4D] bg-[#F1F8EE] text-[#103D30] shadow-xs'
-                      : 'border-[#E3E8DF] bg-white text-[#66736B] hover:border-[#CAD5C6] hover:bg-[#FAFBF9]'
+                      ? 'neu-inset text-[#238B57]'
+                      : 'neu-button text-[#718096] hover:text-[#253247]'
                   }`}
                 >
                   <div className="flex items-center gap-1.5 w-full">
                     <span
-                      className={`grid size-6 place-items-center rounded-lg ${
-                        isSelected ? 'bg-[#176B4D] text-white' : 'bg-[#EEF4E8] text-[#176B4D]'
+                      className={`grid size-7 place-items-center rounded-xl ${
+                        isSelected ? 'neu-raised text-[#238B57]' : 'neu-inset-sm text-[#718096]'
                       }`}
                     >
-                      <Icon size={13} />
+                      <Icon size={14} />
                     </span>
                     <span className="text-[11px] font-extrabold truncate">{m.replace('gemini-', '')}</span>
                   </div>
-                  <span className="mt-1 text-[10px] text-[#66736B] line-clamp-1">{item.tag}</span>
+                  <span className="mt-1 text-[10px] text-[#718096] line-clamp-1">{item.tag}</span>
                 </button>
               )
             })}
@@ -404,30 +404,30 @@ I maintain full multi-turn memory of our conversation. You can ask me to:
       </div>
 
       {/* Main Multi-Turn Chat Thread Panel */}
-      <div className="flex flex-col rounded-3xl border border-[#E3E8DF] bg-white shadow-sm overflow-hidden min-h-[580px]">
+      <div className="flex flex-col rounded-3xl neu-raised overflow-hidden min-h-[580px]">
         {/* Active Session Info Header */}
-        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#E3E8DF] bg-[#F8FAF6] px-6 py-3.5">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[rgba(197,202,208,0.35)] px-6 py-4">
           <div className="flex items-center gap-3">
-            <div className="grid size-9 place-items-center rounded-xl bg-[#176B4D] text-white">
-              <ActiveRoleIcon size={18} />
+            <div className="grid size-10 place-items-center rounded-2xl neu-inset text-[#238B57]">
+              <ActiveRoleIcon size={20} />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-bold text-sm text-[#103D30]">{roleDescriptions[rolePersona].label}</span>
-                <span className="inline-flex items-center gap-1 rounded-full bg-[#E5F1DF] px-2 py-0.5 text-[10px] font-bold text-[#176B4D]">
+                <span className="font-extrabold text-sm text-[#253247]">{roleDescriptions[rolePersona].label}</span>
+                <span className="inline-flex items-center gap-1 rounded-xl neu-inset-sm px-2.5 py-0.5 text-[10px] font-bold text-[#238B57]">
                   <Sparkles size={10} /> {selectedModel}
                 </span>
               </div>
-              <p className="text-[11px] text-[#66736B]">
+              <p className="text-[11px] text-[#718096]">
                 Active Context: {user.name} · {user.district} ({user.discom}) · {stats.latestKwh} kWh latest reading
               </p>
             </div>
           </div>
 
           <div className="flex items-center gap-2 text-xs">
-            <span className="inline-flex items-center gap-1 rounded-full bg-emerald-100 text-emerald-800 px-2.5 py-1 font-semibold text-[11px]">
-              <span className="size-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              Connected
+            <span className="inline-flex items-center gap-1.5 rounded-xl neu-inset-sm text-[#238B57] px-3 py-1 font-bold text-[11px]">
+              <span className="size-2 rounded-full bg-[#238B57]" />
+              Gemini Active
             </span>
           </div>
         </div>
@@ -435,7 +435,7 @@ I maintain full multi-turn memory of our conversation. You can ask me to:
         {/* Scrollable Messages Thread */}
         <div
           ref={chatContainerRef}
-          className="flex-1 overflow-y-auto p-6 space-y-5 max-h-[440px] bg-[#FAFBF9]"
+          className="flex-1 overflow-y-auto p-6 space-y-5 max-h-[440px] bg-[#E8EDF3]/50"
         >
           {messages.map((msg) => {
             const isUser = msg.sender === 'user'
@@ -445,26 +445,28 @@ I maintain full multi-turn memory of our conversation. You can ask me to:
                 className={`flex gap-3 text-xs leading-relaxed ${isUser ? 'justify-end' : 'justify-start'}`}
               >
                 {!isUser && (
-                  <div className="grid size-8 shrink-0 place-items-center rounded-xl bg-[#176B4D] text-white mt-0.5 shadow-xs">
-                    <Bot size={16} />
+                  <div className="grid size-9 shrink-0 place-items-center rounded-2xl neu-raised text-[#238B57] mt-0.5">
+                    <Bot size={18} />
                   </div>
                 )}
 
                 <div
-                  className={`group relative max-w-[85%] sm:max-w-[75%] rounded-2xl p-4 shadow-xs ${
+                  className={`group relative max-w-[85%] sm:max-w-[75%] rounded-3xl p-5 ${
                     isUser
-                      ? 'bg-[#103D30] text-white rounded-br-xs'
-                      : 'border border-[#E3E8DF] bg-white text-[#2C3E35] rounded-bl-xs'
+                      ? 'neu-button-primary text-white rounded-br-md'
+                      : 'neu-raised text-[#253247] rounded-bl-md'
                   }`}
                 >
                   {/* Sender & Model Metadata */}
-                  <div className="flex items-center justify-between gap-4 pb-1 mb-2 border-b border-black/5 dark:border-white/10 text-[10px] opacity-75">
-                    <span className="font-semibold">
+                  <div className={`flex items-center justify-between gap-4 pb-1 mb-2 border-b text-[10px] ${
+                    isUser ? 'border-white/20 text-white/80' : 'border-[rgba(197,202,208,0.35)] text-[#718096]'
+                  }`}>
+                    <span className="font-bold">
                       {isUser ? user.name || 'You' : roleDescriptions[msg.rolePersona || rolePersona].label}
                     </span>
                     <div className="flex items-center gap-2">
                       {!isUser && msg.modelUsed && (
-                        <span className="rounded bg-black/5 px-1.5 py-0.5 font-mono text-[9px]">
+                        <span className="rounded-lg neu-inset-sm px-1.5 py-0.5 font-mono text-[9px] text-[#238B57]">
                           {msg.modelUsed}
                         </span>
                       )}
@@ -473,7 +475,7 @@ I maintain full multi-turn memory of our conversation. You can ask me to:
                         type="button"
                         onClick={() => handleCopy(msg.id, msg.text)}
                         title="Copy message text"
-                        className="opacity-0 group-hover:opacity-100 transition hover:text-[#176B4D]"
+                        className="opacity-0 group-hover:opacity-100 transition hover:text-[#238B57] cursor-pointer"
                       >
                         {copiedId === msg.id ? <Check size={12} /> : <Copy size={12} />}
                       </button>
@@ -487,7 +489,7 @@ I maintain full multi-turn memory of our conversation. You can ask me to:
                 </div>
 
                 {isUser && (
-                  <div className="grid size-8 shrink-0 place-items-center rounded-xl bg-[#B8E986] text-[#103D30] font-extrabold text-xs mt-0.5 shadow-xs">
+                  <div className="grid size-9 shrink-0 place-items-center rounded-2xl neu-raised text-[#238B57] font-extrabold text-xs mt-0.5">
                     {user.avatarInitials || 'ME'}
                   </div>
                 )}
@@ -497,15 +499,15 @@ I maintain full multi-turn memory of our conversation. You can ask me to:
 
           {/* Typing Indicator */}
           {isTyping && (
-            <div className="flex items-center gap-3 text-xs text-[#66736B]">
-              <div className="grid size-8 place-items-center rounded-xl bg-[#176B4D] text-white">
-                <Bot size={16} />
+            <div className="flex items-center gap-3 text-xs text-[#718096]">
+              <div className="grid size-9 place-items-center rounded-2xl neu-raised text-[#238B57]">
+                <Bot size={18} />
               </div>
-              <div className="flex items-center gap-2 rounded-2xl border border-[#E3E8DF] bg-white px-4 py-3 shadow-xs">
-                <span className="size-2 rounded-full bg-[#176B4D] animate-bounce" />
-                <span className="size-2 rounded-full bg-[#176B4D] animate-bounce [animation-delay:0.2s]" />
-                <span className="size-2 rounded-full bg-[#176B4D] animate-bounce [animation-delay:0.4s]" />
-                <span className="text-[11px] font-medium text-[#738279] ml-1">
+              <div className="flex items-center gap-2 rounded-2xl neu-inset px-4 py-3">
+                <span className="size-2 rounded-full bg-[#238B57] animate-bounce" />
+                <span className="size-2 rounded-full bg-[#238B57] animate-bounce [animation-delay:0.2s]" />
+                <span className="size-2 rounded-full bg-[#238B57] animate-bounce [animation-delay:0.4s]" />
+                <span className="text-[11px] font-bold text-[#718096] ml-1">
                   Gemini is thinking with {selectedModel}...
                 </span>
               </div>
@@ -516,16 +518,16 @@ I maintain full multi-turn memory of our conversation. You can ask me to:
         </div>
 
         {/* Suggested Starter Chips */}
-        <div className="border-t border-[#E3E8DF] bg-[#F9FBF8] px-6 py-3">
+        <div className="border-t border-[rgba(197,202,208,0.35)] px-6 py-3">
           <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-0.5">
-            <span className="shrink-0 text-[11px] font-bold text-[#738279] uppercase">Try:</span>
+            <span className="shrink-0 text-[11px] font-bold text-[#718096] uppercase">Try:</span>
             {suggestedPrompts[rolePersona].map((prompt, idx) => (
               <button
                 key={idx}
                 type="button"
                 onClick={() => handleSend(prompt)}
                 disabled={isTyping}
-                className="shrink-0 rounded-full border border-[#D7E2D3] bg-white px-3 py-1 text-[11px] font-medium text-[#103D30] transition hover:border-[#176B4D] hover:bg-[#EEF4E8] disabled:opacity-50 cursor-pointer"
+                className="shrink-0 rounded-2xl neu-button px-3.5 py-1.5 text-[11px] font-bold text-[#253247] transition hover:text-[#238B57] disabled:opacity-50 cursor-pointer"
               >
                 {prompt}
               </button>
@@ -534,7 +536,7 @@ I maintain full multi-turn memory of our conversation. You can ask me to:
         </div>
 
         {/* Input Bar Form */}
-        <div className="border-t border-[#E3E8DF] bg-white p-4 sm:p-5">
+        <div className="border-t border-[rgba(197,202,208,0.35)] p-4 sm:p-5">
           <form
             onSubmit={(e) => {
               e.preventDefault()
@@ -548,19 +550,19 @@ I maintain full multi-turn memory of our conversation. You can ask me to:
               onChange={(e) => setInputPrompt(e.target.value)}
               placeholder={`Ask ${roleDescriptions[rolePersona].label} about bills, solar, or efficiency...`}
               disabled={isTyping}
-              className="flex-1 rounded-2xl border border-[#D7E2D3] bg-[#FCFDFB] px-4 py-3 text-xs text-[#103D30] outline-none transition focus:border-[#176B4D] focus:bg-white placeholder:text-[#8E9B92]"
+              className="flex-1 rounded-2xl neu-input px-4 py-3 text-xs text-[#253247] placeholder:text-[#718096]"
             />
 
             <button
               type="submit"
               disabled={isTyping || !inputPrompt.trim()}
-              className="flex items-center gap-2 rounded-2xl bg-[#176B4D] px-5 py-3 text-xs font-bold text-white shadow-sm transition hover:bg-[#103D30] disabled:opacity-50 cursor-pointer"
+              className="flex items-center gap-2 rounded-2xl neu-button-primary px-5 py-3 text-xs font-bold cursor-pointer disabled:opacity-50"
             >
               <span>Send</span>
               <Send size={14} />
             </button>
           </form>
-          <div className="mt-2 flex items-center justify-between text-[10px] text-[#8E9B92]">
+          <div className="mt-2 flex items-center justify-between text-[10px] text-[#718096]">
             <span>Grounded in CEA v19.0 standard emission baseline and PM Surya Ghar guidelines.</span>
             <span>Responses powered by Google Gemini.</span>
           </div>

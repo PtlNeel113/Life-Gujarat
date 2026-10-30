@@ -20,25 +20,25 @@ export function EmptyState({
   onAction,
 }: EmptyStateProps) {
   return (
-    <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-[#D7E2D3] bg-white/60 p-10 text-center">
-      <div className="grid size-14 place-items-center rounded-2xl bg-[#EEF4E8] text-[#176B4D]">
-        <Icon size={26} />
+    <div className="flex flex-col items-center justify-center rounded-3xl neu-inset p-10 text-center">
+      <div className="grid size-16 place-items-center rounded-3xl neu-raised text-[#238B57]">
+        <Icon size={28} />
       </div>
-      <h3 className="mt-4 text-base font-bold text-[#103D30]">{title}</h3>
-      <p className="mt-1 max-w-sm text-xs text-[#66736B] leading-relaxed">{description}</p>
+      <h3 className="mt-5 text-base font-extrabold text-[#253247]">{title}</h3>
+      <p className="mt-1.5 max-w-sm text-xs text-[#718096] leading-relaxed">{description}</p>
       {actionLabel && (
-        <div className="mt-5">
+        <div className="mt-6">
           {actionHref ? (
             <Link
               href={actionHref}
-              className="inline-flex items-center gap-1.5 rounded-xl bg-[#176B4D] px-4 py-2 text-xs font-bold text-white transition hover:bg-[#103D30]"
+              className="inline-flex items-center gap-1.5 rounded-2xl neu-button-primary px-5 py-2.5 text-xs font-bold"
             >
               {actionLabel}
             </Link>
           ) : (
             <button
               onClick={onAction}
-              className="inline-flex items-center gap-1.5 rounded-xl bg-[#176B4D] px-4 py-2 text-xs font-bold text-white transition hover:bg-[#103D30]"
+              className="inline-flex items-center gap-1.5 rounded-2xl neu-button-primary px-5 py-2.5 text-xs font-bold cursor-pointer"
             >
               {actionLabel}
             </button>

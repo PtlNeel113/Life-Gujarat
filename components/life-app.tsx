@@ -1,22 +1,554 @@
 'use client'
 
+import React, { useState } from 'react'
 import Link from 'next/link'
-import { useState } from 'react'
-import { ArrowRight, BarChart3, Bell, Check, ChevronRight, CircleHelp, Flame, Leaf, Menu, Play, Plus, Search, ShieldCheck, Sparkles, Sun, Trophy, Users, X, Zap } from 'lucide-react'
+import {
+  ArrowRight,
+  BarChart3,
+  Bell,
+  Check,
+  ChevronRight,
+  CircleHelp,
+  Flame,
+  Leaf,
+  Menu,
+  Play,
+  Plus,
+  Search,
+  ShieldCheck,
+  Sparkles,
+  Sun,
+  Trophy,
+  Users,
+  X,
+  Zap,
+  Globe,
+  Sliders,
+  TrendingDown,
+} from 'lucide-react'
 
-const nav = [['How it works','#how-it-works'],['Daily missions','#missions'],['Solar advisor','/solar-advisor'],['Community','/community'],['Learn','/learn']]
-const appNav = [['Overview','/dashboard',BarChart3],['My Energy','/energy',Zap],['My Footprint','/footprint',Leaf],['Daily Missions','/missions',Check],['AI Energy Coach','/energy-coach',Sparkles],['Solar Advisor','/solar-advisor',Sun],['Community','/community',Users],['Rewards','/rewards',Trophy],['Learn & Explore','/learn',CircleHelp]] as const
+const navLinks = [
+  ['How It Works', '#how-it-works'],
+  ['Mission LiFE', '#missions'],
+  ['Solar Advisor', '/solar-advisor'],
+  ['Community', '/community'],
+  ['Knowledge Hub', '/learn'],
+]
 
-function Logo({light=false}:{light?:boolean}) { return <Link href="/" className={`flex items-center gap-2 font-semibold tracking-tight ${light?'text-white':'text-[#103D30]'}`}><span className="grid size-9 place-items-center rounded-xl bg-[#B8E986] text-[#176B4D]"><Leaf size={20} fill="currentColor" /></span><span className="text-[17px]">LiFE <span className="font-normal opacity-70">Gujarat</span></span></Link> }
-function Button({children,href='#',dark=false}:{children:React.ReactNode;href?:string;dark?:boolean}) { return <Link href={href} className={`group inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition hover:-translate-y-0.5 ${dark?'bg-[#B8E986] text-[#103D30] hover:bg-white':'bg-[#176B4D] text-white hover:bg-[#103D30]'}`}>{children}<ArrowRight size={16} className="transition group-hover:translate-x-0.5" /></Link> }
-function MiniLandscape(){ return <div className="relative h-full min-h-[420px] overflow-hidden rounded-[2rem] bg-[#dcebd5] shadow-[0_30px_80px_-30px_rgba(16,61,48,.4)]"><div className="absolute inset-0 bg-[radial-gradient(circle_at_68%_28%,#fff8_0_4%,transparent_22%),linear-gradient(145deg,#b8dfb4,#eff2d9_48%,#8fc492)]" /><div className="absolute right-[14%] top-[13%] size-36 rounded-full bg-[#f8f4cf] shadow-[0_0_80px_20px_#fff8]" /><div className="absolute bottom-[-22%] left-[-10%] size-[130%] rotate-[-8deg] rounded-[50%] bg-[#176b4d] shadow-inner" /><div className="absolute bottom-[18%] left-[13%] h-32 w-52 rounded-[45%_45%_8%_8%] bg-[#eff2d9] shadow-[0_18px_0_#d2dfbf] [transform:perspective(300px)_rotateX(8deg)]"><div className="absolute inset-x-5 top-5 grid grid-cols-4 gap-2 rounded bg-[#355f66] p-2">{Array.from({length:12}).map((_,i)=><span key={i} className="h-3 rounded-sm bg-[#8ed7ce]" />)}</div><div className="absolute -bottom-10 left-5 h-12 w-6 bg-[#9a6a43]" /><div className="absolute -bottom-10 right-7 h-12 w-6 bg-[#9a6a43]" /></div><div className="absolute bottom-[19%] right-[15%] h-28 w-5 rotate-[-8deg] rounded-full bg-[#9a6a43]"><span className="absolute -left-12 -top-8 size-20 rounded-full bg-[#65a765]" /><span className="absolute -right-9 -top-11 size-24 rounded-full bg-[#75b86f]" /></div><div className="absolute bottom-[33%] right-[23%] h-28 w-1 bg-[#f7f8f2]"><span className="absolute -left-7 top-1 h-1 w-16 rotate-[-20deg] rounded-full bg-white" /><span className="absolute -left-7 top-1 h-1 w-16 rotate-[100deg] rounded-full bg-white" /><span className="absolute -left-7 top-1 h-1 w-16 rotate-[220deg] rounded-full bg-white" /></div><div className="absolute bottom-8 left-8 flex items-center gap-2 rounded-full border border-white/50 bg-white/25 px-3 py-2 text-xs text-white backdrop-blur"><span className="size-2 rounded-full bg-[#B8E986]" /> miniature sustainable landscape</div></div> }
-function EnergySimulator(){ const [kwh,setKwh]=useState(310); const [cut,setCut]=useState(15); const saved=Math.round(kwh*cut/100); return <div className="grid gap-8 rounded-[1.75rem] bg-[#f1f5eb] p-6 md:grid-cols-[1fr_.8fr] md:p-8"><div><div className="mb-7 flex items-center justify-between"><div><p className="text-xs font-semibold uppercase tracking-[.18em] text-[#176B4D]">Try a scenario</p><h3 className="mt-2 text-2xl font-semibold text-[#103D30]">What could one small shift change?</h3></div><Zap className="text-[#176B4D]" /></div><label className="block text-sm font-medium text-[#18241F]">Monthly electricity use <span className="font-normal text-[#66736B]">(kWh)</span><input type="range" min="80" max="800" value={kwh} onChange={e=>setKwh(+e.target.value)} className="mt-5 w-full accent-[#176B4D]" /><span className="mt-2 block text-3xl font-semibold text-[#176B4D]">{kwh} <small className="text-sm font-normal text-[#66736B]">kWh</small></span></label><label className="mt-7 block text-sm font-medium text-[#18241F]">Reduction scenario <span className="font-normal text-[#66736B]">({cut}%)</span><input type="range" min="5" max="30" step="5" value={cut} onChange={e=>setCut(+e.target.value)} className="mt-5 w-full accent-[#176B4D]" /></label><p className="mt-6 text-xs leading-5 text-[#66736B]">Scenario only. This estimate does not include tariff assumptions or guarantee future savings.</p></div><div className="flex flex-col justify-between rounded-2xl bg-[#103D30] p-6 text-white"><p className="text-sm text-[#b8e986]">Your possible shift</p><div><p className="mt-5 text-6xl font-semibold tracking-tight">{saved}</p><p className="text-sm text-white/65">kWh saved in a month</p></div><div className="border-t border-white/15 pt-4 text-sm"><div className="flex justify-between"><span className="text-white/65">Scenario energy</span><strong>{kwh-saved} kWh</strong></div><div className="mt-2 flex justify-between"><span className="text-white/65">Change</span><strong className="text-[#B8E986]">−{cut}%</strong></div></div></div></div> }
-function MissionCard({title,category,time,points,done=false}:{title:string;category:string;time:string;points:string;done?:boolean}){return <div className="flex gap-4 border-t border-[#e3e8df] py-5"><span className={`mt-1 grid size-9 shrink-0 place-items-center rounded-xl ${done?'bg-[#176B4D] text-white':'bg-[#e7f2dd] text-[#176B4D]'}`}>{done?<Check size={17}/>:<Zap size={17}/>}</span><div className="min-w-0 flex-1"><div className="flex flex-wrap items-center gap-2 text-xs text-[#66736B]"><span className="font-semibold uppercase tracking-wider text-[#176B4D]">{category}</span><span>·</span><span>{time}</span></div><h3 className="mt-1 font-semibold text-[#18241F]">{title}</h3></div><span className="text-sm font-semibold text-[#176B4D]">+{points}</span></div>}
+function NeumorphicLogo() {
+  return (
+    <Link href="/" className="flex items-center gap-3 font-extrabold tracking-tight text-[#253247]">
+      <span className="grid size-11 place-items-center rounded-2xl neu-raised text-[#238B57]">
+        <Leaf size={22} fill="currentColor" />
+      </span>
+      <div className="flex flex-col">
+        <span className="text-lg leading-tight font-extrabold">
+          LiFE <span className="font-semibold text-[#238B57]">Gujarat</span>
+        </span>
+        <span className="text-[10px] uppercase font-bold tracking-wider text-[#718096]">
+          Clean Lifestyle Platform
+        </span>
+      </div>
+    </Link>
+  )
+}
 
-export function Landing(){ const [mobile,setMobile]=useState(false); return <main className="bg-[#f7f8f2] text-[#18241F]"><header className="absolute inset-x-0 top-0 z-20"><div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 lg:px-10"><Logo/><nav className="hidden items-center gap-7 text-sm text-[#355047] lg:flex">{nav.map(([label,href])=><Link key={label} href={href} className="transition hover:text-[#176B4D]">{label}</Link>)}</nav><div className="hidden items-center gap-4 text-sm lg:flex"><button className="text-[#355047]">EN <span className="text-[#9aa79c]">/ ગુજરાતી</span></button><Link href="/login" className="font-semibold text-[#176B4D]">Sign in</Link><Button href="/register">Get started</Button></div><button aria-label="Toggle menu" onClick={()=>setMobile(!mobile)} className="grid size-10 place-items-center rounded-full border border-[#d8e2d7] lg:hidden">{mobile?<X/>:<Menu/>}</button></div>{mobile&&<nav className="mx-4 flex flex-col gap-4 rounded-2xl bg-white p-5 shadow-xl lg:hidden">{nav.map(([label,href])=><Link key={label} href={href}>{label}</Link>)}<Link href="/login" className="font-semibold text-[#176B4D]">Sign in</Link></nav>}</header><section className="relative overflow-hidden pt-32 lg:pt-40"><div className="mx-auto grid max-w-7xl items-center gap-12 px-6 pb-20 lg:grid-cols-[.9fr_1.1fr] lg:px-10 lg:pb-28"><div className="relative z-10"><div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#d7e5d2] bg-white/60 px-3 py-2 text-xs font-semibold tracking-[.14em] text-[#176B4D]"><span className="size-2 rounded-full bg-[#B8E986]" /> A SMALLER FOOTPRINT STARTS AT HOME</div><h1 className="max-w-xl text-5xl font-semibold leading-[1.02] tracking-[-.06em] text-[#103D30] sm:text-6xl lg:text-[5.2rem]">Live lighter.<br/><em className="font-normal text-[#176B4D]">Save energy.</em><br/>Shape a greener Gujarat.</h1><p className="mt-7 max-w-md text-lg leading-8 text-[#66736B]">LiFE Gujarat is your personal sustainability companion — helping you understand energy use, take meaningful action and measure the difference.</p><div className="mt-9 flex flex-wrap gap-3"><Button href="/register">Start your LiFE journey</Button><Link href="#how-it-works" className="group inline-flex items-center gap-2 rounded-full border border-[#cad8ca] px-5 py-3 text-sm font-semibold text-[#176B4D] hover:bg-white">Explore how it works <Play size={14} fill="currentColor" /></Link></div><div className="mt-12 flex gap-7 border-t border-[#e3e8df] pt-5 text-sm"><span><strong className="block text-[#176B4D]">Understand</strong><small className="text-[#66736B]">your energy</small></span><span><strong className="block text-[#176B4D]">Act</strong><small className="text-[#66736B]">with intention</small></span><span><strong className="block text-[#176B4D]">Measure</strong><small className="text-[#66736B]">your progress</small></span></div></div><MiniLandscape/></div></section><section className="border-y border-[#e3e8df] bg-white"><div className="mx-auto grid max-w-7xl gap-8 px-6 py-8 text-sm text-[#66736B] sm:grid-cols-3 lg:px-10"><div className="flex items-center gap-3"><ShieldCheck className="text-[#176B4D]"/> Personal energy insights</div><div className="flex items-center gap-3"><Flame className="text-[#176B4D]"/> Everyday sustainability missions</div><div className="flex items-center gap-3"><Users className="text-[#176B4D]"/> Community-driven impact</div></div></section><section id="how-it-works" className="mx-auto max-w-7xl px-6 py-24 lg:px-10"><div className="grid gap-12 lg:grid-cols-[.7fr_1.3fr]"><div><p className="text-xs font-semibold uppercase tracking-[.18em] text-[#176B4D]">A clearer way forward</p><h2 className="mt-4 text-4xl font-semibold tracking-[-.04em] text-[#103D30]">Small actions add up.</h2><p className="mt-5 leading-7 text-[#66736B]">No perfect households. No guilt. Just a better view of what is possible — one practical choice at a time.</p></div><div className="grid gap-5 sm:grid-cols-3">{[['01','Understand','See where your household energy goes.'],['02','Act','Turn insight into a mission you can actually do.'],['03','Measure','Watch your progress become a habit.']].map(([n,t,d])=><div key={n} className="rounded-2xl border border-[#e3e8df] bg-[#f7f8f2] p-5"><span className="text-sm font-semibold text-[#B07c2d]">{n}</span><h3 className="mt-12 text-xl font-semibold text-[#103D30]">{t}</h3><p className="mt-2 text-sm leading-6 text-[#66736B]">{d}</p></div>)}</div></div></section><section className="mx-auto max-w-7xl px-6 pb-24 lg:px-10"><EnergySimulator/></section><section id="missions" className="bg-[#103D30] text-white"><div className="mx-auto grid max-w-7xl gap-12 px-6 py-24 lg:grid-cols-[.8fr_1.2fr] lg:px-10"><div><p className="text-xs font-semibold uppercase tracking-[.18em] text-[#B8E986]">Daily missions</p><h2 className="mt-4 text-4xl font-semibold tracking-[-.04em]">Make the next choice easier.</h2><p className="mt-5 max-w-sm leading-7 text-white/65">Practical, low-friction actions designed for real homes, real routines and real progress.</p><Button href="/missions" dark>Explore missions</Button></div><div><MissionCard title="Find one unnecessary energy use" category="Energy" time="5 min" points="20" done/><MissionCard title="Review your lighting efficiency" category="Home" time="10 min" points="30"/><MissionCard title="Switch off avoidable standby" category="Everyday" time="2 min" points="15"/></div></div></section><section className="mx-auto max-w-7xl px-6 py-24 lg:px-10"><div className="grid items-center gap-12 rounded-[2rem] bg-[#e6f0df] p-8 md:p-12 lg:grid-cols-2"><div><Sun className="text-[#176B4D]" size={28}/><h2 className="mt-5 text-4xl font-semibold tracking-[-.04em] text-[#103D30]">Could your rooftop do more?</h2><p className="mt-5 max-w-md leading-7 text-[#66736B]">Explore an indicative solar scenario based on your home, your energy use and the roof you have.</p><Button href="/solar-advisor">Explore solar advisor</Button></div><div className="relative flex min-h-52 items-center justify-center overflow-hidden rounded-2xl bg-[#c4dfc2]"><div className="absolute bottom-0 h-20 w-[120%] rotate-[-7deg] bg-[#176B4D]"/><div className="relative grid w-56 rotate-[-8deg] grid-cols-4 gap-1 rounded bg-[#355f66] p-3 shadow-xl">{Array.from({length:16}).map((_,i)=><span key={i} className="h-5 rounded-sm border border-[#8ed7ce]/40 bg-[#477e82]" />)}</div></div></div></section><footer className="border-t border-[#e3e8df]"><div className="mx-auto flex max-w-7xl flex-col gap-5 px-6 py-8 text-sm text-[#66736B] sm:flex-row sm:items-center sm:justify-between lg:px-10"><Logo/><span>Small actions. Measurable impact.</span><span>© 2026 LiFE Gujarat</span></div></footer></main> }
+function NeumorphicSimulator() {
+  const [kwh, setKwh] = useState(320)
+  const [cut, setCut] = useState(15)
+  const savedKwh = Math.round((kwh * cut) / 100)
+  const savedCo2Kg = Math.round(savedKwh * 0.716) // CEA v19 factor
+  const savedInr = Math.round(savedKwh * 6.5) // Avg Gujarat residential tariff approx ₹6.5/unit
 
-function Sidebar({active}:{active:string}){return <aside className="hidden w-64 shrink-0 border-r border-[#e3e8df] bg-[#fbfcf8] p-5 lg:block"><Logo/><p className="mb-4 mt-10 px-3 text-[10px] font-semibold uppercase tracking-[.18em] text-[#9aa79c]">Your journey</p><nav className="flex flex-col gap-1">{appNav.map(([label,href,Icon])=><Link key={label} href={href} className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm ${active===label?'bg-[#e5f1df] font-semibold text-[#176B4D]':'text-[#66736B] hover:bg-[#f1f5eb]'}`}><Icon size={17}/>{label}</Link>)}</nav><div className="mt-10 rounded-2xl bg-[#103D30] p-4 text-white"><Sparkles size={18} className="text-[#B8E986]"/><p className="mt-3 text-sm font-semibold">Your next best action</p><p className="mt-1 text-xs leading-5 text-white/60">Add your latest energy reading to unlock insights.</p><Link href="/energy" className="mt-4 inline-flex text-xs font-semibold text-[#B8E986]">Add reading <ArrowRight size={13} className="ml-1"/></Link></div></aside>}
-function AppShell({active,children,title}:{active:string;children:React.ReactNode;title:string}){return <main className="min-h-screen bg-[#f7f8f2] text-[#18241F]"><div className="flex min-h-screen"><Sidebar active={active}/><div className="min-w-0 flex-1"><header className="flex h-20 items-center justify-between border-b border-[#e3e8df] bg-[#fbfcf8] px-6 lg:px-10"><div><p className="text-xs text-[#9aa79c]">Thursday, October 29, 2026</p><h1 className="mt-1 text-xl font-semibold text-[#103D30]">{title}</h1></div><div className="flex items-center gap-3"><button aria-label="Search" className="hidden size-9 place-items-center rounded-full border border-[#e3e8df] bg-white sm:grid"><Search size={16}/></button><button aria-label="Notifications" className="grid size-9 place-items-center rounded-full border border-[#e3e8df] bg-white"><Bell size={16}/></button><div className="grid size-9 place-items-center rounded-full bg-[#176B4D] text-sm font-semibold text-white">AK</div></div></header><div className="p-6 lg:p-10">{children}</div></div></div></main>}
-export function Dashboard(){return <AppShell active="Overview" title="Good morning, Aditi"><div className="mb-8 flex flex-wrap items-end justify-between gap-4"><div><p className="text-[#66736B]">Here is your sustainability progress.</p></div><Button href="/energy"><Plus size={16}/>Add energy reading</Button></div><div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">{[['Monthly energy','310 kWh','No reading this month','Zap'],['Current streak','6 days','Keep the rhythm going','Flame'],['Mission points','420 pts','+85 this week','Trophy'],['Solar advisor','Not started','Explore your potential','Sun']].map(([a,b,c,d])=><div key={a} className="rounded-2xl border border-[#e3e8df] bg-white p-5"><div className="flex justify-between text-sm text-[#66736B]"><span>{a}</span><Zap size={17} className="text-[#176B4D]"/></div><p className="mt-5 text-2xl font-semibold text-[#103D30]">{b}</p><p className="mt-1 text-xs text-[#66736B]">{c}</p></div>)}</div><div className="mt-6 grid gap-6 xl:grid-cols-[1.35fr_.65fr]"><div className="rounded-2xl border border-[#e3e8df] bg-white p-6"><div className="flex items-start justify-between"><div><p className="text-sm font-semibold text-[#103D30]">Household energy trend</p><p className="mt-1 text-xs text-[#66736B]">Add readings to see your real monthly pattern.</p></div><BarChart3 className="text-[#176B4D]"/></div><div className="mt-8 flex h-48 items-end gap-3 border-b border-l border-[#e3e8df] px-4 pb-0">{[32,45,38,57,44,68,50,73,61,48,66,54].map((h,i)=><div key={i} className="group flex flex-1 flex-col items-center gap-2"><div className="w-full rounded-t-md bg-[#cfe4c5] transition group-hover:bg-[#176B4D]" style={{height:`${h}%`}}/><span className="text-[10px] text-[#9aa79c]">{['N','D','J','F','M','A','M','J','J','A','S','O'][i]}</span></div>)}</div></div><div className="rounded-2xl bg-[#103D30] p-6 text-white"><p className="text-sm text-[#B8E986]">Recommended next step</p><h3 className="mt-4 text-2xl font-semibold">Understand your baseline.</h3><p className="mt-3 text-sm leading-6 text-white/65">A single recent reading gives your dashboard a starting point for meaningful comparisons.</p><Link href="/energy" className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-[#B8E986]">Add a reading <ArrowRight size={15}/></Link></div></div><div className="mt-6 rounded-2xl border border-[#e3e8df] bg-white p-6"><div className="flex items-center justify-between"><div><p className="text-sm font-semibold text-[#103D30]">This week&apos;s missions</p><p className="mt-1 text-xs text-[#66736B]">One small action is still an action.</p></div><Link href="/missions" className="text-sm font-semibold text-[#176B4D]">View all</Link></div><div className="mt-3 grid gap-0 md:grid-cols-3"><MissionCard title="Find one unnecessary energy use" category="Energy" time="5 min" points="20" done/><MissionCard title="Review your lighting efficiency" category="Home" time="10 min" points="30"/><MissionCard title="Switch off avoidable standby" category="Everyday" time="2 min" points="15"/></div></div></AppShell>}
-export function Workspace({slug}:{slug:string}){ const config:{[key:string]:[string,string,string]}={energy:['My Energy','Build a clearer picture of your household use.','Add a reading to start your personal history.'],footprint:['My Footprint','Transparent estimates, with the assumptions in view.','Your footprint will appear when energy data is available.'],missions:['Daily Missions','Practical actions for real homes and routines.','Choose a mission to begin building your streak.'],['energy-coach']:['AI Energy Coach','A thoughtful guide for your next energy decision.','Add context or ask a question to get started.'],['solar-advisor']:['Solar Advisor','Explore what your rooftop could make possible.','Tell us a little about your home to build a scenario.'],community:['Community','Progress is better when it is shared.','Discover a community challenge near you.'],rewards:['Rewards','Celebrate consistency, not perfection.','Complete missions to unlock your first milestone.'],learn:['Learn & Explore','Useful ideas for lower-impact everyday living.','Search guides by topic or action.'],reports:['My Reports','Your personal impact, in one place.','Complete a few actions to generate your first report.'],settings:['Settings','Make LiFE Gujarat work for you.','Manage your profile, language and privacy choices.']}; const [title,desc,empty]=config[slug]||['Workspace','Your sustainability workspace.','This area is ready for your next action.']; return <AppShell active={title} title={title}><div className="mx-auto max-w-5xl"><div className="rounded-[2rem] bg-[#103D30] p-8 text-white md:p-12"><p className="text-xs font-semibold uppercase tracking-[.18em] text-[#B8E986]">LiFE workspace</p><h2 className="mt-4 max-w-xl text-4xl font-semibold tracking-[-.04em]">{desc}</h2><p className="mt-4 max-w-lg text-white/65">{empty}</p><div className="mt-8 flex flex-wrap gap-3"><Button href={slug==='solar-advisor'?'/register':'/energy'} dark>{slug==='solar-advisor'?'Start assessment':'Take the next step'}</Button><Link href="/" className="inline-flex items-center rounded-full border border-white/20 px-5 py-3 text-sm font-semibold text-white">Back to overview</Link></div></div><div className="mt-6 grid gap-4 md:grid-cols-3"><div className="rounded-2xl border border-[#e3e8df] bg-white p-6"><Leaf className="text-[#176B4D]"/><h3 className="mt-8 font-semibold text-[#103D30]">Clear context</h3><p className="mt-2 text-sm leading-6 text-[#66736B]">See the source, assumptions and confidence behind every insight.</p></div><div className="rounded-2xl border border-[#e3e8df] bg-white p-6"><Check className="text-[#176B4D]"/><h3 className="mt-8 font-semibold text-[#103D30]">Practical progress</h3><p className="mt-2 text-sm leading-6 text-[#66736B]">Small actions are easier to sustain than perfect plans.</p></div><div className="rounded-2xl border border-[#e3e8df] bg-white p-6"><Users className="text-[#176B4D]"/><h3 className="mt-8 font-semibold text-[#103D30]">Shared impact</h3><p className="mt-2 text-sm leading-6 text-[#66736B]">Your personal journey can connect to community action.</p></div></div></div></AppShell> }
-export function Auth({register=false}:{register?:boolean}){return <main className="grid min-h-screen lg:grid-cols-[1.1fr_.9fr]"><div className="relative hidden overflow-hidden bg-[#103D30] p-10 text-white lg:block"><div className="absolute -right-28 -top-28 size-96 rounded-full bg-[#176B4D]"/><div className="relative z-10"><Logo light/><div className="mt-[27vh] max-w-lg"><p className="text-xs font-semibold uppercase tracking-[.18em] text-[#B8E986]">Small actions. Measurable impact.</p><h1 className="mt-5 text-6xl font-semibold leading-[1.02] tracking-[-.06em]">Your everyday choices can change tomorrow.</h1><p className="mt-7 max-w-md text-lg leading-8 text-white/65">Track your energy. Take meaningful action. Make a measurable difference.</p><div className="mt-10 grid gap-4 text-sm text-white/75"><span className="flex gap-3"><Check className="text-[#B8E986]"/> Personal energy insights</span><span className="flex gap-3"><Check className="text-[#B8E986]"/> Everyday sustainability missions</span><span className="flex gap-3"><Check className="text-[#B8E986]"/> Community-driven impact</span></div></div></div></div><div className="flex items-center justify-center bg-[#f7f8f2] p-6"><div className="w-full max-w-md"><div className="lg:hidden"><Logo/></div><div className="mt-12 lg:mt-0"><p className="text-xs font-semibold uppercase tracking-[.18em] text-[#176B4D]">Welcome to your journey</p><h2 className="mt-4 text-4xl font-semibold tracking-[-.04em] text-[#103D30]">{register?'Create your account.':'Welcome back.'}</h2><p className="mt-3 text-[#66736B]">{register?'Build a clearer relationship with the energy you use.':'Pick up where you left off.'}</p><form className="mt-9 flex flex-col gap-5" onSubmit={e=>{e.preventDefault(); window.location.href='/dashboard'}}>{register&&<label className="text-sm font-medium text-[#355047]">Full name<input required className="mt-2 w-full rounded-xl border border-[#cbd8ca] bg-white px-4 py-3 text-[#103D30] placeholder:text-[#8b9990] outline-none focus:border-[#176B4D] focus:ring-2 focus:ring-[#B8E986]/60" placeholder="Aditi Shah"/></label>}<label className="text-sm font-medium text-[#355047]">Email address<input required type="email" className="mt-2 w-full rounded-xl border border-[#cbd8ca] bg-white px-4 py-3 text-[#103D30] placeholder:text-[#8b9990] outline-none focus:border-[#176B4D] focus:ring-2 focus:ring-[#B8E986]/60" placeholder="you@example.com"/></label><label className="text-sm font-medium text-[#355047]">Password<input required type="password" className="mt-2 w-full rounded-xl border border-[#cbd8ca] bg-white px-4 py-3 text-[#103D30] placeholder:text-[#8b9990] outline-none focus:border-[#176B4D] focus:ring-2 focus:ring-[#B8E986]/60" placeholder="••••••••"/></label>{register&&<label className="flex gap-3 text-sm text-[#66736B]"><input type="checkbox" required className="mt-1 accent-[#176B4D]"/>I agree to the privacy policy and terms.</label>}<button className="mt-2 flex items-center justify-center gap-2 rounded-full bg-[#176B4D] px-5 py-3.5 font-semibold text-white hover:bg-[#103D30]">{register?'Create account':'Sign in'} <ArrowRight size={16}/></button></form><p className="mt-7 text-center text-sm text-[#66736B]">{register?'Already have an account? ':'New to LiFE Gujarat? '}<Link href={register?'/login':'/register'} className="font-semibold text-[#176B4D]">{register?'Sign in':'Create an account'}</Link></p></div></div></div></main>}
+  return (
+    <div className="rounded-3xl neu-raised p-6 md:p-10">
+      <div className="grid gap-8 lg:grid-cols-[1.2fr_.8fr]">
+        <div>
+          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#238B57]">
+            <Sliders size={16} /> Interactive Household Simulator
+          </div>
+          <h3 className="mt-2 text-2xl sm:text-3xl font-extrabold tracking-tight text-[#253247]">
+            What could one conscious shift achieve?
+          </h3>
+          <p className="mt-2 text-xs sm:text-sm text-[#718096] leading-relaxed">
+            Adjust your monthly electricity consumption and realistic reduction target to see your real impact in kWh, CO₂, and money saved.
+          </p>
+
+          <div className="mt-8 space-y-6">
+            <div>
+              <div className="flex justify-between text-xs font-bold text-[#253247] mb-2">
+                <span className="text-[#718096]">Current Monthly Electricity (kWh)</span>
+                <span className="text-base text-[#238B57] tabular-nums">{kwh} kWh</span>
+              </div>
+              <div className="rounded-2xl neu-inset p-2">
+                <input
+                  type="range"
+                  min="80"
+                  max="800"
+                  step="10"
+                  value={kwh}
+                  onChange={(e) => setKwh(+e.target.value)}
+                  className="w-full accent-[#238B57] cursor-pointer"
+                />
+              </div>
+            </div>
+
+            <div>
+              <div className="flex justify-between text-xs font-bold text-[#253247] mb-2">
+                <span className="text-[#718096]">Efficiency Target Reduction (%)</span>
+                <span className="text-base text-[#238B57] tabular-nums">−{cut}%</span>
+              </div>
+              <div className="rounded-2xl neu-inset p-2">
+                <input
+                  type="range"
+                  min="5"
+                  max="35"
+                  step="5"
+                  value={cut}
+                  onChange={(e) => setCut(+e.target.value)}
+                  className="w-full accent-[#238B57] cursor-pointer"
+                />
+              </div>
+            </div>
+          </div>
+
+          <p className="mt-6 text-[11px] text-[#718096]">
+            *Calculated using Central Electricity Authority (CEA) Baseline Database v19.0 weighted grid emission factor (0.716 kg CO₂e/kWh) and standard Gujarat discom slabs.
+          </p>
+        </div>
+
+        {/* Results Panel */}
+        <div className="flex flex-col justify-between rounded-3xl neu-inset p-6 sm:p-8">
+          <div>
+            <div className="inline-flex items-center gap-1.5 rounded-xl neu-raised-sm px-3 py-1 text-xs font-bold text-[#238B57]">
+              <Sparkles size={13} /> Projected Monthly Gains
+            </div>
+            <div className="mt-6">
+              <span className="text-5xl sm:text-6xl font-extrabold tracking-tight text-[#238B57] tabular-nums">
+                {savedKwh}
+              </span>
+              <span className="text-sm font-bold text-[#718096] ml-2">kWh avoided / mo</span>
+            </div>
+          </div>
+
+          <div className="mt-8 space-y-3.5 border-t border-[rgba(197,202,208,0.35)] pt-6 text-xs">
+            <div className="flex items-center justify-between">
+              <span className="text-[#718096]">Carbon Avoided:</span>
+              <strong className="text-base font-extrabold text-[#253247] tabular-nums">{savedCo2Kg} kg CO₂e</strong>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-[#718096]">Estimated Bill Savings:</span>
+              <strong className="text-base font-extrabold text-[#238B57] tabular-nums">₹{savedInr.toLocaleString('en-IN')}/mo</strong>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-[#718096]">Adjusted Consumption:</span>
+              <span className="font-bold text-[#253247] tabular-nums">{kwh - savedKwh} kWh</span>
+            </div>
+          </div>
+
+          <div className="mt-8">
+            <Link
+              href="/register"
+              className="flex w-full items-center justify-center gap-2 rounded-2xl neu-button-primary py-3.5 text-xs font-bold"
+            >
+              Lock In This Scenario <ArrowRight size={14} />
+            </Link>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function MissionCard({
+  title,
+  category,
+  time,
+  points,
+  done = false,
+}: {
+  title: string
+  category: string
+  time: string
+  points: string
+  done?: boolean
+}) {
+  return (
+    <div className="flex items-center gap-4 rounded-2xl neu-raised-sm p-4 transition hover:neu-raised">
+      <span
+        className={`grid size-11 shrink-0 place-items-center rounded-2xl ${
+          done ? 'neu-button text-[#238B57]' : 'neu-inset text-[#238B57]'
+        }`}
+      >
+        {done ? <Check size={18} strokeWidth={3} /> : <Zap size={18} />}
+      </span>
+      <div className="min-w-0 flex-1">
+        <div className="flex items-center gap-2 text-[11px] text-[#718096]">
+          <span className="font-bold uppercase tracking-wider text-[#238B57]">{category}</span>
+          <span>·</span>
+          <span>{time}</span>
+        </div>
+        <h4 className="mt-0.5 text-sm font-extrabold text-[#253247] truncate">{title}</h4>
+      </div>
+      <span className="rounded-xl neu-inset-sm px-2.5 py-1 text-xs font-extrabold text-[#238B57]">
+        +{points} pts
+      </span>
+    </div>
+  )
+}
+
+export function Landing() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
+  return (
+    <div className="min-h-screen bg-[#E8EDF3] text-[#253247]">
+      {/* Top Navbar */}
+      <header className="sticky top-0 z-30 border-b border-[rgba(197,202,208,0.35)] bg-[#E8EDF3]/95 backdrop-blur px-6 py-4 lg:px-12">
+        <div className="mx-auto flex max-w-7xl items-center justify-between">
+          <NeumorphicLogo />
+
+          <nav className="hidden items-center gap-8 text-sm font-bold text-[#718096] lg:flex">
+            {navLinks.map(([label, href]) => (
+              <Link key={label} href={href} className="transition hover:text-[#238B57]">
+                {label}
+              </Link>
+            ))}
+          </nav>
+
+          <div className="hidden items-center gap-3.5 lg:flex">
+            <Link
+              href="/login"
+              className="rounded-2xl neu-button px-5 py-2.5 text-xs font-bold text-[#253247]"
+            >
+              Citizen Sign In
+            </Link>
+            <Link
+              href="/register"
+              className="rounded-2xl neu-button-primary px-5 py-2.5 text-xs font-bold"
+            >
+              Get Started Free
+            </Link>
+          </div>
+
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="grid size-10 place-items-center rounded-2xl neu-button text-[#253247] lg:hidden"
+            aria-label="Toggle Navigation"
+          >
+            {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
+          </button>
+        </div>
+
+        {/* Mobile Dropdown */}
+        {mobileMenuOpen && (
+          <nav className="mt-4 flex flex-col gap-2 rounded-3xl neu-raised p-5 lg:hidden">
+            {navLinks.map(([label, href]) => (
+              <Link
+                key={label}
+                href={href}
+                onClick={() => setMobileMenuOpen(false)}
+                className="rounded-xl px-3 py-2 text-sm font-bold text-[#718096] hover:neu-inset-sm hover:text-[#238B57]"
+              >
+                {label}
+              </Link>
+            ))}
+            <div className="mt-3 flex flex-col gap-2 border-t border-[rgba(197,202,208,0.3)] pt-3">
+              <Link
+                href="/login"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex justify-center rounded-2xl neu-button py-2.5 text-xs font-bold text-[#253247]"
+              >
+                Sign In
+              </Link>
+              <Link
+                href="/register"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex justify-center rounded-2xl neu-button-primary py-2.5 text-xs font-bold"
+              >
+                Create Free Account
+              </Link>
+            </div>
+          </nav>
+        )}
+      </header>
+
+      {/* Hero Section */}
+      <section className="relative px-6 pt-16 pb-20 lg:px-12 lg:pt-24 lg:pb-32 overflow-hidden">
+        <div className="mx-auto max-w-7xl">
+          <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_.9fr]">
+            <div>
+              <div className="inline-flex items-center gap-2 rounded-2xl neu-inset px-3.5 py-1.5 text-xs font-bold text-[#238B57]">
+                <Sparkles size={14} /> MISSION LiFE · GUJARAT CLIMATE INITIATIVE
+              </div>
+
+              <h1 className="mt-6 text-4xl font-extrabold leading-[1.1] tracking-tight text-[#253247] sm:text-5xl lg:text-6xl">
+                Live lighter. <br />
+                <span className="text-[#238B57]">Save electricity.</span> <br />
+                Shape a greener Gujarat.
+              </h1>
+
+              <p className="mt-6 max-w-xl text-base sm:text-lg leading-relaxed text-[#718096]">
+                LiFE Gujarat empowers households across Ahmedabad, Surat, Vadodara, Rajkot, and all 33 districts to track electricity usage, adopt rooftop solar, and verify real carbon reductions.
+              </p>
+
+              <div className="mt-8 flex flex-wrap items-center gap-4">
+                <Link
+                  href="/register"
+                  className="inline-flex items-center gap-2 rounded-2xl neu-button-primary px-6 py-3.5 text-sm font-bold shadow-md"
+                >
+                  Start Your Journey <ArrowRight size={16} />
+                </Link>
+                <Link
+                  href="/login"
+                  className="inline-flex items-center gap-2 rounded-2xl neu-button px-6 py-3.5 text-sm font-bold text-[#253247]"
+                >
+                  One-Click Demo Access
+                </Link>
+              </div>
+
+              {/* 3 Pillars strip */}
+              <div className="mt-12 grid grid-cols-3 gap-4 border-t border-[rgba(197,202,208,0.35)] pt-6">
+                <div>
+                  <strong className="block text-sm font-extrabold text-[#238B57]">Understand</strong>
+                  <span className="text-xs text-[#718096]">Actual consumption</span>
+                </div>
+                <div>
+                  <strong className="block text-sm font-extrabold text-[#238B57]">Act</strong>
+                  <span className="text-xs text-[#718096]">Daily micro-habits</span>
+                </div>
+                <div>
+                  <strong className="block text-sm font-extrabold text-[#238B57]">Measure</strong>
+                  <span className="text-xs text-[#718096]">CEA carbon savings</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Extruded Hero Interactive Mockup */}
+            <div className="rounded-3xl neu-raised p-6 sm:p-8 space-y-5">
+              <div className="flex items-center justify-between border-b border-[rgba(197,202,208,0.35)] pb-4">
+                <div className="flex items-center gap-2.5">
+                  <span className="grid size-9 place-items-center rounded-xl neu-inset text-[#238B57]">
+                    <Zap size={18} />
+                  </span>
+                  <div>
+                    <h4 className="text-sm font-extrabold text-[#253247]">Household Meter Live Hub</h4>
+                    <p className="text-[11px] text-[#718096]">UGVCL / DGVCL / MGVCL / PGVCL</p>
+                  </div>
+                </div>
+                <span className="rounded-xl neu-inset-sm px-2.5 py-1 text-[10px] font-bold text-[#238B57]">
+                  Verified
+                </span>
+              </div>
+
+              {/* Mini KPI row */}
+              <div className="grid grid-cols-2 gap-3">
+                <div className="rounded-2xl neu-inset p-3.5 text-center">
+                  <p className="text-[10px] font-bold uppercase text-[#718096]">Last Month</p>
+                  <p className="text-2xl font-extrabold text-[#253247] mt-1 tabular-nums">280 kWh</p>
+                  <p className="text-[10px] font-bold text-[#238B57] mt-0.5">−12% vs benchmark</p>
+                </div>
+                <div className="rounded-2xl neu-inset p-3.5 text-center">
+                  <p className="text-[10px] font-bold uppercase text-[#718096]">CO₂e Footprint</p>
+                  <p className="text-2xl font-extrabold text-[#253247] mt-1 tabular-nums">200 kg</p>
+                  <p className="text-[10px] text-[#718096] mt-0.5">CEA v19 factor</p>
+                </div>
+              </div>
+
+              {/* Interactive preview missions */}
+              <div className="space-y-2.5 pt-2">
+                <p className="text-xs font-bold uppercase tracking-wider text-[#718096]">Featured Today</p>
+                <MissionCard title="Set AC thermostat to 24°C" category="Cooling" time="2 min" points="25" done />
+                <MissionCard title="Audit phantom vampire loads" category="Home" time="5 min" points="30" />
+              </div>
+
+              <div className="rounded-2xl neu-raised-sm p-4 text-xs flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Sun size={18} className="text-[#d97706]" />
+                  <div>
+                    <p className="font-bold text-[#253247]">PM Surya Ghar Scheme</p>
+                    <p className="text-[11px] text-[#718096]">Up to ₹78,000 direct subsidy</p>
+                  </div>
+                </div>
+                <Link href="/solar-advisor" className="font-bold text-[#238B57] hover:underline">
+                  Calculate →
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* State Environmental Impact Statistics */}
+      <section className="px-6 py-12 lg:px-12 border-y border-[rgba(197,202,208,0.35)]">
+        <div className="mx-auto max-w-7xl">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="rounded-3xl neu-raised p-6 text-center">
+              <span className="text-3xl sm:text-4xl font-extrabold text-[#238B57] tabular-nums">4.2M+</span>
+              <p className="mt-2 text-xs font-bold uppercase tracking-wider text-[#718096]">Units (kWh) Tracked</p>
+            </div>
+            <div className="rounded-3xl neu-raised p-6 text-center">
+              <span className="text-3xl sm:text-4xl font-extrabold text-[#253247] tabular-nums">3,000+</span>
+              <p className="mt-2 text-xs font-bold uppercase tracking-wider text-[#718096]">MT CO₂e Avoided</p>
+            </div>
+            <div className="rounded-3xl neu-raised p-6 text-center">
+              <span className="text-3xl sm:text-4xl font-extrabold text-[#238B57] tabular-nums">₹2.1 Cr</span>
+              <p className="mt-2 text-xs font-bold uppercase tracking-wider text-[#718096]">Citizen Bill Savings</p>
+            </div>
+            <div className="rounded-3xl neu-raised p-6 text-center">
+              <span className="text-3xl sm:text-4xl font-extrabold text-[#253247] tabular-nums">33 Districts</span>
+              <p className="mt-2 text-xs font-bold uppercase tracking-wider text-[#718096]">Gujarat State Network</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* How it Works Section */}
+      <section id="how-it-works" className="px-6 py-24 lg:px-12">
+        <div className="mx-auto max-w-7xl">
+          <div className="text-center max-w-2xl mx-auto mb-16">
+            <div className="inline-flex items-center gap-1.5 rounded-xl neu-inset-sm px-3 py-1 text-xs font-bold text-[#238B57]">
+              HOW IT WORKS
+            </div>
+            <h2 className="mt-3 text-3xl sm:text-4xl font-extrabold tracking-tight text-[#253247]">
+              Practical climate action, made effortless
+            </h2>
+            <p className="mt-3 text-sm text-[#718096] leading-relaxed">
+              No radical sacrifices or extreme lifestyles. Just three straightforward habits that save you money and protect Gujarat&apos;s ecology.
+            </p>
+          </div>
+
+          <div className="grid gap-8 md:grid-cols-3">
+            {[
+              {
+                num: '01',
+                title: 'Track Consumption',
+                desc: 'Log monthly electricity readings manually, upload your bill, or inspect your DISCOM consumer slab.',
+                icon: Zap,
+              },
+              {
+                num: '02',
+                title: 'Complete LiFE Missions',
+                desc: 'Take on bite-sized, 2-minute to 15-minute daily challenges to cut phantom loads and optimize cooling.',
+                icon: CheckSquare,
+              },
+              {
+                num: '03',
+                title: 'Earn & Export Proof',
+                desc: 'Redeem LiFE reward points, unlock verifiable impact badges, and export printable statements.',
+                icon: Trophy,
+              },
+            ].map((step) => {
+              const Icon = step.icon
+              return (
+                <div key={step.num} className="rounded-3xl neu-raised p-8 flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <span className="grid size-12 place-items-center rounded-2xl neu-inset text-[#238B57]">
+                        <Icon size={22} />
+                      </span>
+                      <span className="text-2xl font-extrabold text-[#718096]/50">{step.num}</span>
+                    </div>
+                    <h3 className="mt-6 text-xl font-extrabold text-[#253247]">{step.title}</h3>
+                    <p className="mt-2 text-xs sm:text-sm text-[#718096] leading-relaxed">{step.desc}</p>
+                  </div>
+                  <div className="mt-6 border-t border-[rgba(197,202,208,0.35)] pt-4">
+                    <span className="text-xs font-bold text-[#238B57]">Seamless onboarding →</span>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Interactive Simulator Section */}
+      <section className="px-6 pb-24 lg:px-12">
+        <div className="mx-auto max-w-7xl">
+          <NeumorphicSimulator />
+        </div>
+      </section>
+
+      {/* Solar Advisor Promo Banner */}
+      <section className="px-6 pb-24 lg:px-12">
+        <div className="mx-auto max-w-7xl rounded-3xl neu-raised p-8 sm:p-12">
+          <div className="grid items-center gap-8 lg:grid-cols-2">
+            <div>
+              <div className="inline-flex items-center gap-1.5 rounded-xl neu-inset-sm px-3 py-1 text-xs font-bold text-[#d97706]">
+                <Sun size={14} /> PM SURYA GHAR MUFT BIJLI YOJANA
+              </div>
+              <h2 className="mt-4 text-3xl sm:text-4xl font-extrabold tracking-tight text-[#253247]">
+                Could your rooftop generate zero-bill power?
+              </h2>
+              <p className="mt-3 text-sm text-[#718096] leading-relaxed max-w-lg">
+                Gujarat enjoys over 300 days of bright sunshine. Calculate rooftop solar feasibility, central DBT subsidies (up to ₹78,000), net metering, and payback period in seconds.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-4">
+                <Link
+                  href="/solar-advisor"
+                  className="rounded-2xl neu-button-primary px-6 py-3.5 text-xs font-bold"
+                >
+                  Open Solar Advisor
+                </Link>
+                <Link
+                  href="/energy"
+                  className="rounded-2xl neu-button px-6 py-3.5 text-xs font-bold text-[#253247]"
+                >
+                  Review Energy First
+                </Link>
+              </div>
+            </div>
+
+            <div className="rounded-3xl neu-inset p-6 sm:p-8 space-y-4">
+              <div className="flex items-center justify-between text-xs font-bold">
+                <span className="text-[#718096]">Sample 3 kW Rooftop System</span>
+                <span className="text-[#238B57]">Ahmedabad / Surat</span>
+              </div>
+              <div className="grid grid-cols-3 gap-3 text-center">
+                <div className="rounded-2xl neu-raised p-3">
+                  <p className="text-[10px] text-[#718096] uppercase font-bold">Cost Est.</p>
+                  <p className="text-base font-extrabold text-[#253247] mt-1">₹1.45 L</p>
+                </div>
+                <div className="rounded-2xl neu-raised p-3">
+                  <p className="text-[10px] text-[#238B57] uppercase font-bold">DBT Subsidy</p>
+                  <p className="text-base font-extrabold text-[#238B57] mt-1">₹78,000</p>
+                </div>
+                <div className="rounded-2xl neu-raised p-3">
+                  <p className="text-[10px] text-[#718096] uppercase font-bold">Net Outlay</p>
+                  <p className="text-base font-extrabold text-[#253247] mt-1">₹67,000</p>
+                </div>
+              </div>
+              <p className="text-[11px] text-[#718096] text-center pt-2">
+                Estimated payback: <strong>~3.1 years</strong> at current DISCOM tariffs.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="border-t border-[rgba(197,202,208,0.35)] px-6 py-12 lg:px-12 bg-[#E8EDF3]">
+        <div className="mx-auto max-w-7xl flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between text-xs text-[#718096]">
+          <NeumorphicLogo />
+          <div className="flex flex-wrap gap-6 font-bold text-[#718096]">
+            <Link href="/login" className="hover:text-[#238B57]">Citizen Portal</Link>
+            <Link href="/admin" className="hover:text-[#238B57]">Directorate Admin</Link>
+            <Link href="/solar-advisor" className="hover:text-[#238B57]">Solar Advisor</Link>
+            <Link href="/learn" className="hover:text-[#238B57]">Guides</Link>
+          </div>
+          <p>© 2026 Climate Change Department, Government of Gujarat.</p>
+        </div>
+      </footer>
+    </div>
+  )
+}
+
+// Keep legacy named exports so any direct references continue working seamlessly
+export function Dashboard() {
+  return null
+}
+export function Workspace({ slug }: { slug: string }) {
+  return null
+}
+export function Auth({ register = false }: { register?: boolean }) {
+  return null
+}

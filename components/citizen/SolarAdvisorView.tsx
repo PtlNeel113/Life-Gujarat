@@ -49,10 +49,8 @@ export function SolarAdvisorView() {
   }
 
   const baseResult: SolarCalculationResult = calculateSolarFeasibility(inputs)
-  // If user selected a capacity comparison pill
   const activeCapacity = overrideCapacity !== null ? overrideCapacity : baseResult.recommendedCapacityKw
 
-  // Recalculate tailored metrics for the active capacity
   const annualGeneration = Math.round(activeCapacity * 1450)
   const annualSavings = Math.round(annualGeneration * 6.20)
   const grossCost = Math.round(activeCapacity * 55000)
@@ -98,20 +96,22 @@ export function SolarAdvisorView() {
 
       {/* Main Grid: Calculator Inputs & Realtime Outputs */}
       <div className="grid gap-8 lg:grid-cols-[1fr_1.1fr]">
-        {/* Left Card: Input Parameters */}
-        <div className="rounded-3xl border border-[#E3E8DF] bg-white p-6 shadow-sm sm:p-8 space-y-6">
-          <div className="flex items-center gap-2 border-b border-[#F0F3EC] pb-4">
-            <Sliders size={18} className="text-[#176B4D]" />
-            <h3 className="text-base font-bold text-[#103D30]">Household Rooftop Inputs</h3>
+        {/* Left Card: Input Parameters with Neumorphism */}
+        <div className="rounded-3xl neu-raised p-6 sm:p-8 space-y-6">
+          <div className="flex items-center gap-2 border-b border-[rgba(197,202,208,0.35)] pb-4">
+            <Sliders size={18} className="text-[#238B57]" />
+            <h3 className="text-base font-extrabold text-[#253247]">Household Rooftop Inputs</h3>
           </div>
 
           <div className="space-y-4">
             <div>
-              <label className="block text-xs font-bold text-[#103D30]">District in Gujarat</label>
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#718096] mb-1.5">
+                District in Gujarat
+              </label>
               <select
                 value={district}
                 onChange={(e) => setDistrict(e.target.value)}
-                className="mt-1.5 w-full rounded-xl border border-[#D7E2D3] bg-[#FBFCF8] p-2.5 text-xs font-semibold text-[#103D30] outline-none focus:border-[#176B4D]"
+                className="w-full appearance-none rounded-2xl neu-input py-2.5 px-4 text-xs font-bold text-[#253247] cursor-pointer"
               >
                 {gujaratDistricts.map((d) => (
                   <option key={d} value={d}>
@@ -122,31 +122,36 @@ export function SolarAdvisorView() {
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-[#103D30]">
-                Monthly Electricity Consumption: <span className="text-[#176B4D]">{monthlyKwh} kWh</span>
-              </label>
-              <input
-                type="range"
-                min="80"
-                max="800"
-                step="10"
-                value={monthlyKwh}
-                onChange={(e) => setMonthlyKwh(parseInt(e.target.value))}
-                className="mt-2 w-full accent-[#176B4D]"
-              />
-              <div className="flex justify-between text-[11px] text-[#8E9B92]">
+              <div className="flex justify-between items-center text-xs font-bold text-[#253247] mb-1.5">
+                <span className="text-[#718096]">Monthly Electricity:</span>
+                <span className="text-[#238B57] tabular-nums">{monthlyKwh} kWh</span>
+              </div>
+              <div className="rounded-2xl neu-inset p-2">
+                <input
+                  type="range"
+                  min="80"
+                  max="800"
+                  step="10"
+                  value={monthlyKwh}
+                  onChange={(e) => setMonthlyKwh(parseInt(e.target.value))}
+                  className="w-full accent-[#238B57] cursor-pointer"
+                />
+              </div>
+              <div className="flex justify-between text-[11px] text-[#718096] mt-1">
                 <span>80 kWh (Small)</span>
-                <span>300 kWh (Avg Gujarat)</span>
-                <span>800 kWh (Large home)</span>
+                <span>300 kWh (Avg)</span>
+                <span>800 kWh (Large)</span>
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-[#103D30]">Property Structure</label>
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#718096] mb-1.5">
+                Property Structure
+              </label>
               <select
                 value={propertyType}
                 onChange={(e) => setPropertyType(e.target.value)}
-                className="mt-1.5 w-full rounded-xl border border-[#D7E2D3] bg-[#FBFCF8] p-2.5 text-xs font-semibold text-[#103D30] outline-none focus:border-[#176B4D]"
+                className="w-full appearance-none rounded-2xl neu-input py-2.5 px-4 text-xs font-bold text-[#253247] cursor-pointer"
               >
                 <option value="apartment">Apartment Penthouse / Society Terrace</option>
                 <option value="individual_bungalow">Individual Bungalow / Villa</option>
@@ -156,50 +161,60 @@ export function SolarAdvisorView() {
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-[#103D30]">
-                Usable Roof Area: <span className="text-[#176B4D]">{roofAreaSqFt} sq ft</span>
-              </label>
-              <input
-                type="range"
-                min="100"
-                max="1500"
-                step="50"
-                value={roofAreaSqFt}
-                onChange={(e) => setRoofAreaSqFt(parseInt(e.target.value))}
-                className="mt-2 w-full accent-[#176B4D]"
-              />
-              <span className="text-[11px] text-[#8E9B92]">Approx 100 sq ft shadow-free area needed per 1 kWp capacity</span>
+              <div className="flex justify-between items-center text-xs font-bold text-[#253247] mb-1.5">
+                <span className="text-[#718096]">Usable Roof Area:</span>
+                <span className="text-[#238B57] tabular-nums">{roofAreaSqFt} sq ft</span>
+              </div>
+              <div className="rounded-2xl neu-inset p-2">
+                <input
+                  type="range"
+                  min="100"
+                  max="1500"
+                  step="50"
+                  value={roofAreaSqFt}
+                  onChange={(e) => setRoofAreaSqFt(parseInt(e.target.value))}
+                  className="w-full accent-[#238B57] cursor-pointer"
+                />
+              </div>
+              <span className="text-[11px] text-[#718096] block mt-1">
+                Approx 100 sq ft shadow-free area needed per 1 kWp capacity
+              </span>
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-[#103D30]">
-                Roof Shading / Obstacles: <span className="text-[#176B4D]">{roofShadingPercent}%</span>
-              </label>
-              <input
-                type="range"
-                min="0"
-                max="40"
-                step="5"
-                value={roofShadingPercent}
-                onChange={(e) => setRoofShadingPercent(parseInt(e.target.value))}
-                className="mt-2 w-full accent-[#176B4D]"
-              />
+              <div className="flex justify-between items-center text-xs font-bold text-[#253247] mb-1.5">
+                <span className="text-[#718096]">Roof Shading / Obstacles:</span>
+                <span className="text-[#d97706] tabular-nums">{roofShadingPercent}%</span>
+              </div>
+              <div className="rounded-2xl neu-inset p-2">
+                <input
+                  type="range"
+                  min="0"
+                  max="40"
+                  step="5"
+                  value={roofShadingPercent}
+                  onChange={(e) => setRoofShadingPercent(parseInt(e.target.value))}
+                  className="w-full accent-[#238B57] cursor-pointer"
+                />
+              </div>
             </div>
           </div>
 
           {/* Quick Capacity Scenario Buttons */}
-          <div className="pt-2 border-t border-[#F0F3EC]">
-            <label className="block text-xs font-bold text-[#103D30] mb-2">Compare Capacities:</label>
-            <div className="grid grid-cols-4 gap-2">
+          <div className="pt-3 border-t border-[rgba(197,202,208,0.35)]">
+            <label className="block text-xs font-bold uppercase tracking-wider text-[#718096] mb-2.5">
+              Compare Capacities:
+            </label>
+            <div className="grid grid-cols-4 gap-2.5">
               {[1, 2, 3, 5].map((cap) => (
                 <button
                   key={cap}
                   type="button"
                   onClick={() => setOverrideCapacity(cap)}
-                  className={`rounded-xl py-2 text-xs font-bold transition ${
+                  className={`rounded-2xl py-2.5 text-xs font-bold transition cursor-pointer ${
                     activeCapacity === cap
-                      ? 'bg-[#176B4D] text-white shadow-xs'
-                      : 'border border-[#D7E2D3] bg-[#FBFCF8] text-[#103D30] hover:bg-[#EEF4E8]'
+                      ? 'neu-inset text-[#238B57]'
+                      : 'neu-button text-[#253247]'
                   }`}
                 >
                   {cap} kW
@@ -210,70 +225,74 @@ export function SolarAdvisorView() {
         </div>
 
         {/* Right Card: Feasibility Report & Financial Breakdown */}
-        <div className="flex flex-col justify-between rounded-3xl bg-[#103D30] p-6 text-white shadow-sm sm:p-8 space-y-6">
+        <div className="flex flex-col justify-between rounded-3xl neu-raised p-6 sm:p-8 space-y-6">
           <div>
             <div className="flex items-center justify-between">
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-[#B8E986]">
-                <Sun size={14} /> Recommended Scenario: {activeCapacity} kW System
+              <span className="inline-flex items-center gap-1.5 rounded-xl neu-inset-sm px-3 py-1 text-xs font-bold text-[#d97706]">
+                <Sun size={14} /> Scenario: {activeCapacity} kW System
               </span>
-              <span className="text-xs text-white/60">PM Surya Ghar Standard</span>
+              <span className="text-xs text-[#718096] font-bold">PM Surya Ghar</span>
             </div>
 
-            <div className="mt-6 grid grid-cols-2 gap-4 rounded-2xl bg-white/10 p-4">
+            <div className="mt-6 grid grid-cols-2 gap-4 rounded-2xl neu-inset p-5">
               <div>
-                <p className="text-[11px] text-[#B8E986] uppercase font-bold">Estimated Generation</p>
-                <p className="mt-1 text-2xl font-extrabold">{annualGeneration.toLocaleString('en-IN')}</p>
-                <p className="text-[10px] text-white/60">kWh / year</p>
+                <p className="text-[11px] text-[#718096] uppercase font-bold">Estimated Generation</p>
+                <p className="mt-1 text-2xl font-extrabold text-[#253247] tabular-nums">
+                  {annualGeneration.toLocaleString('en-IN')}
+                </p>
+                <p className="text-[10px] text-[#718096]">kWh / year</p>
               </div>
               <div>
-                <p className="text-[11px] text-[#B8E986] uppercase font-bold">Annual Bill Savings</p>
-                <p className="mt-1 text-2xl font-extrabold">₹{annualSavings.toLocaleString('en-IN')}</p>
-                <p className="text-[10px] text-white/60">per year on power bill</p>
+                <p className="text-[11px] text-[#238B57] uppercase font-bold">Annual Bill Savings</p>
+                <p className="mt-1 text-2xl font-extrabold text-[#238B57] tabular-nums">
+                  ₹{annualSavings.toLocaleString('en-IN')}
+                </p>
+                <p className="text-[10px] text-[#718096]">per year on power bill</p>
               </div>
             </div>
 
             {/* Financial Ledger */}
-            <div className="mt-6 space-y-2.5 text-xs text-white/80">
-              <div className="flex justify-between border-b border-white/10 pb-2">
+            <div className="mt-6 space-y-3 text-xs text-[#718096]">
+              <div className="flex justify-between border-b border-[rgba(197,202,208,0.35)] pb-2.5">
                 <span>Estimated Gross Installation Cost:</span>
-                <strong className="text-white">₹{grossCost.toLocaleString('en-IN')}</strong>
+                <strong className="text-[#253247] tabular-nums">₹{grossCost.toLocaleString('en-IN')}</strong>
               </div>
-              <div className="flex justify-between border-b border-white/10 pb-2 text-[#B8E986]">
+              <div className="flex justify-between border-b border-[rgba(197,202,208,0.35)] pb-2.5 text-[#238B57] font-bold">
                 <span>Central DBT Subsidy (PM Surya Ghar):</span>
-                <strong className="font-bold">− ₹{subsidy.toLocaleString('en-IN')}</strong>
+                <strong className="tabular-nums">− ₹{subsidy.toLocaleString('en-IN')}</strong>
               </div>
-              <div className="flex justify-between border-b border-white/10 pb-2 font-bold text-white text-sm">
+              <div className="flex justify-between border-b border-[rgba(197,202,208,0.35)] pb-2.5 font-extrabold text-[#253247] text-sm">
                 <span>Net Citizen Investment:</span>
-                <span>₹{netInvestment.toLocaleString('en-IN')}</span>
+                <span className="tabular-nums">₹{netInvestment.toLocaleString('en-IN')}</span>
               </div>
-              <div className="flex justify-between border-b border-white/10 pb-2">
+              <div className="flex justify-between border-b border-[rgba(197,202,208,0.35)] pb-2.5">
                 <span>Estimated Payback Period:</span>
-                <strong className="text-white">{payback} Years</strong>
+                <strong className="text-[#253247] tabular-nums">{payback} Years</strong>
               </div>
-              <div className="flex justify-between text-white/80">
+              <div className="flex justify-between text-[#718096]">
                 <span>Annual Carbon Mitigated:</span>
-                <strong className="text-[#B8E986]">{co2Avoided} kg CO₂ / yr</strong>
+                <strong className="text-[#238B57] tabular-nums">{co2Avoided} kg CO₂ / yr</strong>
               </div>
             </div>
 
             {/* Official portal link & assumptions */}
-            <div className="mt-5 rounded-2xl bg-white/5 p-4 text-[11px] text-white/70 leading-relaxed space-y-1">
-              <p className="font-semibold text-white">Assumptions & GERC Net Metering:</p>
+            <div className="mt-6 rounded-2xl neu-inset-sm p-4 text-[11px] text-[#718096] leading-relaxed space-y-1">
+              <p className="font-bold text-[#253247]">Assumptions &amp; GERC Net Metering:</p>
               <p>• Based on average Gujarat solar insolation of 5.2 peak sun hours/day.</p>
               <p>• Direct subsidy credited to citizen bank account linked with consumer number.</p>
             </div>
           </div>
 
-          <div className="space-y-3 pt-4 border-t border-white/10">
+          <div className="space-y-3 pt-4 border-t border-[rgba(197,202,208,0.35)]">
             {isSaved ? (
-              <div className="flex items-center gap-2 rounded-xl bg-[#B8E986] p-3 text-xs font-bold text-[#103D30]">
-                <CheckCircle2 size={16} /> Solar Assessment saved to your profile! (+50 LiFE Points & Badge Unlocked)
+              <div className="flex items-center gap-2 rounded-2xl neu-inset p-3.5 text-xs font-bold text-[#238B57]">
+                <CheckCircle2 size={16} /> Solar Assessment saved to your profile! (+50 LiFE Points &amp; Badge Unlocked)
               </div>
             ) : (
               <button
                 type="button"
                 onClick={handleSaveAssessment}
-                className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#B8E986] py-3 text-xs font-bold text-[#103D30] transition hover:bg-white"
+                className="flex w-full items-center justify-center gap-2 rounded-2xl neu-button-primary py-3.5 text-xs font-bold cursor-pointer"
               >
                 <Save size={15} /> Save Assessment to Profile (+50 Pts)
               </button>
@@ -283,7 +302,7 @@ export function SolarAdvisorView() {
               href="https://pmsuryaghar.gov.in"
               target="_blank"
               rel="noreferrer"
-              className="flex w-full items-center justify-center gap-1.5 text-xs font-semibold text-white/80 hover:text-white"
+              className="flex w-full items-center justify-center gap-1.5 text-xs font-bold text-[#718096] hover:text-[#253247]"
             >
               <span>Visit National Portal (pmsuryaghar.gov.in)</span>
               <ExternalLink size={12} />

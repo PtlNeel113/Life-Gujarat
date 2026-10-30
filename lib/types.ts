@@ -13,7 +13,7 @@ export interface UserProfile {
   points: number
   streakDays: number
   joinedDate: string
-  language: 'en' | 'gu'
+  language: 'en' | 'hi' | 'gu'
   avatarInitials: string
 }
 

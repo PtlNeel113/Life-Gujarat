@@ -79,7 +79,6 @@ export function BillAnalysisView() {
       setUploadProgress(100)
       setIsAnalyzing(false)
 
-      // Intelligent parser simulation adapted for Gujarat Discoms
       const simulatedResult: BillAnalysisResult = {
         id: 'scan_' + Date.now(),
         fileName: selectedFile.name,
@@ -114,7 +113,6 @@ export function BillAnalysisView() {
   const handleConfirmAndSave = () => {
     if (!analysisResult) return
 
-    // Save as persistent Energy Reading
     dataStore.addReading({
       userId: dataStore.getUser().id,
       startDate: editStartDate,
@@ -126,7 +124,6 @@ export function BillAnalysisView() {
       status: 'verified',
     })
 
-    // Store in bill analyses list
     dataStore.addBillAnalysis({
       ...analysisResult,
       unitsKwh: editUnits,
@@ -150,30 +147,30 @@ export function BillAnalysisView() {
         backLabel="Back to Energy Workspace"
       />
 
-      {/* Upload Box */}
-      <div className="rounded-3xl border border-[#E3E8DF] bg-white p-6 shadow-sm sm:p-8">
-        <h3 className="text-base font-bold text-[#103D30]">Upload Electricity Bill Document</h3>
-        <p className="mt-1 text-xs text-[#66736B]">
+      {/* Upload Box with Soft Neumorphism */}
+      <div className="rounded-3xl neu-raised p-6 sm:p-8">
+        <h3 className="text-base font-extrabold text-[#253247]">Upload Electricity Bill Document</h3>
+        <p className="mt-1 text-xs text-[#718096]">
           Supports UGVCL, DGVCL, MGVCL, PGVCL, and Torrent Power bill formats up to 10MB.
         </p>
 
         <div
           onDragOver={(e) => e.preventDefault()}
           onDrop={handleFileDrop}
-          className="mt-6 flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-[#D7E2D3] bg-[#FBFCF8] p-8 text-center transition hover:border-[#176B4D]"
+          className="mt-6 flex flex-col items-center justify-center rounded-3xl neu-inset p-8 sm:p-12 text-center transition"
         >
-          <div className="grid size-14 place-items-center rounded-2xl bg-[#EEF4E8] text-[#176B4D]">
-            <ScanLine size={28} />
+          <div className="grid size-16 place-items-center rounded-2xl neu-raised text-[#238B57]">
+            <ScanLine size={30} />
           </div>
 
-          <p className="mt-4 text-sm font-bold text-[#103D30]">
-            Drag & drop your electricity bill here
+          <p className="mt-4 text-sm font-extrabold text-[#253247]">
+            Drag &amp; drop your electricity bill here
           </p>
-          <p className="mt-1 text-xs text-[#8E9B92]">
+          <p className="mt-1 text-xs text-[#718096]">
             or browse your computer for PDF, PNG, or JPEG
           </p>
 
-          <label className="mt-5 cursor-pointer rounded-xl bg-[#176B4D] px-5 py-2.5 text-xs font-bold text-white shadow-sm transition hover:bg-[#103D30]">
+          <label className="mt-5 cursor-pointer rounded-2xl neu-button-primary px-6 py-3 text-xs font-bold">
             Browse Files
             <input
               type="file"
@@ -185,20 +182,20 @@ export function BillAnalysisView() {
         </div>
 
         {errorMessage && (
-          <div className="mt-4 flex items-center gap-2 rounded-xl bg-[#FEECEC] p-3 text-xs font-semibold text-[#C0392B]">
+          <div className="mt-4 flex items-center gap-2 rounded-2xl neu-inset p-3 text-xs font-bold text-[#C0392B]">
             <AlertTriangle size={16} /> {errorMessage}
           </div>
         )}
 
         {isAnalyzing && (
           <div className="mt-6 space-y-2">
-            <div className="flex items-center justify-between text-xs font-semibold text-[#103D30]">
-              <span>Extracting Discom fields & tariff breakdown...</span>
-              <span>{uploadProgress}%</span>
+            <div className="flex items-center justify-between text-xs font-bold text-[#253247]">
+              <span>Extracting Discom fields &amp; tariff breakdown...</span>
+              <span className="tabular-nums">{uploadProgress}%</span>
             </div>
-            <div className="h-2 w-full overflow-hidden rounded-full bg-[#EEF4E8]">
+            <div className="h-3 w-full overflow-hidden rounded-full neu-inset p-0.5">
               <div
-                className="h-full bg-[#176B4D] transition-all duration-300"
+                className="h-full rounded-full bg-gradient-to-r from-[#65B98A] to-[#238B57] transition-all duration-300"
                 style={{ width: `${uploadProgress}%` }}
               />
             </div>
@@ -208,34 +205,33 @@ export function BillAnalysisView() {
 
       {/* Extraction Confirmation Workflow */}
       {analysisResult && (
-        <div className="rounded-3xl border border-[#E3E8DF] bg-white p-6 shadow-sm sm:p-8 space-y-6">
-          <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#F0F3EC] pb-4">
+        <div className="rounded-3xl neu-raised p-6 sm:p-8 space-y-6">
+          <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[rgba(197,202,208,0.35)] pb-4">
             <div>
               <div className="flex items-center gap-2">
-                <FileCheck size={20} className="text-[#176B4D]" />
-                <h3 className="text-base font-bold text-[#103D30]">
+                <FileCheck size={20} className="text-[#238B57]" />
+                <h3 className="text-base font-extrabold text-[#253247]">
                   Extracted Bill Details — Verification Checkpoint
                 </h3>
               </div>
-              <p className="mt-0.5 text-xs text-[#66736B]">
-                Parsed from <span className="font-semibold">{analysisResult.fileName}</span>. Please review and adjust if any field differs from your physical bill.
+              <p className="mt-0.5 text-xs text-[#718096]">
+                Parsed from <span className="font-bold text-[#253247]">{analysisResult.fileName}</span>. Review and adjust if any field differs.
               </p>
             </div>
 
-            <StatusBadge label="Awaiting Citizen Confirmation" variant="warning" />
+            <StatusBadge label="Awaiting Confirmation" variant="warning" />
           </div>
 
           {/* Form with extracted & editable values */}
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             <div>
-              <label className="block text-xs font-bold text-[#103D30]">
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#718096] mb-1.5">
                 Discom Company
-                <span className="ml-1 text-[10px] text-[#176B4D] font-semibold">(99% confidence)</span>
               </label>
               <select
                 value={editDiscom}
                 onChange={(e) => setEditDiscom(e.target.value)}
-                className="mt-1.5 w-full rounded-xl border border-[#D7E2D3] bg-[#FBFCF8] p-2.5 text-xs font-semibold text-[#103D30] outline-none focus:border-[#176B4D]"
+                className="w-full appearance-none rounded-2xl neu-input py-2.5 px-3 text-xs font-bold text-[#253247] cursor-pointer"
               >
                 <option value="UGVCL">UGVCL (Uttar Gujarat Vij Company Ltd)</option>
                 <option value="DGVCL">DGVCL (Dakshin Gujarat Vij Company Ltd)</option>
@@ -246,101 +242,105 @@ export function BillAnalysisView() {
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-[#103D30]">Consumer Number</label>
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#718096] mb-1.5">
+                Consumer Number
+              </label>
               <input
                 type="text"
                 value={editConsumerNo}
                 onChange={(e) => setEditConsumerNo(e.target.value)}
-                className="mt-1.5 w-full rounded-xl border border-[#D7E2D3] bg-[#FBFCF8] p-2.5 text-xs text-[#103D30] outline-none focus:border-[#176B4D]"
+                className="w-full rounded-2xl neu-input py-2.5 px-3 text-xs text-[#253247]"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-[#103D30]">
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#718096] mb-1.5">
                 Units Consumed (kWh)
-                <span className="ml-1 text-[10px] text-[#176B4D] font-semibold">({analysisResult.extractedFieldsConfidence.kwh}% confidence)</span>
               </label>
               <input
                 type="number"
                 value={editUnits}
                 onChange={(e) => setEditUnits(parseFloat(e.target.value) || 0)}
-                className="mt-1.5 w-full rounded-xl border border-[#D7E2D3] bg-[#FBFCF8] p-2.5 text-xs font-bold text-[#176B4D] outline-none focus:border-[#176B4D]"
+                className="w-full rounded-2xl neu-input py-2.5 px-3 text-xs font-extrabold text-[#238B57]"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-[#103D30]">Billing Period Start</label>
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#718096] mb-1.5">
+                Billing Period Start
+              </label>
               <input
                 type="date"
                 value={editStartDate}
                 onChange={(e) => setEditStartDate(e.target.value)}
-                className="mt-1.5 w-full rounded-xl border border-[#D7E2D3] bg-[#FBFCF8] p-2.5 text-xs text-[#103D30] outline-none focus:border-[#176B4D]"
+                className="w-full rounded-2xl neu-input py-2.5 px-3 text-xs text-[#253247]"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-[#103D30]">Billing Period End</label>
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#718096] mb-1.5">
+                Billing Period End
+              </label>
               <input
                 type="date"
                 value={editEndDate}
                 onChange={(e) => setEditEndDate(e.target.value)}
-                className="mt-1.5 w-full rounded-xl border border-[#D7E2D3] bg-[#FBFCF8] p-2.5 text-xs text-[#103D30] outline-none focus:border-[#176B4D]"
+                className="w-full rounded-2xl neu-input py-2.5 px-3 text-xs text-[#253247]"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-[#103D30]">
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#718096] mb-1.5">
                 Total Amount Due (₹)
-                <span className="ml-1 text-[10px] text-[#176B4D] font-semibold">({analysisResult.extractedFieldsConfidence.amount}% confidence)</span>
               </label>
               <input
                 type="number"
                 value={editAmount}
                 onChange={(e) => setEditAmount(parseFloat(e.target.value) || 0)}
-                className="mt-1.5 w-full rounded-xl border border-[#D7E2D3] bg-[#FBFCF8] p-2.5 text-xs font-bold text-[#103D30] outline-none focus:border-[#176B4D]"
+                className="w-full rounded-2xl neu-input py-2.5 px-3 text-xs font-bold text-[#253247]"
               />
             </div>
           </div>
 
           {/* Explanation of extraction */}
-          <div className="rounded-2xl bg-[#F6F8F3] p-4 text-xs text-[#66736B] space-y-1">
-            <p className="font-semibold text-[#103D30] flex items-center gap-1.5">
-              <HelpCircle size={14} className="text-[#176B4D]" /> Note on OCR Parsing & Transparency
+          <div className="rounded-2xl neu-inset-sm p-4 text-xs text-[#718096] space-y-1">
+            <p className="font-bold text-[#253247] flex items-center gap-1.5">
+              <HelpCircle size={15} className="text-[#238B57]" /> OCR Parsing Transparency
             </p>
             <p>
-              Values are extracted using our Gujarat Discom layout recognizer. Previous meter reading: {analysisResult.meterReadingPrevious},
-              current reading: {analysisResult.meterReadingCurrent}. Differences match {analysisResult.unitsKwh} units.
+              Values are extracted using the Gujarat Discom layout recognizer. Previous meter reading: {analysisResult.meterReadingPrevious},
+              current reading: {analysisResult.meterReadingCurrent}. Difference equals {analysisResult.unitsKwh} units.
             </p>
           </div>
 
           {saveSuccess ? (
-            <div className="flex flex-wrap items-center justify-between gap-4 rounded-2xl bg-[#E5F1DF] p-4 text-xs font-semibold text-[#176B4D]">
+            <div className="flex flex-wrap items-center justify-between gap-4 rounded-2xl neu-inset p-4 text-xs font-bold text-[#238B57]">
               <div className="flex items-center gap-2">
                 <CheckCircle2 size={18} />
                 <span>Reading successfully verified and added to your energy history! (+50 LiFE Points awarded)</span>
               </div>
               <Link
                 href="/energy"
-                className="rounded-xl bg-[#176B4D] px-4 py-2 text-white hover:bg-[#103D30]"
+                className="rounded-2xl neu-button-primary px-4 py-2 text-xs"
               >
                 Go to Energy Workspace →
               </Link>
             </div>
           ) : (
-            <div className="flex justify-end gap-3 pt-4 border-t border-[#F0F3EC]">
+            <div className="flex justify-end gap-3 pt-4 border-t border-[rgba(197,202,208,0.35)]">
               <button
                 type="button"
                 onClick={() => setAnalysisResult(null)}
-                className="rounded-xl border border-[#D7E2D3] px-4 py-2.5 text-xs font-semibold text-[#55635B] hover:bg-[#F6F8F3]"
+                className="rounded-2xl neu-button px-4 py-2.5 text-xs font-bold text-[#718096]"
               >
-                Discard & Upload Another
+                Discard &amp; Upload Another
               </button>
               <button
                 type="button"
                 onClick={handleConfirmAndSave}
-                className="inline-flex items-center gap-2 rounded-xl bg-[#176B4D] px-5 py-2.5 text-xs font-bold text-white shadow-sm transition hover:bg-[#103D30]"
+                className="inline-flex items-center gap-2 rounded-2xl neu-button-primary px-5 py-2.5 text-xs font-bold cursor-pointer"
               >
-                <CheckCircle2 size={15} /> Confirm & Save to History (+50 Pts)
+                <CheckCircle2 size={15} /> Confirm &amp; Save to History (+50 Pts)
               </button>
             </div>
           )}

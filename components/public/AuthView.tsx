@@ -14,6 +14,9 @@ import {
   Mail,
   User,
   MapPin,
+  Eye,
+  EyeOff,
+  Sparkles,
 } from 'lucide-react'
 import { useAuth } from '@/components/providers/AuthProvider'
 
@@ -28,6 +31,7 @@ export function AuthView({ mode }: AuthViewProps) {
   const [password, setPassword] = useState(mode === 'login' ? '••••••••' : '')
   const [name, setName] = useState('')
   const [district, setDistrict] = useState('Ahmedabad')
+  const [showPassword, setShowPassword] = useState(false)
   const [resetSent, setResetSent] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [authError, setAuthError] = useState<string | null>(null)
@@ -69,7 +73,6 @@ export function AuthView({ mode }: AuthViewProps) {
     let enteredName = ''
     let enteredEmail = ''
 
-    // If user entered custom credentials, preserve them in profile
     if (email && email.trim() && !email.includes('aditi.shah@ahmedabad.life') && !email.includes('bhavin.patel@gujarat.gov.in')) {
       enteredName = name.trim() || email.split('@')[0] || (role === 'admin' ? 'Bhavin Patel' : 'Aditi Shah')
       enteredEmail = email.trim()
@@ -139,58 +142,69 @@ export function AuthView({ mode }: AuthViewProps) {
   }
 
   return (
-    <main className="grid min-h-screen lg:grid-cols-[1.1fr_.9fr]">
-      {/* Brand Hero Panel */}
-      <div className="relative hidden overflow-hidden bg-[#103D30] p-12 text-white lg:flex lg:flex-col lg:justify-between">
-        <div className="absolute -right-32 -top-32 size-[450px] rounded-full bg-[#176B4D]/60 blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-24 -left-24 size-[400px] rounded-full bg-[#B8E986]/10 blur-3xl pointer-events-none" />
-
-        <div className="relative z-10">
-          <Link href="/" className="inline-flex items-center gap-2.5 font-bold tracking-tight text-white">
-            <span className="grid size-10 place-items-center rounded-xl bg-[#B8E986] text-[#176B4D]">
+    <main className="grid min-h-screen bg-[#E8EDF3] lg:grid-cols-[1fr_1.1fr]">
+      {/* Brand Hero Panel with Soft Surfaces */}
+      <div className="relative hidden p-12 lg:flex lg:flex-col lg:justify-between border-r border-[rgba(197,202,208,0.35)]">
+        <div>
+          <Link href="/" className="inline-flex items-center gap-3 font-extrabold tracking-tight text-[#253247]">
+            <span className="grid size-11 place-items-center rounded-2xl neu-raised text-[#238B57]">
               <Leaf size={22} fill="currentColor" />
             </span>
-            <span className="text-xl">LiFE <span className="font-normal opacity-80">Gujarat</span></span>
+            <div className="flex flex-col">
+              <span className="text-lg leading-tight font-extrabold">LiFE <span className="font-semibold text-[#238B57]">Gujarat</span></span>
+              <span className="text-[10px] uppercase font-bold tracking-wider text-[#718096]">Soft UI Portal</span>
+            </div>
           </Link>
 
-          <div className="mt-28 max-w-lg space-y-6">
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-xs font-semibold tracking-wider text-[#B8E986]">
-              MISSION LiFE · GOVERNMENT OF GUJARAT
+          <div className="mt-20 max-w-lg space-y-6">
+            <div className="inline-flex items-center gap-2 rounded-2xl neu-inset px-3.5 py-1.5 text-xs font-bold text-[#238B57]">
+              <Sparkles size={13} /> MISSION LiFE · GOVERNMENT OF GUJARAT
             </div>
-            <h1 className="text-5xl font-extrabold leading-[1.05] tracking-tight">
+
+            <h1 className="text-4xl sm:text-5xl font-extrabold leading-[1.1] tracking-tight text-[#253247]">
               Small actions. <br />
-              <span className="text-[#B8E986]">Measurable impact.</span>
+              <span className="text-[#238B57]">Measurable impact.</span>
             </h1>
-            <p className="text-base text-white/75 leading-relaxed">
-              Join thousands of households across Gujarat tracking energy, completing daily sustainable missions,
-              and adopting rooftop solar.
+
+            <p className="text-sm leading-relaxed text-[#718096]">
+              Join thousands of households across Gujarat tracking energy, completing daily sustainable missions, and adopting rooftop solar.
             </p>
 
-            <div className="space-y-3 pt-4 text-xs text-white/80">
-              <div className="flex items-center gap-2.5">
-                <Check className="text-[#B8E986]" size={16} /> Official CEA grid emission calculations (0.716 kg/kWh)
+            {/* Feature cards soft raised */}
+            <div className="space-y-3 pt-4">
+              <div className="flex items-center gap-3 rounded-2xl neu-raised-sm p-3.5 text-xs text-[#253247]">
+                <span className="grid size-8 place-items-center rounded-xl neu-inset-sm text-[#238B57]">
+                  <Check size={16} strokeWidth={3} />
+                </span>
+                <span>Official CEA grid emission calculations (0.716 kg/kWh)</span>
               </div>
-              <div className="flex items-center gap-2.5">
-                <Check className="text-[#B8E986]" size={16} /> PM Surya Ghar rooftop solar DBT subsidy navigator
+              <div className="flex items-center gap-3 rounded-2xl neu-raised-sm p-3.5 text-xs text-[#253247]">
+                <span className="grid size-8 place-items-center rounded-xl neu-inset-sm text-[#238B57]">
+                  <Check size={16} strokeWidth={3} />
+                </span>
+                <span>PM Surya Ghar rooftop solar DBT subsidy navigator</span>
               </div>
-              <div className="flex items-center gap-2.5">
-                <Check className="text-[#B8E986]" size={16} /> Society collectives and verified points rewards
+              <div className="flex items-center gap-3 rounded-2xl neu-raised-sm p-3.5 text-xs text-[#253247]">
+                <span className="grid size-8 place-items-center rounded-xl neu-inset-sm text-[#238B57]">
+                  <Check size={16} strokeWidth={3} />
+                </span>
+                <span>Society collectives and verified points rewards</span>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="relative z-10 text-xs text-white/50 border-t border-white/10 pt-4">
+        <div className="text-xs text-[#718096] border-t border-[rgba(197,202,208,0.35)] pt-4">
           © 2026 Climate Change Department, Government of Gujarat.
         </div>
       </div>
 
       {/* Auth Interaction Panel */}
-      <div className="flex items-center justify-center bg-[#F6F8F3] p-6 sm:p-12">
-        <div className="w-full max-w-md space-y-6">
-          <div className="lg:hidden flex items-center justify-between pb-4 border-b border-[#E3E8DF]">
-            <Link href="/" className="flex items-center gap-2 font-bold text-[#103D30]">
-              <span className="grid size-8 place-items-center rounded-lg bg-[#B8E986] text-[#176B4D]">
+      <div className="flex items-center justify-center p-6 sm:p-12">
+        <div className="w-full max-w-md rounded-3xl neu-raised p-8 space-y-6">
+          <div className="lg:hidden flex items-center justify-between pb-4 border-b border-[rgba(197,202,208,0.35)]">
+            <Link href="/" className="flex items-center gap-2.5 font-extrabold text-[#253247]">
+              <span className="grid size-9 place-items-center rounded-2xl neu-raised text-[#238B57]">
                 <Leaf size={18} fill="currentColor" />
               </span>
               <span>LiFE Gujarat</span>
@@ -198,49 +212,49 @@ export function AuthView({ mode }: AuthViewProps) {
           </div>
 
           {/* Quick Demo Access Bar */}
-          <div className="rounded-2xl border-2 border-[#B8E986] bg-[#EBF4E5] p-3.5 text-xs shadow-xs">
+          <div className="rounded-2xl neu-inset p-4 text-xs">
             <div className="flex items-center justify-between mb-2">
-              <span className="font-extrabold text-[#103D30] uppercase text-[11px] tracking-wider flex items-center gap-1.5">
-                <Zap size={14} className="text-[#176B4D]" /> Instant Demo Access
+              <span className="font-extrabold text-[#253247] uppercase text-[11px] tracking-wider flex items-center gap-1.5">
+                <Zap size={14} className="text-[#238B57]" /> Instant Demo Access
               </span>
-              <span className="text-[10px] text-[#176B4D] font-bold bg-white px-2 py-0.5 rounded-full border border-[#CBE3C3]">
-                One-Click Access
+              <span className="rounded-xl neu-raised-sm px-2 py-0.5 text-[10px] font-bold text-[#238B57]">
+                One-Click
               </span>
             </div>
-            <p className="text-[11px] text-[#4A6356] mb-2.5">
-              Enter directly into the platform without passwords:
+            <p className="text-[11px] text-[#718096] mb-3">
+              Enter directly into the platform without typing passwords:
             </p>
-            <div className="flex flex-col sm:flex-row gap-2">
+            <div className="flex flex-col sm:flex-row gap-2.5">
               <button
                 type="button"
                 id="btn-demo-citizen"
                 onClick={() => handleLoginDemo('citizen')}
-                className="flex-1 flex items-center justify-center gap-1.5 rounded-xl bg-[#176B4D] px-3 py-2.5 font-bold text-white shadow-xs hover:bg-[#103D30] transition text-center cursor-pointer"
+                className="flex-1 flex items-center justify-center gap-1.5 rounded-xl neu-button-primary py-2.5 text-xs font-bold cursor-pointer"
               >
                 <UserCheck size={14} />
-                Demo Access (Dashboard)
+                Citizen Demo
               </button>
               <button
                 type="button"
                 id="btn-demo-admin"
                 onClick={() => handleLoginDemo('admin')}
-                className="flex-1 flex items-center justify-center gap-1.5 rounded-xl bg-white border border-[#CBD8CA] px-3 py-2.5 font-bold text-[#103D30] shadow-xs hover:bg-[#F6F8F3] transition text-center cursor-pointer"
+                className="flex-1 flex items-center justify-center gap-1.5 rounded-xl neu-button py-2.5 text-xs font-bold text-[#253247] cursor-pointer"
               >
-                <ShieldCheck size={14} className="text-[#176B4D]" />
-                Demo Access (Admin)
+                <ShieldCheck size={14} className="text-[#238B57]" />
+                Admin Demo
               </button>
             </div>
           </div>
 
           <div>
-            <h2 className="text-3xl font-extrabold tracking-tight text-[#103D30]">
+            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#253247]">
               {mode === 'register'
                 ? 'Create Your Account'
                 : mode === 'forgot-password'
                 ? 'Reset Password'
                 : 'Welcome Back'}
             </h2>
-            <p className="mt-1 text-xs text-[#66736B]">
+            <p className="mt-1 text-xs text-[#718096]">
               {mode === 'register'
                 ? 'Start tracking household electricity and participating in Mission LiFE.'
                 : mode === 'forgot-password'
@@ -250,7 +264,7 @@ export function AuthView({ mode }: AuthViewProps) {
           </div>
 
           {authError && (
-            <div className="rounded-xl border border-red-200 bg-red-50 p-3 text-xs text-red-700">
+            <div className="rounded-2xl neu-inset p-3.5 text-xs font-bold text-red-600">
               {authError}
             </div>
           )}
@@ -261,7 +275,7 @@ export function AuthView({ mode }: AuthViewProps) {
                 type="button"
                 onClick={handleGoogleSignIn}
                 disabled={isSubmitting}
-                className="flex w-full items-center justify-center gap-3 rounded-xl border border-[#D7E2D3] bg-white py-3 text-xs font-bold text-[#103D30] shadow-xs transition hover:bg-[#F6F8F3] hover:border-[#176B4D] disabled:opacity-60 cursor-pointer"
+                className="flex w-full items-center justify-center gap-3 rounded-2xl neu-button py-3 text-xs font-bold text-[#253247] cursor-pointer"
               >
                 <svg className="size-4" viewBox="0 0 24 24">
                   <path
@@ -281,24 +295,24 @@ export function AuthView({ mode }: AuthViewProps) {
                     d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
                   />
                 </svg>
-                Continue with Google (Firebase Auth)
+                Continue with Google
               </button>
 
               <div className="flex items-center gap-3">
-                <div className="h-px flex-1 bg-[#E3E8DF]" />
-                <span className="text-[11px] font-medium text-[#8E9B92]">OR WITH CREDENTIALS</span>
-                <div className="h-px flex-1 bg-[#E3E8DF]" />
+                <div className="h-px flex-1 bg-[rgba(197,202,208,0.35)]" />
+                <span className="text-[10px] font-bold text-[#718096]">OR WITH CREDENTIALS</span>
+                <div className="h-px flex-1 bg-[rgba(197,202,208,0.35)]" />
               </div>
             </div>
           )}
 
           {resetSent ? (
-            <div className="rounded-2xl bg-[#E5F1DF] p-5 text-xs text-[#176B4D] space-y-3 font-semibold">
-              <p className="font-bold text-sm">Reset link dispatched!</p>
+            <div className="rounded-2xl neu-inset p-5 text-xs text-[#238B57] space-y-3 font-semibold">
+              <p className="font-extrabold text-sm">Reset link dispatched!</p>
               <p>We have simulated sending instructions to your email address.</p>
               <Link
                 href="/login"
-                className="inline-block rounded-xl bg-[#176B4D] px-4 py-2 text-white hover:bg-[#103D30]"
+                className="inline-block rounded-xl neu-button-primary px-4 py-2 text-white"
               >
                 Back to Sign in
               </Link>
@@ -308,68 +322,98 @@ export function AuthView({ mode }: AuthViewProps) {
               {mode === 'register' && (
                 <>
                   <div>
-                    <label className="block text-xs font-bold text-[#103D30]">Full Name</label>
-                    <input
-                      type="text"
-                      required
-                      placeholder="Aditi Shah"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      className="mt-1.5 w-full rounded-xl border border-[#D7E2D3] bg-white p-3 text-xs text-[#103D30] outline-none focus:border-[#176B4D]"
-                    />
+                    <label className="block text-xs font-bold text-[#718096] uppercase tracking-wider mb-1.5">
+                      Full Name
+                    </label>
+                    <div className="relative flex items-center">
+                      <User size={16} className="absolute left-3.5 text-[#718096] pointer-events-none" />
+                      <input
+                        type="text"
+                        required
+                        placeholder="Aditi Shah"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        className="w-full rounded-2xl neu-input py-3 pl-10 pr-4 text-xs text-[#253247]"
+                      />
+                    </div>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-[#103D30]">District in Gujarat</label>
-                    <select
-                      value={district}
-                      onChange={(e) => setDistrict(e.target.value)}
-                      className="mt-1.5 w-full rounded-xl border border-[#D7E2D3] bg-white p-3 text-xs font-semibold text-[#103D30] outline-none focus:border-[#176B4D]"
-                    >
-                      <option value="Ahmedabad">Ahmedabad</option>
-                      <option value="Surat">Surat</option>
-                      <option value="Vadodara">Vadodara</option>
-                      <option value="Rajkot">Rajkot</option>
-                      <option value="Gandhinagar">Gandhinagar</option>
-                      <option value="Bhavnagar">Bhavnagar</option>
-                    </select>
+                    <label className="block text-xs font-bold text-[#718096] uppercase tracking-wider mb-1.5">
+                      District in Gujarat
+                    </label>
+                    <div className="relative flex items-center">
+                      <MapPin size={16} className="absolute left-3.5 text-[#718096] pointer-events-none" />
+                      <select
+                        value={district}
+                        onChange={(e) => setDistrict(e.target.value)}
+                        className="w-full appearance-none rounded-2xl neu-input py-3 pl-10 pr-8 text-xs font-bold text-[#253247] cursor-pointer"
+                      >
+                        <option value="Ahmedabad">Ahmedabad</option>
+                        <option value="Surat">Surat</option>
+                        <option value="Vadodara">Vadodara</option>
+                        <option value="Rajkot">Rajkot</option>
+                        <option value="Gandhinagar">Gandhinagar</option>
+                        <option value="Bhavnagar">Bhavnagar</option>
+                        <option value="Kutch">Kutch</option>
+                        <option value="Junagadh">Junagadh</option>
+                      </select>
+                    </div>
                   </div>
                 </>
               )}
 
               <div>
-                <label className="block text-xs font-bold text-[#103D30]">Email Address</label>
-                <input
-                  type="email"
-                  required
-                  placeholder="you@example.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="mt-1.5 w-full rounded-xl border border-[#D7E2D3] bg-white p-3 text-xs text-[#103D30] outline-none focus:border-[#176B4D]"
-                />
+                <label className="block text-xs font-bold text-[#718096] uppercase tracking-wider mb-1.5">
+                  Email Address
+                </label>
+                <div className="relative flex items-center">
+                  <Mail size={16} className="absolute left-3.5 text-[#718096] pointer-events-none" />
+                  <input
+                    type="email"
+                    required
+                    placeholder="you@example.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full rounded-2xl neu-input py-3 pl-10 pr-4 text-xs text-[#253247]"
+                  />
+                </div>
               </div>
 
               {mode !== 'forgot-password' && (
                 <div>
-                  <div className="flex items-center justify-between">
-                    <label className="block text-xs font-bold text-[#103D30]">Password</label>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <label className="block text-xs font-bold text-[#718096] uppercase tracking-wider">
+                      Password
+                    </label>
                     {mode === 'login' && (
                       <Link
                         href="/forgot-password"
-                        className="text-xs font-semibold text-[#176B4D] hover:underline"
+                        className="text-xs font-bold text-[#238B57] hover:underline"
                       >
                         Forgot password?
                       </Link>
                     )}
                   </div>
-                  <input
-                    type="password"
-                    required
-                    placeholder="••••••••"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="mt-1.5 w-full rounded-xl border border-[#D7E2D3] bg-white p-3 text-xs text-[#103D30] outline-none focus:border-[#176B4D]"
-                  />
+                  <div className="relative flex items-center">
+                    <Lock size={16} className="absolute left-3.5 text-[#718096] pointer-events-none" />
+                    <input
+                      type={showPassword ? 'text' : 'password'}
+                      required
+                      placeholder="••••••••"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className="w-full rounded-2xl neu-input py-3 pl-10 pr-10 text-xs text-[#253247]"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-3.5 text-[#718096] hover:text-[#253247] cursor-pointer"
+                      title={showPassword ? 'Hide password' : 'Show password'}
+                    >
+                      {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                    </button>
+                  </div>
                 </div>
               )}
 
@@ -377,7 +421,7 @@ export function AuthView({ mode }: AuthViewProps) {
                 type="submit"
                 id="btn-login-submit"
                 disabled={isSubmitting}
-                className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-[#176B4D] py-3 text-xs font-bold text-white shadow-sm transition hover:bg-[#103D30] disabled:opacity-70 cursor-pointer"
+                className="mt-2 flex w-full items-center justify-center gap-2 rounded-2xl neu-button-primary py-3.5 text-xs font-bold cursor-pointer"
               >
                 {isSubmitting
                   ? 'Redirecting to Dashboard...'
@@ -385,7 +429,7 @@ export function AuthView({ mode }: AuthViewProps) {
                   ? 'Continue to Onboarding'
                   : mode === 'forgot-password'
                   ? 'Send Reset Link'
-                  : 'Sign In & Redirect to Dashboard'}
+                  : 'Sign In & Open Dashboard'}
                 <ArrowRight size={14} />
               </button>
 
@@ -394,27 +438,27 @@ export function AuthView({ mode }: AuthViewProps) {
                   type="button"
                   id="btn-quick-demo-access"
                   onClick={() => handleLoginDemo('citizen')}
-                  className="w-full flex items-center justify-center gap-1.5 rounded-xl border border-[#B8E986] bg-[#F1F8EE] py-2.5 text-xs font-bold text-[#176B4D] hover:bg-[#E5F1DF] transition cursor-pointer"
+                  className="w-full flex items-center justify-center gap-1.5 rounded-2xl neu-button py-2.5 text-xs font-bold text-[#238B57] cursor-pointer"
                 >
                   <Zap size={14} />
-                  Demo Access (Skip password & open dashboard)
+                  Demo Access (Skip password)
                 </button>
               )}
             </form>
           )}
 
-          <div className="pt-4 border-t border-[#E3E8DF] text-center text-xs text-[#66736B]">
+          <div className="pt-4 border-t border-[rgba(197,202,208,0.35)] text-center text-xs text-[#718096]">
             {mode === 'login' ? (
               <p>
                 Don&apos;t have an account?{' '}
-                <Link href="/register" className="font-bold text-[#176B4D] hover:underline">
+                <Link href="/register" className="font-bold text-[#238B57] hover:underline">
                   Create citizen profile
                 </Link>
               </p>
             ) : (
               <p>
                 Already have an account?{' '}
-                <Link href="/login" className="font-bold text-[#176B4D] hover:underline">
+                <Link href="/login" className="font-bold text-[#238B57] hover:underline">
                   Sign in here
                 </Link>
               </p>
