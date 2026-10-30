@@ -134,7 +134,7 @@ export function AppShell({ children, activeNav, title, subtitle }: AppShellProps
     <ProtectedRoute requiredRole={isAdminSection ? 'admin' : undefined}>
       <div className="min-h-screen bg-[#F6F8F3] text-[#18241F]">
         {/* Mobile Top Navigation */}
-      <div className="flex h-16 items-center justify-between border-b border-[#E3E8DF] bg-white px-4 lg:hidden">
+      <div className="flex h-16 items-center justify-between border-b border-[#E3E8DF] bg-white px-4 lg:hidden print:hidden">
         <Link href="/" className="flex items-center gap-2 font-bold text-[#103D30]">
           <span className="grid size-8 place-items-center rounded-lg bg-[#B8E986] text-[#176B4D]">
             <Leaf size={18} fill="currentColor" />
@@ -166,7 +166,7 @@ export function AppShell({ children, activeNav, title, subtitle }: AppShellProps
 
       <div className="flex min-h-screen">
         {/* Desktop Sidebar */}
-        <aside className="hidden w-64 shrink-0 flex-col justify-between border-r border-[#E3E8DF] bg-[#FBFCF8] p-5 lg:flex">
+        <aside className="hidden w-64 shrink-0 flex-col justify-between border-r border-[#E3E8DF] bg-[#FBFCF8] p-5 lg:flex print:hidden">
           <div>
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2.5 font-bold tracking-tight text-[#103D30]">
@@ -359,7 +359,7 @@ export function AppShell({ children, activeNav, title, subtitle }: AppShellProps
         {/* Main Content Area */}
         <div className="flex min-w-0 flex-1 flex-col">
           {/* Top Bar Header */}
-          <header className="sticky top-0 z-20 flex h-16 items-center justify-between border-b border-[#E3E8DF] bg-white/95 px-6 backdrop-blur lg:px-10">
+          <header className="sticky top-0 z-20 flex h-16 items-center justify-between border-b border-[#E3E8DF] bg-white/95 px-6 backdrop-blur lg:px-10 print:hidden">
             <div>
               <div className="hidden items-center gap-2 text-xs text-[#8E9B92] sm:flex">
                 <span>Gujarat</span>
@@ -524,7 +524,7 @@ export function AppShell({ children, activeNav, title, subtitle }: AppShellProps
           )}
 
           {/* Page Body */}
-          <main className="flex-1 p-6 lg:p-10">{children}</main>
+          <main className="flex-1 p-6 lg:p-10 print:p-0">{children}</main>
         </div>
       </div>
     </div>
