@@ -277,9 +277,9 @@ The current implementation focuses on functionality available in the deployed ap
 - Improved accessibility and multilingual support.
 - Integration with relevant public sustainability programs.
 
-## 14. Hackathon Development and Compliance
+## 14. Development and Compliance
 
-The project is developed for the hackathon sprint and follows the applicable participation requirements.
+The project is developed for the sprint and follows the applicable participation requirements.
 
 - Core implementation and project-specific logic are developed during the permitted sprint.
 - Third-party libraries and development tools are used where permitted.
@@ -306,9 +306,11 @@ All project-specific claims should be supported by the actual implementation and
 
 **Live Deployment:** https://lifegujrat123.vercel.app/
 
-**Team Name:** Add your official registered team name.
+**Team Name:** INFINITE HACKERS
 
-**Team Members:** Add all officially registered team member names.
+**Team Members:** 1) NEEL PATEL ( LEADER )
+                  2) NIRAJ SHARMA
+                  3) KAIVAL SOLANKI
 
 ---
 
