@@ -161,43 +161,6 @@ function NeumorphicSimulator() {
   )
 }
 
-function MissionCard({
-  title,
-  category,
-  time,
-  points,
-  done = false,
-}: {
-  title: string
-  category: string
-  time: string
-  points: string
-  done?: boolean
-}) {
-  return (
-    <div className="flex items-center gap-4 rounded-2xl neu-raised-sm p-4 transition hover:neu-raised">
-      <span
-        className={`grid size-11 shrink-0 place-items-center rounded-2xl ${
-          done ? 'neu-button text-[#238B57]' : 'neu-inset text-[#238B57]'
-        }`}
-      >
-        {done ? <Check size={18} strokeWidth={3} /> : <Zap size={18} />}
-      </span>
-      <div className="min-w-0 flex-1">
-        <div className="flex items-center gap-2 text-[11px] text-[#718096]">
-          <span className="font-bold uppercase tracking-wider text-[#238B57]">{category}</span>
-          <span>·</span>
-          <span>{time}</span>
-        </div>
-        <h4 className="mt-0.5 text-sm font-extrabold text-[#253247] truncate">{title}</h4>
-      </div>
-      <span className="rounded-xl neu-inset-sm px-2.5 py-1 text-xs font-extrabold text-[#238B57]">
-        +{points} pts
-      </span>
-    </div>
-  )
-}
-
 export function Landing() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
@@ -275,105 +238,49 @@ export function Landing() {
 
       {/* Hero Section */}
       <section className="relative px-6 pt-16 pb-20 lg:px-12 lg:pt-24 lg:pb-32 overflow-hidden">
-        <div className="mx-auto max-w-7xl">
-          <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_.9fr]">
+        <div className="mx-auto max-w-5xl text-center">
+          <div className="inline-flex items-center gap-2 rounded-2xl neu-inset px-4 py-2 text-xs font-bold text-[#238B57]">
+            <Sparkles size={14} /> MISSION LiFE · GUJARAT CLIMATE INITIATIVE
+          </div>
+
+          <h1 className="mt-6 text-4xl font-extrabold leading-[1.1] tracking-tight text-[#253247] sm:text-5xl lg:text-6xl">
+            Live lighter. <br />
+            <span className="text-[#238B57]">Save electricity.</span> <br />
+            Shape a greener Gujarat.
+          </h1>
+
+          <p className="mt-6 mx-auto max-w-2xl text-base sm:text-lg leading-relaxed text-[#718096]">
+            LiFE Gujarat empowers households across Ahmedabad, Surat, Vadodara, Rajkot, and all 33 districts to track electricity usage, adopt rooftop solar, and verify real carbon reductions.
+          </p>
+
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+            <Link
+              href="/register"
+              className="inline-flex items-center gap-2 rounded-2xl neu-button-primary px-7 py-4 text-sm font-bold shadow-md"
+            >
+              Start Your Journey <ArrowRight size={16} />
+            </Link>
+            <Link
+              href="/login"
+              className="inline-flex items-center gap-2 rounded-2xl neu-button px-7 py-4 text-sm font-bold text-[#253247]"
+            >
+              One-Click Demo Access
+            </Link>
+          </div>
+
+          {/* 3 Pillars strip */}
+          <div className="mt-14 grid max-w-2xl mx-auto grid-cols-3 gap-6 border-t border-[rgba(197,202,208,0.35)] pt-8">
             <div>
-              <div className="inline-flex items-center gap-2 rounded-2xl neu-inset px-3.5 py-1.5 text-xs font-bold text-[#238B57]">
-                <Sparkles size={14} /> MISSION LiFE · GUJARAT CLIMATE INITIATIVE
-              </div>
-
-              <h1 className="mt-6 text-4xl font-extrabold leading-[1.1] tracking-tight text-[#253247] sm:text-5xl lg:text-6xl">
-                Live lighter. <br />
-                <span className="text-[#238B57]">Save electricity.</span> <br />
-                Shape a greener Gujarat.
-              </h1>
-
-              <p className="mt-6 max-w-xl text-base sm:text-lg leading-relaxed text-[#718096]">
-                LiFE Gujarat empowers households across Ahmedabad, Surat, Vadodara, Rajkot, and all 33 districts to track electricity usage, adopt rooftop solar, and verify real carbon reductions.
-              </p>
-
-              <div className="mt-8 flex flex-wrap items-center gap-4">
-                <Link
-                  href="/register"
-                  className="inline-flex items-center gap-2 rounded-2xl neu-button-primary px-6 py-3.5 text-sm font-bold shadow-md"
-                >
-                  Start Your Journey <ArrowRight size={16} />
-                </Link>
-                <Link
-                  href="/login"
-                  className="inline-flex items-center gap-2 rounded-2xl neu-button px-6 py-3.5 text-sm font-bold text-[#253247]"
-                >
-                  One-Click Demo Access
-                </Link>
-              </div>
-
-              {/* 3 Pillars strip */}
-              <div className="mt-12 grid grid-cols-3 gap-4 border-t border-[rgba(197,202,208,0.35)] pt-6">
-                <div>
-                  <strong className="block text-sm font-extrabold text-[#238B57]">Understand</strong>
-                  <span className="text-xs text-[#718096]">Actual consumption</span>
-                </div>
-                <div>
-                  <strong className="block text-sm font-extrabold text-[#238B57]">Act</strong>
-                  <span className="text-xs text-[#718096]">Daily micro-habits</span>
-                </div>
-                <div>
-                  <strong className="block text-sm font-extrabold text-[#238B57]">Measure</strong>
-                  <span className="text-xs text-[#718096]">CEA carbon savings</span>
-                </div>
-              </div>
+              <strong className="block text-sm sm:text-base font-extrabold text-[#238B57]">Understand</strong>
+              <span className="text-xs text-[#718096]">Actual consumption</span>
             </div>
-
-            {/* Extruded Hero Interactive Mockup */}
-            <div className="rounded-3xl neu-raised p-6 sm:p-8 space-y-5">
-              <div className="flex items-center justify-between border-b border-[rgba(197,202,208,0.35)] pb-4">
-                <div className="flex items-center gap-2.5">
-                  <span className="grid size-9 place-items-center rounded-xl neu-inset text-[#238B57]">
-                    <Zap size={18} />
-                  </span>
-                  <div>
-                    <h4 className="text-sm font-extrabold text-[#253247]">Household Meter Live Hub</h4>
-                    <p className="text-[11px] text-[#718096]">UGVCL / DGVCL / MGVCL / PGVCL</p>
-                  </div>
-                </div>
-                <span className="rounded-xl neu-inset-sm px-2.5 py-1 text-[10px] font-bold text-[#238B57]">
-                  Verified
-                </span>
-              </div>
-
-              {/* Mini KPI row */}
-              <div className="grid grid-cols-2 gap-3">
-                <div className="rounded-2xl neu-inset p-3.5 text-center">
-                  <p className="text-[10px] font-bold uppercase text-[#718096]">Last Month</p>
-                  <p className="text-2xl font-extrabold text-[#253247] mt-1 tabular-nums">280 kWh</p>
-                  <p className="text-[10px] font-bold text-[#238B57] mt-0.5">−12% vs benchmark</p>
-                </div>
-                <div className="rounded-2xl neu-inset p-3.5 text-center">
-                  <p className="text-[10px] font-bold uppercase text-[#718096]">CO₂e Footprint</p>
-                  <p className="text-2xl font-extrabold text-[#253247] mt-1 tabular-nums">200 kg</p>
-                  <p className="text-[10px] text-[#718096] mt-0.5">CEA v19 factor</p>
-                </div>
-              </div>
-
-              {/* Interactive preview missions */}
-              <div className="space-y-2.5 pt-2">
-                <p className="text-xs font-bold uppercase tracking-wider text-[#718096]">Featured Today</p>
-                <MissionCard title="Set AC thermostat to 24°C" category="Cooling" time="2 min" points="25" done />
-                <MissionCard title="Audit phantom vampire loads" category="Home" time="5 min" points="30" />
-              </div>
-
-              <div className="rounded-2xl neu-raised-sm p-4 text-xs flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <Sun size={18} className="text-[#d97706]" />
-                  <div>
-                    <p className="font-bold text-[#253247]">PM Surya Ghar Scheme</p>
-                    <p className="text-[11px] text-[#718096]">Up to ₹78,000 direct subsidy</p>
-                  </div>
-                </div>
-                <Link href="/solar-advisor" className="font-bold text-[#238B57] hover:underline">
-                  Calculate →
-                </Link>
-              </div>
+            <div>
+              <strong className="block text-sm sm:text-base font-extrabold text-[#238B57]">Act</strong>
+              <span className="text-xs text-[#718096]">Daily micro-habits</span>
+            </div>
+            <div>
+              <strong className="block text-sm sm:text-base font-extrabold text-[#238B57]">Measure</strong>
+              <span className="text-xs text-[#718096]">CEA carbon savings</span>
             </div>
           </div>
         </div>

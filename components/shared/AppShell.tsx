@@ -255,42 +255,6 @@ export function AppShell({ children, activeNav, title, subtitle }: AppShellProps
                 </div>
               )}
 
-              {/* Citizen / Admin Role Switcher Segment */}
-              {!sidebarCollapsed ? (
-                <div className="mt-6 flex items-center justify-between rounded-2xl neu-inset p-1.5 text-xs">
-                  <button
-                    onClick={() => handleRoleSwitch('citizen')}
-                    className={`flex-1 rounded-xl py-2 font-bold transition cursor-pointer ${
-                      currentUser.role === 'citizen' && !isAdminSection
-                        ? 'neu-raised text-[#238B57]'
-                        : 'text-[#718096] hover:text-[#253247]'
-                    }`}
-                  >
-                    Citizen
-                  </button>
-                  <button
-                    onClick={() => handleRoleSwitch('admin')}
-                    className={`flex-1 rounded-xl py-2 font-bold transition cursor-pointer ${
-                      currentUser.role === 'admin' || isAdminSection
-                        ? 'neu-raised text-[#238B57]'
-                        : 'text-[#718096] hover:text-[#253247]'
-                    }`}
-                  >
-                    Admin
-                  </button>
-                </div>
-              ) : (
-                <div className="mt-4 flex justify-center">
-                  <button
-                    onClick={() => handleRoleSwitch(isAdminSection ? 'citizen' : 'admin')}
-                    className="grid size-9 place-items-center rounded-xl neu-inset text-xs font-bold text-[#238B57]"
-                    title={`Switch to ${isAdminSection ? 'Citizen' : 'Admin'} mode`}
-                  >
-                    {isAdminSection ? 'ADM' : 'CIT'}
-                  </button>
-                </div>
-              )}
-
               {/* Navigation Section */}
               <div className="mt-6">
                 {!sidebarCollapsed && (
@@ -398,32 +362,6 @@ export function AppShell({ children, activeNav, title, subtitle }: AppShellProps
                       className="grid size-9 place-items-center rounded-2xl neu-button text-[#718096]"
                     >
                       <X size={18} />
-                    </button>
-                  </div>
-
-                  {/* Mode switcher mobile */}
-                  <div className="mt-5 flex items-center justify-between rounded-2xl neu-inset p-1 text-xs">
-                    <button
-                      onClick={() => {
-                        handleRoleSwitch('citizen')
-                        setMobileMenuOpen(false)
-                      }}
-                      className={`flex-1 rounded-xl py-2 font-bold cursor-pointer ${
-                        currentUser.role === 'citizen' && !isAdminSection ? 'neu-raised text-[#238B57]' : 'text-[#718096]'
-                      }`}
-                    >
-                      Citizen
-                    </button>
-                    <button
-                      onClick={() => {
-                        handleRoleSwitch('admin')
-                        setMobileMenuOpen(false)
-                      }}
-                      className={`flex-1 rounded-xl py-2 font-bold cursor-pointer ${
-                        currentUser.role === 'admin' || isAdminSection ? 'neu-raised text-[#238B57]' : 'text-[#718096]'
-                      }`}
-                    >
-                      Admin
                     </button>
                   </div>
 
