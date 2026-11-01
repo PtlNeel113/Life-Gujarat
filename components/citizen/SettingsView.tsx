@@ -26,7 +26,7 @@ export function SettingsView() {
   const [consumerNumber, setConsumerNumber] = useState('')
   const [householdMembers, setHouseholdMembers] = useState(4)
   const [homeType, setHomeType] = useState<UserProfile['homeType']>('apartment')
-  const [language, setLanguage] = useState<'en' | 'gu'>('en')
+  const [language, setLanguage] = useState<UserProfile['language']>('en')
   const [emailAlerts, setEmailAlerts] = useState(true)
   const [societySharing, setSocietySharing] = useState(true)
 

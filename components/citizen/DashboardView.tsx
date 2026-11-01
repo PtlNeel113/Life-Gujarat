@@ -157,7 +157,7 @@ export function DashboardView() {
             <div>
               <div className="flex items-center gap-2">
                 <BarChart3 size={18} className="text-[#238B57]" />
-                <h3 className="text-base font-extrabold text-[#253247]">Household Energy Trend</h3>
+                <h3 className="text-base font-extrabold text-[#253247]">Household Energy History</h3>
               </div>
               <p className="mt-0.5 text-xs text-[#718096]">
                 Tracked over billing cycles with official Discom tariff estimates
@@ -189,21 +189,23 @@ export function DashboardView() {
           <div className="mt-8">
             <div className="flex h-56 items-end gap-3 sm:gap-5 border-b border-[rgba(197,202,208,0.35)] px-2 pb-2">
               {chartItems.map((r, i) => {
-                const heightPercent = Math.max(15, Math.round((r.consumptionKwh / maxKwh) * 100))
+                const heightPercent = Math.max(18, Math.min(100, Math.round((r.consumptionKwh / maxKwh) * 100)))
                 const dateLabel = new Date(r.startDate).toLocaleDateString('en-IN', { month: 'short' })
                 return (
-                  <div key={r.id || i} className="group relative flex flex-1 flex-col items-center">
+                  <div key={r.id || i} className="group relative flex h-full flex-1 flex-col items-center justify-end">
                     {/* Tooltip on hover */}
-                    <div className="absolute -top-14 z-20 hidden flex-col items-center rounded-xl neu-raised p-2 text-[11px] shadow-lg group-hover:flex">
+                    <div className="pointer-events-none absolute -top-12 z-20 hidden flex-col items-center rounded-xl neu-raised px-2.5 py-1.5 text-[11px] shadow-lg group-hover:flex">
                       <span className="font-extrabold text-[#253247]">{r.consumptionKwh} kWh</span>
-                      <span className="text-[10px] font-bold text-[#238B57]">₹{r.billAmount || '—'}</span>
+                      <span className="text-[10px] font-bold text-[#238B57]">₹{(r.billAmount || 0).toLocaleString('en-IN')}</span>
                     </div>
 
-                    <div
-                      className="w-full rounded-t-xl bg-gradient-to-t from-[#65B98A] to-[#238B57] shadow-sm transition-all duration-300 group-hover:from-[#238B57] group-hover:to-[#176B4D]"
-                      style={{ height: `${heightPercent}%` }}
-                    />
-                    <span className="mt-2 text-[11px] font-bold text-[#718096]">{dateLabel}</span>
+                    <div className="relative flex h-44 w-full items-end justify-center">
+                      <div
+                        className="w-full max-w-[48px] rounded-t-xl bg-gradient-to-t from-[#65B98A] to-[#238B57] shadow-sm transition-all duration-300 group-hover:from-[#238B57] group-hover:to-[#176B4D]"
+                        style={{ height: `${heightPercent}%` }}
+                      />
+                    </div>
+                    <span className="mt-2 text-[11px] font-bold text-[#718096] shrink-0">{dateLabel}</span>
                   </div>
                 )
               })}

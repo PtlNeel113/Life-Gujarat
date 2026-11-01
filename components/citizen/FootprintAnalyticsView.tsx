@@ -166,17 +166,19 @@ export function FootprintAnalyticsView() {
 
           <div className="mt-6 flex h-48 items-end gap-4 border-b border-[rgba(197,202,208,0.35)] px-2 pb-2">
             {historicalEmissions.map((h, idx) => {
-              const heightPercent = Math.max(15, Math.round((h.kgCo2 / maxKg) * 100))
+              const heightPercent = Math.max(18, Math.min(100, Math.round((h.kgCo2 / maxKg) * 100)))
               return (
-                <div key={idx} className="group relative flex flex-1 flex-col items-center">
-                  <div className="absolute -top-12 z-20 hidden rounded-xl neu-raised p-1.5 text-[10px] font-bold text-[#253247] shadow-md group-hover:flex">
+                <div key={idx} className="group relative flex h-full flex-1 flex-col items-center justify-end">
+                  <div className="pointer-events-none absolute -top-12 z-20 hidden rounded-xl neu-raised p-1.5 text-[10px] font-bold text-[#253247] shadow-md group-hover:flex">
                     {h.kgCo2} kg ({h.kwh} kWh)
                   </div>
-                  <div
-                    className="w-full rounded-t-xl bg-gradient-to-t from-[#65B98A] to-[#238B57] shadow-sm transition-all duration-300 group-hover:from-[#238B57] group-hover:to-[#176B4D]"
-                    style={{ height: `${heightPercent}%` }}
-                  />
-                  <span className="mt-2 text-[11px] font-bold text-[#718096]">{h.label}</span>
+                  <div className="relative flex h-36 w-full items-end justify-center">
+                    <div
+                      className="w-full max-w-[48px] rounded-t-xl bg-gradient-to-t from-[#65B98A] to-[#238B57] shadow-sm transition-all duration-300 group-hover:from-[#238B57] group-hover:to-[#176B4D]"
+                      style={{ height: `${heightPercent}%` }}
+                    />
+                  </div>
+                  <span className="mt-2 text-[11px] font-bold text-[#718096] shrink-0">{h.label}</span>
                 </div>
               )
             })}

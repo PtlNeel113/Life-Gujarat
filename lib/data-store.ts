@@ -129,6 +129,78 @@ const SEED_READINGS: EnergyReading[] = [
     status: 'verified',
     createdAt: '2026-05-16T16:00:00Z',
   },
+  {
+    id: 'rd_2026_04',
+    userId: 'usr_aditi_01',
+    startDate: '2026-03-15',
+    endDate: '2026-04-15',
+    consumptionKwh: 290,
+    billAmount: 2080,
+    source: 'bill_scan',
+    notes: 'Spring transition cooling.',
+    status: 'verified',
+    createdAt: '2026-04-16T10:00:00Z',
+  },
+  {
+    id: 'rd_2026_03',
+    userId: 'usr_aditi_01',
+    startDate: '2026-02-15',
+    endDate: '2026-03-15',
+    consumptionKwh: 245,
+    billAmount: 1680,
+    source: 'discom_sync',
+    notes: 'Pre-summer moderate usage.',
+    status: 'verified',
+    createdAt: '2026-03-16T11:00:00Z',
+  },
+  {
+    id: 'rd_2026_02',
+    userId: 'usr_aditi_01',
+    startDate: '2026-01-15',
+    endDate: '2026-02-15',
+    consumptionKwh: 220,
+    billAmount: 1450,
+    source: 'manual',
+    notes: 'Winter low energy consumption.',
+    status: 'verified',
+    createdAt: '2026-02-16T09:00:00Z',
+  },
+  {
+    id: 'rd_2026_01',
+    userId: 'usr_aditi_01',
+    startDate: '2025-12-15',
+    endDate: '2026-01-15',
+    consumptionKwh: 235,
+    billAmount: 1560,
+    source: 'bill_scan',
+    notes: 'Winter water heating and lighting.',
+    status: 'verified',
+    createdAt: '2026-01-16T14:00:00Z',
+  },
+  {
+    id: 'rd_2025_12',
+    userId: 'usr_aditi_01',
+    startDate: '2025-11-15',
+    endDate: '2025-12-15',
+    consumptionKwh: 250,
+    billAmount: 1710,
+    source: 'discom_sync',
+    notes: 'Early winter baseline.',
+    status: 'verified',
+    createdAt: '2025-12-16T10:00:00Z',
+  },
+  {
+    id: 'rd_2025_11',
+    userId: 'usr_aditi_01',
+    startDate: '2025-10-15',
+    endDate: '2025-11-15',
+    consumptionKwh: 275,
+    billAmount: 1940,
+    source: 'manual',
+    notes: 'Festival season lighting and family visits.',
+    status: 'verified',
+    createdAt: '2025-11-16T12:00:00Z',
+  },
 ]
 
 const SEED_MISSIONS: Mission[] = [
@@ -840,7 +912,11 @@ class DataStore {
 
   // Energy readings
   getReadings(): EnergyReading[] {
-    return getStored<EnergyReading[]>('readings', SEED_READINGS)
+    const list = getStored<EnergyReading[]>('readings', SEED_READINGS)
+    if (!list || list.length === 0) {
+      return SEED_READINGS
+    }
+    return list
   }
 
   addReading(reading: Omit<EnergyReading, 'id' | 'createdAt'>): EnergyReading {

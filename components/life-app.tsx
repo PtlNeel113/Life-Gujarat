@@ -25,6 +25,7 @@ import {
   Globe,
   Sliders,
   TrendingDown,
+  CheckSquare,
 } from 'lucide-react'
 
 const navLinks = [

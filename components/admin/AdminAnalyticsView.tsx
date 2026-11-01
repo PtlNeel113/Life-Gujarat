@@ -93,17 +93,19 @@ export function AdminAnalyticsView() {
 
         <div className="mt-8 flex h-52 items-end gap-6 sm:gap-10 border-b border-[#E3E8DF] px-4 pb-2">
           {monthlyRunRate.map((item, idx) => {
-            const h = Math.round((item.mwh / maxMwh) * 100)
+            const h = Math.max(15, Math.min(100, Math.round((item.mwh / maxMwh) * 100)))
             return (
-              <div key={idx} className="group relative flex flex-1 flex-col items-center">
-                <div className="absolute -top-10 hidden rounded-md bg-[#103D30] px-2 py-1 text-[10px] font-bold text-white shadow-md group-hover:block">
+              <div key={idx} className="group relative flex h-full flex-1 flex-col items-center justify-end">
+                <div className="pointer-events-none absolute -top-10 hidden rounded-md bg-[#103D30] px-2 py-1 text-[10px] font-bold text-white shadow-md group-hover:block">
                   {item.mwh} MWh
                 </div>
-                <div
-                  className="w-full rounded-t-lg bg-[#CBE3C3] transition group-hover:bg-[#176B4D]"
-                  style={{ height: `${h}%` }}
-                />
-                <span className="mt-2 text-xs font-semibold text-[#66736B]">{item.month}</span>
+                <div className="relative flex h-40 w-full items-end justify-center">
+                  <div
+                    className="w-full max-w-[48px] rounded-t-lg bg-[#238B57] transition group-hover:bg-[#176B4D]"
+                    style={{ height: `${h}%` }}
+                  />
+                </div>
+                <span className="mt-2 text-xs font-semibold text-[#66736B] shrink-0">{item.month}</span>
               </div>
             )
           })}

@@ -37,12 +37,33 @@ export interface BillAnalysisResult {
   uploadedAt: string
   discom: string
   consumerNumber: string
+  consumerName?: string
   billingPeriodStart: string
   billingPeriodEnd: string
+  billDate?: string
+  dueDate?: string
   unitsKwh: number
   amountDue: number
   meterReadingPrevious: number
   meterReadingCurrent: number
+  meterNumber?: string
+  tariffSlab?: string
+  connectedLoadKw?: number
+  chargesBreakdown?: {
+    energyCharges?: number
+    fixedCharges?: number
+    fpppaCharges?: number
+    electricityDuty?: number
+    otherCharges?: number
+  }
+  aiInsights?: {
+    slabAnalysis: string
+    carbonFootprintKg: number
+    savingPotentialKwh: number
+    savingPotentialInr: number
+    topRecommendations: string[]
+    efficiencyRating: string
+  }
   status: 'extracted' | 'confirmed' | 'rejected'
   extractedFieldsConfidence: {
     kwh: number
